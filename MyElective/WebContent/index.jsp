@@ -8,6 +8,6 @@
 		<title>Insert title here</title>
 	</head>
 	<body>
-		<p class="">hello from jebus... this is the second cumming</p>
+		<p class="">hello from our group</p>
 	</body>
 </html>
