@@ -13,7 +13,7 @@
 			<div class="row-fluid" id="signinLoginRow">
 				<div class="row-fluid">
 					<div class="col-md-12">
-						<div id="loginSignup" ><a href="LoginSignup.jsp">Log In/Sign Up</a></div>
+						
 					</div>
 				</div>
 				<div class="col-md-6" id="loginSplit">
