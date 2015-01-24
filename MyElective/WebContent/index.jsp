@@ -17,11 +17,11 @@
 				</div>
 			</div>
 			<div class="row-fluid" id="sidebarDashboardRow">
-				<div class="col-md-2">
-					
+				<div class="col-sm-2">
+					this
 				</div>
-				<div class="col-md-10">
-					
+				<div class="col-sm-10">
+					that
 				</div>
 			</div>
 		</div>

@@ -50,6 +50,4 @@ CREATE  TABLE `my_elective`.`comments` (
   FOREIGN KEY (`users_id`) REFERENCES users(`id`),
   PRIMARY KEY (`id`) );
 
-INSERT INTO `my_elective`.`users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('Kyle1986', 'wheredmyhairg0', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
-INSERT INTO `my_elective`.`users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('Lumberjack', 'plaid4dayZ', 'Kyle', 'Kilbride', 'Computer Engineering - Computer Science', 'kilb0067@algonquinlive.com', 'admin');
-INSERT INTO `my_elective`.`users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('MattyB', 'i<3aRi', 'Matthew', 'Boyd', 'Computer Engineering - Computer Science', 'boyd0077@algonquinlive.com', 'admin');  
+INSERT INTO `my_elective`.`users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('admin', 'password', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
