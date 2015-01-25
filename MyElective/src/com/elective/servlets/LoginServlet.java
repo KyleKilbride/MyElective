@@ -1,9 +1,7 @@
 package com.elective.servlets;
 
-import java.io.IOException;  
-import java.io.PrintWriter;  
-  
-
+import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.RequestDispatcher;  
 import javax.servlet.ServletException;  
@@ -23,8 +21,8 @@ public class LoginServlet extends HttpServlet {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
-		String name = (String) request.getAttribute("user_name");
-		String pass = (String) request.getAttribute("user_pass");
+		String name = (String) request.getParameter("user_name");
+		String pass = (String) request.getParameter("user_pass");
 		
 		System.out.print(name);
 		System.out.print(pass);

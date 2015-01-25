@@ -14,20 +14,22 @@
 				<div class="col-md-6" id="loginSplit">
 					<div>
 						<h3 id="loginHeader">Login</h3>	
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Username / Email"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Password"></br>
-						<input type="submit" class="button" value="Log In">
+						<form action="loginServlet" method="post">
+							<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Username / Email"></br>
+							<input type="password" class="input" name="user_pass" autocomplete="off" placeholder="Password"></br>
+							<input type="submit" class="button" value="Log In">
+						</form>
 					</div>
 				</div>
 				<div class="col-md-6" id="signUpSplit">
 					<div>
 						<h3 id="signUpHeader">Sign Up</h3>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Username"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="First Name"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Last Name"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Email"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Program of Study"></br>
-						<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Password"></br>
+						<input type="text" class="input" name="user_name_signup" autocomplete="off" placeholder="Username"></br>
+						<input type="text" class="input" name="userFirstName" autocomplete="off" placeholder="First Name"></br>
+						<input type="text" class="input" name="userLastName" autocomplete="off" placeholder="Last Name"></br>
+						<input type="text" class="input" name="email_signup" autocomplete="off" placeholder="Email"></br>
+						<input type="text" class="input" name="prog_signup" autocomplete="off" placeholder="Program of Study"></br>
+						<input type="password" class="input" name="user_pass_signup" autocomplete="off" placeholder="Password"></br>
 						<input type="submit" class="button" value="Sign up">
 					</div>
 				</div>

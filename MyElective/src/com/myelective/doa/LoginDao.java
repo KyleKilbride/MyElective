@@ -19,7 +19,7 @@ public class LoginDao {
         String dbName = "my_elective";  
         String driver = "com.mysql.jdbc.Driver";  
         String userName = "root";  
-        String password = "yA540004";  
+        String password = "";  
         
         try {  
             Class.forName(driver).newInstance();  
@@ -38,7 +38,6 @@ public class LoginDao {
   
             rs = userPass.executeQuery();
             status = rs.next();
-            
             
   
         } catch (Exception e) {  
