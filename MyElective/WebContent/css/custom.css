@@ -6,7 +6,7 @@ html, body {
 
 body{
 	margin-bottom: 1%;
-	background-color: #E7E0D2;
+	/* background-color: #E7E0D2; */
 }
 
 .container-fluid{
@@ -23,13 +23,13 @@ body{
 	height: 50px;
 }
 
-.col-md-2{
+.col-sm-2{
 	background-color: #ffffff;
 	border: 1px solid black;
 	height: 100%;
 }
 
-.col-md-10{
+.col-sm-10{
 	background-color: #ffffff;
 	border: 1px solid black;
 	height: 100%;
