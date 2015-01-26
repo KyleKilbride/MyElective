@@ -9,31 +9,31 @@
 		<title>MyElective</title>
 	</head>
 	<body>
-		<div class="container-fluid">
+		<div class="container-fluid" id="loginSignupContainer">
 			<div class="row-fluid" id="signinLoginRow">
 				<div class="col-md-6" id="loginSplit">
-					<div>
-						<h3 id="loginHeader">Login</h3>	
-						<form action="loginServlet" method="post">
-							<input type="text" class="input" name="user_name" autocomplete="off" placeholder="Username / Email"></br>
-							<input type="password" class="input" name="user_pass" autocomplete="off" placeholder="Password"></br>
+				<h2 id="loginHeader">Login</h2>	
+					<div class="block">						
+						<form action="loginServlet" method="post"> <!-- Login form -->
+							<span class="formText">Username or Email</span><input type="text" class="input" name="user_name" autocomplete="off"></br>
+							<span class="formText">Password</span><input type="password" class="input" name="user_pass" autocomplete="off"></br>
 							<input type="submit" class="button" value="Log In">
-						</form>
+						</form> <!-- / Login form -->
 					</div>
 				</div>
 				<div class="col-md-6" id="signUpSplit">
-					<div>
-						<h3 id="signUpHeader">Sign Up</h3>
-						<form action="signupServlet" method="post">
-							<input type="text" class="input" name="user_name_signup" autocomplete="off" placeholder="Username"></br>
-							<input type="text" class="input" name="userFirstName" autocomplete="off" placeholder="First Name"></br>
-							<input type="text" class="input" name="userLastName" autocomplete="off" placeholder="Last Name"></br>
-							<input type="text" class="input" name="email_signup" autocomplete="off" placeholder="Email"></br>
-							<input type="text" class="input" name="prog_signup" autocomplete="off" placeholder="Program of Study"></br>
-							<input type="password" class="input" name="user_pass_signup" autocomplete="off" placeholder="Password"></br>
-							<input type="submit" class="button" value="Sign up">
-						</form>
-					</div>
+				<h2 id="signUpHeader">Sign Up</h2>
+				<div class="block">						
+					<form action="signupServlet" method="post"> <!-- Sign up form -->
+						<span class="formText">Username</span><input type="text" class="input" name="user_name_signup" autocomplete="off"></br>
+						<span class="formText">First Name</span><input type="text" class="input" name="userFirstName" autocomplete="off"></br>
+						<span class="formText">Last Name</span><input type="text" class="input" name="userLastName" autocomplete="off"></br>
+						<span class="formText">E-mail</span><input type="text" class="input" name="email_signup" autocomplete="off"></br>
+						<span class="formText">Program of Study</span><input type="text" class="input" name="prog_signup" autocomplete="off"></br>
+						<span class="formText">Password</span><input type="password" class="input" name="user_pass_signup" autocomplete="off"></br>
+						<input type="submit" class="button" value="Sign up">
+					</form> <!-- / Sign up form -->
+				</div>
 				</div>
 			</div>
 		</div>
