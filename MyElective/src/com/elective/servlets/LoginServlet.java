@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;  
 import javax.servlet.http.HttpSession; 
 
-import com.myelective.doa.LoginDao;
+import com.myelective.doa.UserDAO;
 
 public class LoginServlet extends HttpServlet {
 	
@@ -20,25 +20,22 @@ public class LoginServlet extends HttpServlet {
 		
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession(false);
+		UserDAO userDAO = new UserDAO();
 		
 		String name = (String) request.getParameter("user_name");
 		String pass = (String) request.getParameter("user_pass");
 		
-		System.out.print(name);
-		System.out.print(pass);
+		String userName = userDAO.validate(name, pass);
 		
-		HttpSession session = request.getSession(false);  
-        if(session!=null)  
-        session.setAttribute("name", name);
-        
-        if(LoginDao.validate(name, pass)){
-        	RequestDispatcher rd=request.getRequestDispatcher("index.jsp");    
-            rd.forward(request,response);  
-        }else{
-        	out.print("<p style=\"color:red\">Sorry username or password error</p>");    
+		if(userName == null){
+			out.print("<p style=\"color:red\">Sorry username or password error</p>");    
             RequestDispatcher rd=request.getRequestDispatcher("LoginSignup.jsp");    
             rd.include(request,response);
-        }
+		} else {
+			session.setAttribute("user", userName);
+			response.sendRedirect("index.jsp");
+		}
         
         out.close();
 	}
