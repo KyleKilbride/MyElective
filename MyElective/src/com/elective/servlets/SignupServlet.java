@@ -9,14 +9,14 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;  
 import javax.servlet.http.HttpServletResponse;
 
-import com.myelective.doa.UserDAO;;
+import com.myelective.doa.UserDAO;
 
 public class SignupServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
 	
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		System.out.print("gets here");
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
 		
@@ -27,6 +27,14 @@ public class SignupServlet extends HttpServlet {
 		String program = (String) request.getParameter("prog_signup");
 		String email = (String) request.getParameter("email_signup");
 		
+		System.out.println(userName);
+		System.out.println(pass);
+		System.out.println(firstName);
+		System.out.println(lastName);
+		System.out.println(lastName);
+		System.out.println(email);
+		
+		
 		UserDAO userDAO = new UserDAO();
 		
 		boolean usernameInUse = userDAO.checkEmailNotUsed(email);
@@ -35,6 +43,7 @@ public class SignupServlet extends HttpServlet {
 		if(usernameInUse == false && emailInUse == false){
 			int result = userDAO.createUser(userName, pass, firstName, lastName, email, program, "user");
 			if(result == 1){
+				System.out.print("gets here");
 				response.sendRedirect("index.jsp"); //send user to Account Creation Success
 			}
 		}else{
