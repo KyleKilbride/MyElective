@@ -30,7 +30,7 @@ public class LoginServlet extends HttpServlet {
 		
 		if(userName == null){
 			out.print("<p style=\"color:red\">Sorry username or password error</p>");    
-            RequestDispatcher rd=request.getRequestDispatcher("LoginSignup.jsp");    
+            RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
             rd.include(request,response);
 		} else {
 			session.setAttribute("user", userName);

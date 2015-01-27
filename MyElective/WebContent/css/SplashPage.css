@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+
+html, body {
+	height: 100%;
+}
+
+body{
+	background: url(http://localhost:8080/MyElective/images/auditorium.jpg) no-repeat center center fixed; 
+	-webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.container-fluid{
+	height: 100%;
+}
+
+.row-fluid{
+	height: 100%;
+}
+
+.loginCreateButtons{
+	width: 40%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 15%;
+}
