@@ -13,7 +13,7 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="col-md-12">
-					<div id="loginSignup" ><a href="LoginSignup.jsp">Log In/Sign Up</a></div>
+					<div id="loginSignup" ><a href="SplashPage.jsp">Log In/Sign Up</a></div>
 				</div>
 			</div>
 			<div class="row-fluid" id="sidebarDashboardRow">
