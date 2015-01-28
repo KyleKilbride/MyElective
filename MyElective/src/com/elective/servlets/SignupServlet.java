@@ -8,6 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;  
 import javax.servlet.http.HttpServletRequest;  
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.catalina.Session;
 
 import com.myelective.doa.UserDAO;
 
@@ -43,6 +46,8 @@ public class SignupServlet extends HttpServlet {
 		if(usernameInUse == false && emailInUse == false){
 			int result = userDAO.createUser(userName, pass, firstName, lastName, email, program, "user");
 			if(result == 1){
+				HttpSession session = request.getSession(false);
+				session.setAttribute("userName", userName);
 				System.out.print("gets here");
 				response.sendRedirect("index.jsp"); //send user to Account Creation Success
 			}
