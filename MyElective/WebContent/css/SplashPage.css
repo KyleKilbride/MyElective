@@ -21,8 +21,16 @@ body{
 }
 
 .loginCreateButtons{
-	width: 40%;
+	width: 27%;
 	margin-left: auto;
 	margin-right: auto;
-	margin-top: 15%;
+	margin-top: 35%;
+}
+
+#loginButton, #signupButton{
+	width: 150px;
+	height: 50px;
+	color: #f1f3e7;
+	background-color: #584692;
+	border: none;
 }

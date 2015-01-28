@@ -73,9 +73,9 @@
 							</form>       				    
       				    </div>					
 					</script>
-				    <button class="btn btn-default" ng-click="open('md', 1)">Log In</button>
-				    <button class="btn btn-default" ng-click="open('md', 2)">Create Account</button>
-				    <div ng-show="selected">Selection from a modal: {{ selected }}</div>
+				    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
+				    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
+				    </div>
 				</div><!-- / well -->
 				</div> <!-- / col-sm-12 -->
 			</div><!-- / row fluid -->
