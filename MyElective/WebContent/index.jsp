@@ -5,7 +5,7 @@
 <html>
 	<head>
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="css/custom.css" rel="stylesheet" type="text/css">
+		<link href="css/index.css" rel="stylesheet" type="text/css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MyElective</title>
 	</head>
@@ -13,9 +13,20 @@
 		<div class="container-fluid">
 			<div class="row-fluid">
 				<div class="col-md-12">
-					<div id="loginSignup" ><a href="SplashPage.jsp">Log In/Sign Up</a></div>
-				</div>
-			</div>
+					<nav class="navbar navbar-inverse navbar-fixed-top">
+					  <div class="container-fluid">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="#">
+					        MyElective
+					      </a>
+					    </div>
+					    <p class="navbar-text navbar-right">
+						  	<a href="SplashPage.jsp" class="navbar-link">Log In/Sign Up</a>
+						</p>
+					  </div>
+					</nav>
+				</div><!-- /.col-md-12 -->
+			</div><!-- /.row-fluid -->
 			<div class="row-fluid" id="sidebarDashboardRow">
 				<div class="col-sm-2">
 					this
@@ -23,7 +34,7 @@
 				<div class="col-sm-10">
 					that
 				</div>
-			</div>
-		</div>
+			</div><!-- /.row-fluid -->
+		</div> <!-- /.container fluid -->
 	</body>
 </html>

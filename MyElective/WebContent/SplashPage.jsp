@@ -15,9 +15,12 @@
 		<div class="container-fluid" id="loginSignupContainer">
 			<div class="row-fluid" id="signinLoginRow">
 				<div class="col-sm-12">
-				<div class="loginCreateButtons">
-				<div ng-controller="ModalDemoCtrl">
-				    <script type="text/ng-template" id="loginModal.html">
+					<div class="loginCreateButtons">
+						<div>
+							<span class="logo"><a href="index.jsp">MyElective</a></span>
+						</div>
+						<div ng-controller="ModalDemoCtrl">
+						    <script type="text/ng-template" id="loginModal.html">
         				<div class="modal-header">
         				    <h3 class="modal-title">Log In</h3>
         				</div>
@@ -37,7 +40,7 @@
 							</form>
       				    </div>
    					 </script>
-					<script type="text/ng-template" id="signupModal.html">
+							<script type="text/ng-template" id="signupModal.html">
 						<div class="modal-header">
         				    <h3 class="modal-title">Create Account</h3>
         				</div>
@@ -73,10 +76,10 @@
 							</form>       				    
       				    </div>					
 					</script>
-				    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
-				    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
-				    </div>
-				</div><!-- / well -->
+						    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
+						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
+					    </div> <!-- /modaldemocntrl -->
+					</div><!-- / logincreatebuttons -->
 				</div> <!-- / col-sm-12 -->
 			</div><!-- / row fluid -->
 		</div><!-- / container-fluid -->
