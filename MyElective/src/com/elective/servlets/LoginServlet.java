@@ -16,7 +16,7 @@ import com.myelective.doa.UserDAO;
  * Gets login info from page and attempts to validate
  * with the database
  * 
- * @author Matthew Boyd
+ * @author Matthew Boyd, Kyle Kilbride
  * @version 0.1
  *
  */

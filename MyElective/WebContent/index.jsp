@@ -20,9 +20,12 @@
 					        MyElective
 					      </a>
 					    </div>
-					    <p class="navbar-text navbar-right">
-						  	<a href="SplashPage.jsp" class="navbar-link">Log In/Sign Up</a>
-						</p>
+					    <div id="loginSignupText" ng-app="" ng-controller="loginLogout">
+						    <p class="navbar-text navbar-right">
+							  	<a href="SplashPage.jsp" class="navbar-link" ng-show="$scope.loggedOut">Log In/Sign Up</a>
+							  	<a href="index.jsp" class="navbar-link" ng-show="!$scope.loggedOut">Logout</a>
+							</p>
+						</div>
 					  </div>
 					</nav>
 				</div><!-- /.col-md-12 -->
