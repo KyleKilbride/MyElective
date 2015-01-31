@@ -1,0 +1,64 @@
+@CHARSET "UTF-8";
+
+html, body {
+	height: 100%;
+}
+
+body{
+	margin-bottom: 1%;
+	background-color: #f5f5f5;
+}
+
+.container-fluid{
+	height: 95%;
+}
+
+#loginSignupContainer{
+	margin-top: 1.5%;
+	margin-bottom: 2.5%;
+}
+
+#sidebarDashboardRow, #signinLoginRow{
+	height: 100%; 
+}
+
+/* .col-md-12{
+	background-color: #ffffff;
+	border: 1px solid black;
+	height: 50px;
+} */
+
+.col-sm-2{
+	background-color: #ffffff;
+	border: 1px solid black;
+	height: 100%;
+}
+
+.col-sm-10{
+	background-color: #ffffff;
+	border: 1px solid black;
+	height: 100%;
+}
+
+#signUpHeader, #loginHeader{
+	color: #f5f5f5;
+}
+
+.input{
+	margin: 0.5%;
+}
+
+.pure-control-group label{
+	color: #f5f5f5;
+}
+
+#loginSignup{
+	float: right;
+	margin-top: 12px;
+	color: black;
+}
+
+#loginSignup:hover{
+	font-weight: bold;
+	text-decoration: none; 
+}
