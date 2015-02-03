@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
+<%-- <jsp:useBean id="obj" class="com.myelective.controller"/> --%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -22,8 +22,9 @@
 					    </div>
 					    <div id="loginSignupText" ng-app="" ng-controller="loginLogout">
 						    <p class="navbar-text navbar-right">
-							  	<a href="SplashPage.jsp" class="navbar-link" ng-show="$scope.loggedOut">Log In/Sign Up</a>
-							  	<a href="index.jsp" class="navbar-link" ng-show="!$scope.loggedOut">Logout</a>
+						    	<%if(session.getAttribute("user") == null){%>
+							  	<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
+							  	<%}else{%><a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
 							</p>
 						</div>
 					  </div>
