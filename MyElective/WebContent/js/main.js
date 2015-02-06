@@ -56,3 +56,10 @@ angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($s
     $modalInstance.dismiss('cancel');
   };
 });
+
+function loginLogout($scope){
+	
+}
+
+
+
