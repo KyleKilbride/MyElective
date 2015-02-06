@@ -24,7 +24,7 @@
 						    <p class="navbar-text navbar-right">
 						    	<%if(session.getAttribute("user") == null){%>
 							  	<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-							  	<%}else{%><a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
+							  	<%}else{%>${sessionScope.user} <a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
 							</p>
 						</div>
 					  </div>
