@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;  
 
 import com.myelective.jbdc.DBUtility;
+import beans.User;
 
 /**
  * A class used to access, return and add user data to
@@ -44,10 +45,11 @@ public class UserDAO {
 	 * @return		null for unsuccessful login, username for
 	 * 				successful login.
 	 */
-	public String validate(String name, String pass){
+	public User validate(String name, String pass){
 		String userName = null;
         PreparedStatement userPassPST = null;
         PreparedStatement emailPassPST = null;
+        User user = new User();
    
         try { 
         	emailPassPST = dbConnection.prepareStatement(SQL_SELECT_EMAIL);
@@ -55,7 +57,13 @@ public class UserDAO {
         	emailPassPST.setString(2, pass);
         	ResultSet rsEmailPass = emailPassPST.executeQuery();
         	while(rsEmailPass.next()){	//if a row is returned from the SELECT statement
-        		userName = rsEmailPass.getString("user_name");
+        		user.setUsername("user_name");
+    			user.setPassword("password");
+    			user.setFirstName("first_name");
+    			user.setLastName("last_name");
+    			user.setEmailAddress("email_address");
+    			user.setProgram("program");
+    			user.setStatus("status");
         	}
         	
         	if(userName == null){	//if email/pass doesn't return a User
@@ -64,14 +72,20 @@ public class UserDAO {
         		userPassPST.setString(2, pass);
         		ResultSet rsUserPass = userPassPST.executeQuery();
         		while(rsUserPass.next()){	//if a row is returned from the SELECT statement
-        			userName = rsUserPass.getString("user_name");
+        			user.setUsername("user_name");
+        			user.setPassword("password");
+        			user.setFirstName("first_name");
+        			user.setLastName("last_name");
+        			user.setEmailAddress("email_address");
+        			user.setProgram("program");
+        			user.setStatus("status");
         		}
         	}
         } catch (Exception e) {  
             System.out.println(e);  
         }
 		
-		return userName;
+		return user;
 	}
 	
 	/**
