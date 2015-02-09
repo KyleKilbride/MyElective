@@ -1,7 +1,13 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html ng-app="ui.bootstrap.demo">
+
+<html ng-app="ui.bootstrap.demo" 
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
@@ -9,7 +15,6 @@
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>MyElective</title>
-	<title>Insert title here</title>
 </head>
 	<body>
 		<div class="container-fluid" id="loginSignupContainer">
@@ -78,8 +83,11 @@
 					</script>
 						    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
 						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
+						    
+						    	<p class="errorMsg">Sorry Username or Password error</p>
+						    
 					    </div> <!-- /modaldemocntrl -->
-					</div><!-- / logincreatebuttons -->
+					</div><!-- /logincreatebuttons -->	
 				</div> <!-- / col-sm-12 -->
 			</div><!-- / row fluid -->
 		</div><!-- / container-fluid -->

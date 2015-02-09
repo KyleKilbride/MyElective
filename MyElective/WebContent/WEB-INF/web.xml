@@ -5,12 +5,12 @@
     version="2.5">  
     <servlet>  
         <servlet-name>login</servlet-name>  
-        <servlet-class>com.elective.servlets.LoginServlet</servlet-class>  
+        <servlet-class>com.myelective.servlets.LoginServlet</servlet-class>  
     </servlet>
     
     <servlet>
     	<servlet-name>signup</servlet-name>
-    	<servlet-class>com.elective.servlets.SignupServlet</servlet-class>
+    	<servlet-class>com.myelective.servlets.SignupServlet</servlet-class>
     </servlet>
   
     <servlet-mapping>  
