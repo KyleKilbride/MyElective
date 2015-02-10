@@ -41,6 +41,6 @@ public class RatingController {
 			System.out.println(e);
 		}
 		
-		return null;
+		return ratingBeanAL;
 	}
 }

@@ -14,7 +14,13 @@
 	RatingController ratingController = new RatingController();
 	
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	session.setAttribute("recentRatings", ratingController.getRecentRating(4));
+	//session.setAttribute("recentRatings", ratingController.getRecentRating(4));
+	
+	ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	
+	//Rating recent1 = (Rating)ratingArrLst.get(1);
+	
+	session.setAttribute("recentRatingBean1", (Rating)ratingArrLst.get(1));
 	
 	String s = request.getParameter("newsession");
 	if(s != null){
@@ -85,7 +91,7 @@
 					<h2>Recent Reviews</h2>
 				</div>
 				<div class="col-sm-6" id="recentReview">
-					recent review 
+					<h3>recent review ${sessionScope.recentRatingBean1.getComment() }</h3>
 				</div>
 				<div class="col-sm-6" id="recentReview">
 					recent review
