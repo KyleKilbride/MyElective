@@ -1,11 +1,15 @@
 create database my_elective;   
 use my_elective;  
   
+SET global general_log = 1;
+SET global log_output = 'table';  
+  
 CREATE  TABLE `my_elective`.`electives` (
   `id` int NOT NULL auto_increment,
   `course_code` VARCHAR(8) NOT NULL,
   `elective_name` VARCHAR(200) NOT NULL ,  
   `description` VARCHAR(5000) NOT NULL,
+  `average_rating` int not null default '0',
   PRIMARY KEY (`id`) );   
 
 CREATE  TABLE `my_elective`.`users` (
@@ -24,22 +28,10 @@ CREATE  TABLE `my_elective`.`ratings` (
   `rating` int NOT NULL,
   `hours_per_week` int NOT NULL,
   `comment` longtext,
-  `date` datetime DEFAULT CURRENT_TIMESTAMP,
+  `date` int unsigned,
   `electives_id` int NOT NULL,
   `users_id` int NOT NULL,
   FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  PRIMARY KEY (`id`) );
-
-CREATE  TABLE `my_elective`.`histories` (
-  `id` int NOT NULL auto_increment ,
-  `comment` longtext,
-  `date` datetime NOT NULL,
-  `electives_id` int NOT NULL,
-  `users_id` int NOT NULL,
-  `ratings_id` int NOT NULL,
-  FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  FOREIGN KEY (`users_id`) REFERENCES users(`id`),
-  FOREIGN KEY (`ratings_id`) REFERENCES users(`id`),
   PRIMARY KEY (`id`) );
 
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('kyle', 'password', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
@@ -86,3 +78,25 @@ INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES (
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('PSI1702', 'Government of Canada','Students explore the Canadian governmental system and consider key principles of democracy and federalism. In addition, students analyze the impact of government on the lives of its citizens, as well as the ways in which citizens and communities affect the government. Finally, students examine the diverse political, national and ideological dynamics of Canadian politics.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('RAD2001', 'Popular Culture','This introductory, Internet-based course will examine recent North American popular culture including trends, fads, styles, theories and the cult of the new. This course will explore our perceptions of culture, the trivialization of society and how the media has inexorably helped to shape today’‘s values. Students will, through on-line research, assigned readings, and participation in self-directed learning, critically study popular culture’‘s place in North American society concentrating on their decade of choice. One dictionary definition of popular culture is the "totality of socially transmitted behaviour patterns, arts, beliefs, institutions, and all other products of human work and thought." That definition allows us great freedom and scope.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('SOC2003', 'Understanding Human Sexuality','This course provides an interdisciplinary introduction to the study of human sexuality. It examines the basic understanding of human sexuality through an investigation of history, culture, physiology, sexual development, sexual behaviours, sexually transmitted diseases, attitudes, sex, deviance, and sexual relationships.');
+
+CREATE TRIGGER update_avg AFTER INSERT ON `ratings`
+FOR EACH ROW UPDATE electives
+  SET average_rating = (SELECT AVG(rating) from ratings where ratings.id=electives.id)
+WHERE electives.id=NEW.id;
+
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '5', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '7', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('8', '1', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '15');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '1', 'i''m batman', '5', UNIX_TIMESTAMP(), '2');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('5', '2', 'i''m batman', '5', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '1', 'i''m batman', '5', UNIX_TIMESTAMP(), '30');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('4', '3', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '7', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '22');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('10', '5', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '32');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('9', '13', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('1', '25', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('3', '2', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('7', '3', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '5');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '4', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '12');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '6', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '11');
+

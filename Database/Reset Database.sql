@@ -3,7 +3,11 @@ DROP TABLE IF EXISTS electives;
 DROP TABLE IF EXISTS ratings;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS logs;
+drop trigger if exists update_avg;
 SET FOREIGN_KEY_CHECKS = 1;
+
+SET global general_log = 1;
+SET global log_output = 'table';
 
 CREATE  TABLE `my_elective`.`electives` (
   `id` int NOT NULL auto_increment,
@@ -32,18 +36,6 @@ CREATE  TABLE `my_elective`.`ratings` (
   `electives_id` int NOT NULL,
   `users_id` int NOT NULL,
   FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  PRIMARY KEY (`id`) );
-
-CREATE  TABLE `my_elective`.`histories` (
-  `id` int NOT NULL auto_increment ,
-  `comment` longtext,
-  `date` datetime NOT NULL,
-  `electives_id` int NOT NULL,
-  `users_id` int NOT NULL,
-  `ratings_id` int NOT NULL,
-  FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  FOREIGN KEY (`users_id`) REFERENCES users(`id`),
-  FOREIGN KEY (`ratings_id`) REFERENCES users(`id`),
   PRIMARY KEY (`id`) );
 
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('kyle', 'password', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
@@ -90,6 +82,11 @@ INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES (
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('PSI1702', 'Government of Canada','Students explore the Canadian governmental system and consider key principles of democracy and federalism. In addition, students analyze the impact of government on the lives of its citizens, as well as the ways in which citizens and communities affect the government. Finally, students examine the diverse political, national and ideological dynamics of Canadian politics.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('RAD2001', 'Popular Culture','This introductory, Internet-based course will examine recent North American popular culture including trends, fads, styles, theories and the cult of the new. This course will explore our perceptions of culture, the trivialization of society and how the media has inexorably helped to shape today’‘s values. Students will, through on-line research, assigned readings, and participation in self-directed learning, critically study popular culture’‘s place in North American society concentrating on their decade of choice. One dictionary definition of popular culture is the "totality of socially transmitted behaviour patterns, arts, beliefs, institutions, and all other products of human work and thought." That definition allows us great freedom and scope.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('SOC2003', 'Understanding Human Sexuality','This course provides an interdisciplinary introduction to the study of human sexuality. It examines the basic understanding of human sexuality through an investigation of history, culture, physiology, sexual development, sexual behaviours, sexually transmitted diseases, attitudes, sex, deviance, and sexual relationships.');
+
+CREATE TRIGGER update_avg AFTER INSERT ON `ratings`
+FOR EACH ROW UPDATE electives
+  SET average_rating = (SELECT AVG(rating) from ratings where ratings.id=electives.id)
+WHERE electives.id=NEW.id;
 
 INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '5', 'Lorem Ipsem', '4', '1');
 INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('2', '7', 'Lorem Ipsem', '4', '23');
