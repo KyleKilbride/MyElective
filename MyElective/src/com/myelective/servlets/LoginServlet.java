@@ -23,7 +23,7 @@ import beans.User;
  */
 public class LoginServlet extends HttpServlet {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 12L;
 	
 	/**
 	 * Gets user_name and user_pass from the page and validates it with
@@ -55,7 +55,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			
 			session.setAttribute("user", user);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect("http://localhost:8080/MyElective/indexServlet");
 		}
         
         out.close();

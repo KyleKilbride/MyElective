@@ -57,13 +57,13 @@ public class UserDAO {
         	emailPassPST.setString(2, pass);
         	ResultSet rsEmailPass = emailPassPST.executeQuery();
         	while(rsEmailPass.next()){	//if a row is returned from the SELECT statement
-        		user.setUsername("user_name");
-    			user.setPassword("password");
-    			user.setFirstName("first_name");
-    			user.setLastName("last_name");
-    			user.setEmailAddress("email_address");
-    			user.setProgram("program");
-    			user.setStatus("status");
+        		user.setUsername(rsEmailPass.getString("user_name"));
+    			user.setPassword(rsEmailPass.getString("password"));
+    			user.setFirstName(rsEmailPass.getString("first_name"));
+    			user.setLastName(rsEmailPass.getString("last_name"));
+    			user.setEmailAddress(rsEmailPass.getString("email_address"));
+    			user.setProgram(rsEmailPass.getString("program"));
+    			user.setStatus(rsEmailPass.getString("status"));
         	}
         	
         	if(userName == null){	//if email/pass doesn't return a User
@@ -72,13 +72,13 @@ public class UserDAO {
         		userPassPST.setString(2, pass);
         		ResultSet rsUserPass = userPassPST.executeQuery();
         		while(rsUserPass.next()){	//if a row is returned from the SELECT statement
-        			user.setUsername("user_name");
-        			user.setPassword("password");
-        			user.setFirstName("first_name");
-        			user.setLastName("last_name");
-        			user.setEmailAddress("email_address");
-        			user.setProgram("program");
-        			user.setStatus("status");
+        			user.setUsername(rsUserPass.getString("user_name"));
+        			user.setPassword(rsUserPass.getString("password"));
+        			user.setFirstName(rsUserPass.getString("first_name"));
+        			user.setLastName(rsUserPass.getString("last_name"));
+        			user.setEmailAddress(rsUserPass.getString("email_address"));
+        			user.setProgram(rsUserPass.getString("program"));
+        			user.setStatus(rsUserPass.getString("status"));
         		}
         	}
         } catch (Exception e) {  

@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<jsp:useBean id="user" class="beans.User" scope="session"></jsp:useBean>
+<!-- <jsp:useBean id="user" class="beans.User" scope="session"></jsp:useBean> -->
+<!-- <jsp:useBean id="featuredelective" class="beans.Elective" scope="session"></jsp:useBean> -->
+
 <%
 	String s = request.getParameter("newsession");
 	if(s != null){
@@ -54,7 +56,7 @@
 						    <p class="navbar-text navbar-right">
 						    	<%if(user.getUsername() == null){%>
 							  	<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-							  	<%}else{%>${sessionScope.user} <a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
+							  	<%}else{%>${sessionScope.user.getFirstName()} <a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
 							</p>
 						</div>
 					  </div>
@@ -63,7 +65,7 @@
 			</div><!-- /.row-fluid -->
 			<div class="row" id="featuredElectivesRow">
 				<div class="col-sm-12" id="featuredElectives">
-					<h2 id="featuredElectivesHeader">Featured Elective</h2>
+					<h2 id="featuredElectivesHeader">Featured Elective ${sessionScope.featuredElective.getName()}</h2>
                     <a class="btn btn-default" id="featuredViewButton" href="#">View</a>
 				</div>
 			</div><!-- /.row-fluid -->
@@ -72,7 +74,7 @@
 					<h2>Recent Reviews</h2>
 				</div>
 				<div class="col-sm-6" id="recentReview">
-					recent review
+					recent review 
 				</div>
 				<div class="col-sm-6" id="recentReview">
 					recent review
