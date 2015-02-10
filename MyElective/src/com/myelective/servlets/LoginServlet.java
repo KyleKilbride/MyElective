@@ -10,7 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;  
 import javax.servlet.http.HttpSession; 
 
-import com.myelective.doa.UserDAO;
+import com.myelective.controllers.UserController;
+
 import beans.User;
 
 /**
@@ -37,7 +38,7 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 		
-		UserDAO userDAO = new UserDAO();
+		UserController userDAO = new UserController();
 		User user = new User();
 		
 		//Gets username and password from page
@@ -55,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 		} else {
 			
 			session.setAttribute("user", user);
-			response.sendRedirect("http://localhost:8080/MyElective/indexServlet");
+			response.sendRedirect("index.jsp");
 		}
         
         out.close();

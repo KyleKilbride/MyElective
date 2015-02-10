@@ -1,10 +1,21 @@
+<%@page import="com.myelective.controllers.RatingController"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8" import="com.myelective.controllers.*,java.util.ArrayList,beans.*"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<!-- <jsp:useBean id="user" class="beans.User" scope="session"></jsp:useBean> -->
-<!-- <jsp:useBean id="featuredelective" class="beans.Elective" scope="session"></jsp:useBean> -->
 
+<!--  -->
 <%
+	//<jsp:useBean id="user" class="beans.User"></jsp:useBean>
+
+	request.getSession(false);
+	User user = (User)session.getAttribute("user");
+	
+	ElectiveController electiveController = new ElectiveController();
+	RatingController ratingController = new RatingController();
+	
+	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	session.setAttribute("recentRatings", ratingController.getRecentRating(4));
+	
 	String s = request.getParameter("newsession");
 	if(s != null){
 		try
@@ -14,7 +25,7 @@
             response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
             response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
             session.setAttribute("user",null);
-            //session.invalidate(); //do not think this is necessary -- Kyle K
+            session.invalidate(); //do not think this is necessary -- Kyle K
             response.sendRedirect("index.jsp");
         }
         catch(Exception e)
@@ -54,7 +65,7 @@
 						</form>
 					    <div id="loginSignupText" ng-app="" ng-controller="loginLogout">
 						    <p class="navbar-text navbar-right">
-						    	<%if(user.getUsername() == null){%>
+						    	<%if(user == null){%>
 							  	<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
 							  	<%}else{%>${sessionScope.user.getFirstName()} <a href="index.jsp" class="navbar-link" id="logoutText" >Logout</a><%}%>
 							</p>

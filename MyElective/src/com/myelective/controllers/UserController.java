@@ -1,4 +1,4 @@
-package com.myelective.doa;
+package com.myelective.controllers;
 
 import java.sql.Connection; 
 import java.sql.PreparedStatement;  
@@ -15,7 +15,7 @@ import beans.User;
  * @version 0.1
  *
  */
-public class UserDAO {
+public class UserController {
 	
 	private Connection dbConnection;
 	
@@ -33,7 +33,7 @@ public class UserDAO {
 	private String SQL_INSERTUSER = "INSERT INTO users (user_name, password, first_name, last_name, program, email_address, status) VALUES (?,?,?,?,?,?,?)";
 	
 	
-	public UserDAO(){
+	public UserController(){
 		dbConnection = DBUtility.getConnection();
 	}
 	

@@ -1,4 +1,4 @@
-package com.myelective.doa;
+package com.myelective.controllers;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,11 +10,11 @@ import beans.Elective;
 
 import com.myelective.jbdc.DBUtility;
 
-public class ElectiveDAO {
+public class ElectiveController {
 
 	private Connection dbConnection;
 	
-	public ElectiveDAO(){
+	public ElectiveController(){
 		dbConnection = DBUtility.getConnection();
 	}
 	
@@ -54,26 +54,4 @@ public class ElectiveDAO {
 		return electiveBean;
 	}
 	
-	public ArrayList<Elective> getRecentElectives(int numberOf){
-		ArrayList<Elective> electiveBeanAL = new ArrayList<Elective>();
-		
-		try{
-			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT * FROM electives");
-			ResultSet result1 = pSt1.executeQuery();
-			if(result1.last()){
-				for(int i = 0; i < numberOf; i++){
-					Elective electiveBean = new Elective();
-					electiveBean.setCourseCode(result1.getString("course_code"));
-					electiveBean.setName(result1.getString("elective_name"));
-					electiveBean.setDescription(result1.getString("description"));
-					//electiveBean.setRating(Integer.parseInt(result1.getString("rating")));
-					electiveBeanAL.add(electiveBean); //LOGIC NEEDS A BIT MORE WORK
-				}
-			}
-		}catch(Exception e){
-			System.out.println(e);
-		}
-		
-		return null;
-	}
 }

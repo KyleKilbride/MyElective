@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import beans.User;
 
-import com.myelective.doa.UserDAO;
+import com.myelective.controllers.UserController;
 
 /**
  * Gets account creation info from page and attempts to create
@@ -44,7 +44,7 @@ public class SignupServlet extends HttpServlet {
 		String program = (String) request.getParameter("prog_signup");
 		String email = (String) request.getParameter("email_signup");
 		
-		UserDAO userDAO = new UserDAO();
+		UserController userDAO = new UserController();
 		
 		User user = new User();
 		
