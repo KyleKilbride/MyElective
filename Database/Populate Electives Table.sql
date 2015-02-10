@@ -1,59 +1,4 @@
-SET FOREIGN_KEY_CHECKS = 0;
-DROP TABLE IF EXISTS electives;
-DROP TABLE IF EXISTS ratings;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS logs;
-SET FOREIGN_KEY_CHECKS = 1;
-
-CREATE  TABLE `my_elective`.`electives` (
-  `id` int NOT NULL auto_increment,
-  `course_code` VARCHAR(8) NOT NULL,
-  `elective_name` VARCHAR(200) NOT NULL ,  
-  `description` VARCHAR(5000) NOT NULL,
-  PRIMARY KEY (`id`) );   
-
-CREATE  TABLE `my_elective`.`users` (
-  `id` int NOT NULL auto_increment,
-  `user_name` VARCHAR(200) NOT NULL ,  
-  `password` VARCHAR(100) NOT NULL,
-  `first_name` VARCHAR(50) NOT NULL,
-  `last_name` VARCHAR(75) NOT NULL,
-  `program` VARCHAR(200) NOT NULL,
-  `email_address` VARCHAR(200) NOT NULL,
-  `status` VARCHAR(5),
-  PRIMARY KEY (`id`) );
-
-CREATE  TABLE `my_elective`.`ratings` (
-  `id` int NOT NULL auto_increment ,
-  `rating` int NOT NULL,
-  `hours_per_week` int NOT NULL,
-  `comment` longtext,
-  `date` datetime NOT NULL,
-  `electives_id` int NOT NULL,
-  `users_id` int NOT NULL,
-  FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  PRIMARY KEY (`id`) );
-
-CREATE  TABLE `my_elective`.`histories` (
-  `id` int NOT NULL auto_increment ,
-  `comment` longtext,
-  `date` datetime NOT NULL,
-  `electives_id` int NOT NULL,
-  `users_id` int NOT NULL,
-  `ratings_id` int NOT NULL,
-  FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
-  FOREIGN KEY (`users_id`) REFERENCES users(`id`),
-  FOREIGN KEY (`ratings_id`) REFERENCES users(`id`),
-  PRIMARY KEY (`id`) );
-
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('kyle', 'password', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('lesserkyle', 'password', 'Kyle', 'Kilbride', 'Computer Engineering - Computer Science', 'kilb0067@algonquinlive.com', 'admin');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('matt', 'password', 'Matthew', 'Boyd', 'Computer Engineering - Computer Science', 'boyd0077@algonquinlive.com', 'admin');  
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('superman346', 'lastSUN', 'Kal', 'El', 'Farming', 'el1933@algonquinlive.com', 'user');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('i''mbatman', 'aintnorest123', 'Bruce', 'Wayne', 'Forensics', 'wayn1939@algonquinlive.com', 'user');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('DAflash', 'arribaARRIBA', 'Barry', 'Allen', 'Kinesiology', 'alle1956@algonquinlive.com', 'user');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('green-lantern', 'yElLoWbAd', 'Hal', 'Jordan', 'Aviation', 'jord1959@algonquinlive.com', 'user');
-INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('wonder_woman', 'themyscira4eva', 'Diana', 'Prince', 'Classical Studies', 'boyd0077@algonquinlive.com', 'user');
+use my_elective; 
 
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('ARC9001', 'Conserving Canada''s Architectural Heritage', 'If your field is architecture, building trades, engineering, social planning or tourism, your future is certain to include our past. To Canadians, preserving our heritage resources is a visible sign of community pride and environmental responsibility. Protecting heritage buildings requires an understanding of their histories and the principles of conservation shared by the preservation community. Conserving Canada’‘s Architectural Heritage traces the study of building styles and traditional building techniques as they have evolved across the Canadian landscape.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('DSN2001', 'History of Design','Explore the many influences of graphic design from the invention of writing and alphabets to the present day computer revolution and its impact on contemporary design. You will learn the philosophies, methods, and techniques of the eras in design including the origins of printing and typography, Victorian and Art Nouveau, Modern Art and Post Modern design. The course involves online discussion and analysis of each of the eras.');
@@ -90,19 +35,3 @@ INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES (
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('PSI1702', 'Government of Canada','Students explore the Canadian governmental system and consider key principles of democracy and federalism. In addition, students analyze the impact of government on the lives of its citizens, as well as the ways in which citizens and communities affect the government. Finally, students examine the diverse political, national and ideological dynamics of Canadian politics.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('RAD2001', 'Popular Culture','This introductory, Internet-based course will examine recent North American popular culture including trends, fads, styles, theories and the cult of the new. This course will explore our perceptions of culture, the trivialization of society and how the media has inexorably helped to shape today’‘s values. Students will, through on-line research, assigned readings, and participation in self-directed learning, critically study popular culture’‘s place in North American society concentrating on their decade of choice. One dictionary definition of popular culture is the "totality of socially transmitted behaviour patterns, arts, beliefs, institutions, and all other products of human work and thought." That definition allows us great freedom and scope.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('SOC2003', 'Understanding Human Sexuality','This course provides an interdisciplinary introduction to the study of human sexuality. It examines the basic understanding of human sexuality through an investigation of history, culture, physiology, sexual development, sexual behaviours, sexually transmitted diseases, attitudes, sex, deviance, and sexual relationships.');
-
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '5', 'Lorem Ipsem', '4', '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('2', '7', 'Lorem Ipsem', '4', '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('8', '1', 'Lorem Ipsem', '4', '15');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('2', '1', 'i''m batman', '5', '2');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('5', '2', 'i''m batman', '5', '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '1', 'i''m batman', '5', '30');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('4', '3', 'Lorem Ipsem', '6', '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '7', 'Lorem Ipsem', '6', '22');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('10', '5', 'Lorem Ipsem', '6', '32');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('9', '13', 'Lorem Ipsem', '7', '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('1', '25', 'Lorem Ipsem', '7', '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('3', '2', 'Lorem Ipsem', '7', '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('7', '3', 'Lorem Ipsem', '8', '5');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '4', 'Lorem Ipsem', '8', '12');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `electives_id`) VALUES ('6', '6', 'Lorem Ipsem', '8', '11');
