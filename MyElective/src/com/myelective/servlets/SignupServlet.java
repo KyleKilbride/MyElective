@@ -19,7 +19,7 @@ import com.myelective.controllers.UserController;
  * a new user in the database
  * 
  * @author Matthew Boyd
- * @version 0.1
+ * @version 0.2
  *
  */
 public class SignupServlet extends HttpServlet {

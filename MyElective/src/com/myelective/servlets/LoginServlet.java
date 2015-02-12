@@ -19,7 +19,7 @@ import beans.User;
  * with the database
  * 
  * @author Matthew Boyd, Kyle Kilbride
- * @version 0.1
+ * @version 0.2
  *
  */
 public class LoginServlet extends HttpServlet {
@@ -49,12 +49,9 @@ public class LoginServlet extends HttpServlet {
 		user = userDAO.validate(name, pass);
 		
 		if(user.getUsername() == null){ //if login is unsuccessful
-//			out.print("<p style=\"color:red\">Sorry username or password error</p>");
-			
             RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
             rd.include(request,response);
 		} else {
-			
 			session.setAttribute("user", user);
 			response.sendRedirect("index.jsp");
 		}

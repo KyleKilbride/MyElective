@@ -8,11 +8,11 @@ import com.myelective.jbdc.DBUtility;
 import beans.User;
 
 /**
- * A class used to access, return and add user data to
+ * A class used to access, return and add User data to
  * the SQL Database.
  * 
  * @author Matthew Boyd
- * @version 0.1
+ * @version 0.2
  *
  */
 public class UserController {

@@ -5,7 +5,6 @@
 
 <!--  -->
 <%
-	//<jsp:useBean id="user" class="beans.User"></jsp:useBean>
 
 	request.getSession(false);
 	User user = (User)session.getAttribute("user");
@@ -14,7 +13,6 @@
 	RatingController ratingController = new RatingController();
 	
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	//session.setAttribute("recentRatings", ratingController.getRecentRating(4));
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 	
