@@ -1,20 +1,21 @@
-package com.myelective.doa;
+package com.myelective.controllers;
 
 import java.sql.Connection; 
 import java.sql.PreparedStatement;  
 import java.sql.ResultSet;  
 
 import com.myelective.jbdc.DBUtility;
+import beans.User;
 
 /**
- * A class used to access, return and add user data to
+ * A class used to access, return and add User data to
  * the SQL Database.
  * 
  * @author Matthew Boyd
- * @version 0.1
+ * @version 0.2
  *
  */
-public class UserDAO {
+public class UserController {
 	
 	private Connection dbConnection;
 	
@@ -32,7 +33,7 @@ public class UserDAO {
 	private String SQL_INSERTUSER = "INSERT INTO users (user_name, password, first_name, last_name, program, email_address, status) VALUES (?,?,?,?,?,?,?)";
 	
 	
-	public UserDAO(){
+	public UserController(){
 		dbConnection = DBUtility.getConnection();
 	}
 	
@@ -44,10 +45,11 @@ public class UserDAO {
 	 * @return		null for unsuccessful login, username for
 	 * 				successful login.
 	 */
-	public String validate(String name, String pass){
+	public User validate(String name, String pass){
 		String userName = null;
         PreparedStatement userPassPST = null;
         PreparedStatement emailPassPST = null;
+        User user = new User();
    
         try { 
         	emailPassPST = dbConnection.prepareStatement(SQL_SELECT_EMAIL);
@@ -55,7 +57,13 @@ public class UserDAO {
         	emailPassPST.setString(2, pass);
         	ResultSet rsEmailPass = emailPassPST.executeQuery();
         	while(rsEmailPass.next()){	//if a row is returned from the SELECT statement
-        		userName = rsEmailPass.getString("user_name");
+        		user.setUsername(rsEmailPass.getString("user_name"));
+    			user.setPassword(rsEmailPass.getString("password"));
+    			user.setFirstName(rsEmailPass.getString("first_name"));
+    			user.setLastName(rsEmailPass.getString("last_name"));
+    			user.setEmailAddress(rsEmailPass.getString("email_address"));
+    			user.setProgram(rsEmailPass.getString("program"));
+    			user.setStatus(rsEmailPass.getString("status"));
         	}
         	
         	if(userName == null){	//if email/pass doesn't return a User
@@ -64,14 +72,20 @@ public class UserDAO {
         		userPassPST.setString(2, pass);
         		ResultSet rsUserPass = userPassPST.executeQuery();
         		while(rsUserPass.next()){	//if a row is returned from the SELECT statement
-        			userName = rsUserPass.getString("user_name");
+        			user.setUsername(rsUserPass.getString("user_name"));
+        			user.setPassword(rsUserPass.getString("password"));
+        			user.setFirstName(rsUserPass.getString("first_name"));
+        			user.setLastName(rsUserPass.getString("last_name"));
+        			user.setEmailAddress(rsUserPass.getString("email_address"));
+        			user.setProgram(rsUserPass.getString("program"));
+        			user.setStatus(rsUserPass.getString("status"));
         		}
         	}
         } catch (Exception e) {  
             System.out.println(e);  
         }
 		
-		return userName;
+		return user;
 	}
 	
 	/**

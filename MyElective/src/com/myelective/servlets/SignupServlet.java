@@ -10,14 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.myelective.doa.UserDAO;
+import beans.User;
+
+import com.myelective.controllers.UserController;
 
 /**
  * Gets account creation info from page and attempts to create
  * a new user in the database
  * 
  * @author Matthew Boyd
- * @version 0.1
+ * @version 0.2
  *
  */
 public class SignupServlet extends HttpServlet {
@@ -42,7 +44,9 @@ public class SignupServlet extends HttpServlet {
 		String program = (String) request.getParameter("prog_signup");
 		String email = (String) request.getParameter("email_signup");
 		
-		UserDAO userDAO = new UserDAO();
+		UserController userDAO = new UserController();
+		
+		User user = new User();
 		
 		boolean usernameInUse = userDAO.checkEmailNotUsed(email); //checks if email exists in database
 		boolean emailInUse = userDAO.checkUsername(userName); //checks if username exists in database
@@ -52,7 +56,14 @@ public class SignupServlet extends HttpServlet {
 			int result = userDAO.createUser(userName, pass, firstName, lastName, email, program, "user");
 			if(result == 1){ // if account is created successfully
 				HttpSession session = request.getSession(false);
-				session.setAttribute("userName", userName);
+				user.setUsername(userName);
+				user.setPassword(pass);
+				user.setFirstName(firstName);
+				user.setLastName(lastName);
+				user.setProgram(program);
+				user.setEmailAddress(email);
+				user.setStatus("user");
+				session.setAttribute("user", user);
 				response.sendRedirect("index.jsp"); //send user to Account Creation Success
 			}else{ // if account is not created successfully
 				out.print("<p style=\"color:red\">Sorry, Error while creating account");    

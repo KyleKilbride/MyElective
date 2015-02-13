@@ -87,9 +87,6 @@
 					</script>
 						    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
 						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
-						    <%if(!ls.isSuccess()){ %>
-						    	<p class="errorMsg">Sorry Username or Password error</p>
-						   	<%} %>
 					    </div> <!-- /modaldemocntrl -->
 					</div><!-- /logincreatebuttons -->	
 				</div> <!-- / col-sm-12 -->
