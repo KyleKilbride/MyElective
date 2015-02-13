@@ -68,7 +68,7 @@ public class ElectiveController {
 					electiveBean.setCourseCode(result2.getString("course_code"));
 					electiveBean.setName(result2.getString("elective_name"));
 					electiveBean.setDescription(result2.getString("description"));
-					electiveBean.setRating(Integer.parseInt(result2.getString("rating")));
+					electiveBean.setRating(Integer.parseInt(result2.getString("average_rating")));
 				}
 			}
 			
