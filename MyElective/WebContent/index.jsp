@@ -31,54 +31,76 @@
 	</head>
 	<body>
 		<div class="container-fluid">
+			<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
-				<div class="col-md-12">
+				<div class="col-md-6">
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
 					      <a class="navbar-brand" href="#">
 					        MyElective
 					      </a>
+					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
 					    </div>
-					    <ul class="nav navbar-nav">
-					    	<li><a href="#">All Electives</a></li>
-					    </ul>
-					    <form class="navbar-form navbar-right" role="search">
-						  <div class="form-group">
-						    <input type="text" class="form-control" placeholder="Search">
-						  </div>
-						  <button type="submit" class="btn btn-default">Submit</button>
-						</form>
-					    <div id="loginSignupText" ng-app="" ng-controller="loginLogout">
-						    <p class="navbar-text navbar-right">
-						    	<%if(session.getAttribute("user") == null){%>
-							  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-							  	<%}else{%>
-							  		<a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
-							  	<%}%>
-							</p>
+					    <div class="collapse navbar-collapse">
+						    <ul class="nav navbar-nav">
+						    	<li><a href="#">All Electives</a></li>
+						    </ul>
+						    <form class="navbar-form navbar-right" role="search">
+							  <div class="form-group">
+							    <input type="text" class="form-control" placeholder="Search">
+							    <button type="submit" class="btn btn-default">Submit</button>
+							  </div>
+							</form>
+						    <div id="loginSignupText">
+							    <p class="navbar-text navbar-right">
+							    	<%if(session.getAttribute("user") == null){%>
+								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
+								  	<%}else{%>
+								  		<a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
+								  	<%}%>
+								</p>
+							</div>
 						</div>
-					  </div>
+					  </div><!-- /.container-fluid -->
 					</nav>
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
+			<!-- featuredElectives row -->
 			<div class="row" id="featuredElectivesRow">
 				<div class="col-sm-12" id="featuredElectives">
 					<h2 id="featuredElectivesHeader">Featured Elective</h2>
-                    <a class="btn btn-default" id="featuredViewButton" href="#">View</a>
+					<div class="col-xs-12">
+                    	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
+					</div>
 				</div>
 			</div><!-- /.row-fluid -->
-			<div class="row" id="recentReviewsRow">
+			<div class="row-fluid" id="recentReviewsRow"><!-- recentReviewsRow -->
 				<div class="row-fluid" id="recentReviewTitle">
 					<h2>Recent Reviews</h2>
 				</div>
-				<div class="col-sm-6" id="recentReview">
-					recent review
+				<div class="col-sm-6" id="recentReview1">
+					recent review 1
 				</div>
-				<div class="col-sm-6" id="recentReview">
-					recent review
+				<div class="col-sm-6" id="recentReview2">
+					recent review 2
 				</div>
-			</div>
+				<div class="row-fluid" id="recentReviewsRow2"><!-- recentReviewsRow2 TODO this has to be not nested row-->
+					<div class="col-sm-6" id="recentReview3">
+						recent review 3
+					</div>
+					<div class="col-sm-6" id="recentReview4">
+						recent review 4
+					</div>
+				</div><!-- /.recentReviewsRow2 -->
+			</div><!-- /.recentReviewsRow -->
 		</div> <!-- /.container fluid -->
 	</body>
+	<script src="js/jquery-1.11.2.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
 </html>

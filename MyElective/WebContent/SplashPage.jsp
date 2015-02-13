@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page import="com.myelective.servlets.LoginServlet" %>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<% 
+	LoginServlet ls = new LoginServlet();
+%>
 <html ng-app="ui.bootstrap.demo" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:h="http://java.sun.com/jsf/html"
@@ -83,9 +87,9 @@
 					</script>
 						    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
 						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
-						    
+						    <%if(!ls.isSuccess()){ %>
 						    	<p class="errorMsg">Sorry Username or Password error</p>
-						    
+						   	<%} %>
 					    </div> <!-- /modaldemocntrl -->
 					</div><!-- /logincreatebuttons -->	
 				</div> <!-- / col-sm-12 -->

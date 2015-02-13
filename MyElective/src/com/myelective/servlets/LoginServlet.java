@@ -23,7 +23,7 @@ import com.myelective.doa.UserDAO;
 public class LoginServlet extends HttpServlet {
 	
 	private static final long serialVersionUID = 1L;
-	
+	private boolean success = true;
 	/**
 	 * Gets user_name and user_pass from the page and validates it with
 	 * the database. If the login info is valid, gets the username and
@@ -46,10 +46,10 @@ public class LoginServlet extends HttpServlet {
 		String userName = userDAO.validate(name, pass);
 		
 		if(userName == null){ //if login is unsuccessful
-//			out.print("<p style=\"color:red\">Sorry username or password error</p>");
-			
-            RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
+			setSuccess(false);
+            RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");
             rd.include(request,response);
+            response.sendRedirect("SplashPage.jsp");
 		} else {
 			
 			session.setAttribute("user", userName);
@@ -58,5 +58,13 @@ public class LoginServlet extends HttpServlet {
         
         out.close();
 	}
+	public boolean isSuccess() {
+		return success;
+	}
+	public void setSuccess(boolean success) {
+		this.success = success;
+	}
+	
+	
 
 }
