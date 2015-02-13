@@ -42,15 +42,19 @@ body{
 	height: 51px;
 }
 
-#recentReviewsRow{
+#recentReviewsContainer{
 	height: 75%;
 }
 
-#recentReviewTitle{
-	
+#recentReviewsRow1{
+	height: 55%;
 }
 
-#recentReview{
+#recentReviewsRow2{
+	height: 36.5%
+}
+
+#recentReview1, #recentReview2{
 	
 }
 
@@ -114,6 +118,9 @@ body{
 
 #recentReview1, #recentReview2, #recentReview3, #recentReview4{
 	border: 1px solid black;
+	height: 100%;
+	margin: 1%;
+	width: 48%;
 }
 
 

@@ -80,15 +80,17 @@
 					</div>
 				</div>
 			</div><!-- /.row-fluid -->
-			<div class="row-fluid" id="recentReviewsRow"><!-- recentReviewsRow -->
-				<div class="row-fluid" id="recentReviewTitle">
-					<h2>Recent Reviews</h2>
-				</div>
-				<div class="col-sm-6" id="recentReview1">
-					recent review 1
-				</div>
-				<div class="col-sm-6" id="recentReview2">
-					recent review 2
+			<div class="row-fluid" id="recentReviewsContainer"><!-- recentReviewsContainer-->
+				<div class="row-fluid" id="recentReviewsRow1">
+					<div class="row-fluid" id="recentReviewTitle">
+						<h2>Recent Reviews</h2>
+					</div>
+					<div class="col-sm-6" id="recentReview1">
+						recent review 1
+					</div>
+					<div class="col-sm-6" id="recentReview2">
+						recent review 2
+					</div>
 				</div>
 				<div class="row-fluid" id="recentReviewsRow2"><!-- recentReviewsRow2 TODO this has to be not nested row-->
 					<div class="col-sm-6" id="recentReview3">
