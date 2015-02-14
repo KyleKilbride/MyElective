@@ -11,6 +11,7 @@
 	
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
+	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 	
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
@@ -116,7 +117,7 @@
 						<h2>Recent Reviews</h2>
 					</div>
 					<div class="col-sm-6" id="recentReview1">
-						<h2>Elective id: ${ratingController.getElectiveName(sessionScope.recentRatingBean1.getElectiveID())}</h2>
+						<h2>Elective id: ${sessionScope.recentRatingBean1.getElectiveID()}</h2>
 						<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
 						<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
 					</div>

@@ -82,8 +82,9 @@ public class RatingController {
 		try {
 			getName = dbConnection.prepareStatement(SQL_GET_ELECTIVE_NAME);
 			getName.setInt(1, num);
-			ResultSet resultGetName = getName.executeQuery();
-			 electiveName = resultGetName.toString();
+			String resultGetName = getName.executeQuery().toString();
+			System.out.println("THISSSSS" + resultGetName);
+			electiveName = resultGetName;
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
