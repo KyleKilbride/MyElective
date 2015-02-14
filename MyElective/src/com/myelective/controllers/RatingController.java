@@ -3,6 +3,7 @@ package com.myelective.controllers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import beans.Elective;
@@ -24,6 +25,7 @@ public class RatingController {
 	
 	/** Select statement for returning the 4 most recent Ratings from database*/
 	private String SQL_GET_RECENT_RATINGS = "SELECT * FROM ratings ORDER BY id DESC LIMIT ?";
+	private String SQL_GET_ELECTIVE_NAME = "SELECT elective_name FROM electives WHERE id = ?";
 
 	/**
 	 * Default Constructor
@@ -73,4 +75,19 @@ public class RatingController {
 		
 		return ratingBeanAL;
 	}
+	
+	public String getElectiveName(int num){
+		PreparedStatement getName;
+		String electiveName = "nothing";
+		try {
+			getName = dbConnection.prepareStatement(SQL_GET_ELECTIVE_NAME);
+			getName.setInt(1, num);
+			ResultSet resultGetName = getName.executeQuery();
+			 electiveName = resultGetName.toString();
+		} catch (SQLException e) {
+			
+			e.printStackTrace();
+		}
+		return electiveName;
+	} 
 }
