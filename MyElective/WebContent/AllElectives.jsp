@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
+<!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 	String s = request.getParameter("newsession");
 
@@ -31,6 +32,9 @@
 		ElectiveController electiveController = new ElectiveController();
 		RatingController ratingController = new RatingController();
 		ArrayList ratingArrLst = ratingController.getRecentRating(4);
+
+		session.setAttribute("allElectives",
+				electiveController.getElectiveNames());
 
 		session.setAttribute("featuredElective",
 				electiveController.getFeaturedElective());
@@ -108,37 +112,51 @@
 			<!-- /.col-md-12 -->
 		</div>
 		<!-- /.row-fluid -->
-		<!-- featuredElectives row -->
-		<div class="row" id="featuredElectivesRow">
-			<div class="col-sm-12" id="featuredElectives">
-				<h2 id="featuredElectivesHeader">Featured Elective
-					${sessionScope.featuredElective.getName()}</h2>
-				<div class="col-xs-12">
-					<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
-				</div>
+		<div>
+
+			<h2 id="allElectivesHeader">All Electives</h2>
+			<div>
+			<!--this script wont execute
+				<script type="text/javascript" id="electives">
+					var electiveArray = $
+					{
+						sessionScope.allElectives
+					};
+					var table = "<table><tr>";
+					var j = 0;
+					for (var i = 0; i < electiveArray.length; i++) {
+						if (j==3) {
+							table += "</tr><tr>";
+							j=0;
+						}
+						table += "<td>";
+						table += "<a href="#">";
+						table += "${sessionScope.allElectives[i].getName()}";
+						table += "</a>";
+						table += "</td>";
+						j++;
+					}
+					table += "</tr></table>";
+					document.write(table);
+				</script>-->
+<!-- candycrusher22 code -->				<table border="1"><col width="33%"><col width="33%"><col width="33%">
+					<tr><td><a href="#">${sessionScope.allElectives[0].getName()}</a></td><td><a href="#">${sessionScope.allElectives[1].getName()}</a></td><td><a href="#">${sessionScope.allElectives[2].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[3].getName()}</a></td><td><a href="#">${sessionScope.allElectives[4].getName()}</a></td><td><a href="#">${sessionScope.allElectives[5].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[6].getName()}</a></td><td><a href="#">${sessionScope.allElectives[7].getName()}</a></td><td><a href="#">${sessionScope.allElectives[8].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[9].getName()}</a></td><td><a href="#">${sessionScope.allElectives[10].getName()}</a></td><td><a href="#">${sessionScope.allElectives[11].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[12].getName()}</a></td><td><a href="#">${sessionScope.allElectives[13].getName()}</a></td><td><a href="#">${sessionScope.allElectives[14].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[15].getName()}</a></td><td><a href="#">${sessionScope.allElectives[16].getName()}</a></td><td><a href="#">${sessionScope.allElectives[17].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[18].getName()}</a></td><td><a href="#">${sessionScope.allElectives[19].getName()}</a></td><td><a href="#">${sessionScope.allElectives[20].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[21].getName()}</a></td><td><a href="#">${sessionScope.allElectives[22].getName()}</a></td><td><a href="#">${sessionScope.allElectives[23].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[24].getName()}</a></td><td><a href="#">${sessionScope.allElectives[25].getName()}</a></td><td><a href="#">${sessionScope.allElectives[26].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[27].getName()}</a></td><td><a href="#">${sessionScope.allElectives[28].getName()}</a></td><td><a href="#">${sessionScope.allElectives[29].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[30].getName()}</a></td><td><a href="#">${sessionScope.allElectives[31].getName()}</a></td><td><a href="#">${sessionScope.allElectives[32].getName()}</a></td></tr>
+					<tr><td><a href="#">${sessionScope.allElectives[33].getName()}</a></td><td><a href="#">${sessionScope.allElectives[34].getName()}</a></td>
+				</table>
 			</div>
 		</div>
-		<!-- /.row-fluid -->
-		<div class="row-fluid" id="recentReviewsContainer">
-			<!-- recentReviewsContainer-->
-			<div class="row-fluid" id="recentReviewsRow1">
-				<div class="row-fluid" id="recentReviewTitle">
-					<h2>Recent Reviews</h2>
-				</div>
-				<div class="col-sm-6" id="recentReview1">recent review 1 :
-					${sessionScope.recentRatingBean1.getComment() }</div>
-				<div class="col-sm-6" id="recentReview2">recent review 2</div>
-			</div>
-			<div class="row-fluid" id="recentReviewsRow2">
-				<!-- recentReviewsRow2 TODO this has to be not nested row-->
-				<div class="col-sm-6" id="recentReview3">recent review 3</div>
-				<div class="col-sm-6" id="recentReview4">recent review 4</div>
-			</div>
-			<!-- /.recentReviewsRow2 -->
 		</div>
-		<!-- /.recentReviewsRow -->
-	</div>
-	<!-- /.container fluid -->
+		<!-- /.container fluid -->
 </body>
 <script src="js/jquery-1.11.2.min.js"></script>
 <script src="js/bootstrap.min.js"></script>
