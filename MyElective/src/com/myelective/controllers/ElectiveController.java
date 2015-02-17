@@ -85,7 +85,7 @@ public class ElectiveController {
 		return electiveBean;
 	}
 
-	public ArrayList<Elective> getElectiveNames() {
+/*	public ArrayList<Elective> getElectiveNames() {
 		ArrayList<Elective> electiveArray = new ArrayList<Elective>();
 		
 		try {
@@ -104,5 +104,27 @@ public class ElectiveController {
 		}
 
 		return electiveArray;
+	}*/
+	
+	public ArrayList<String> getElectiveNames() {
+		ArrayList<String> electiveArray = new ArrayList<String>();
+		
+		try {
+			PreparedStatement pSt1 = dbConnection
+					.prepareStatement(SQL_SELECT_NAME);
+			ResultSet result1 = pSt1.executeQuery();
+
+			while (result1.next()) {
+				String electiveName = result1.getString("elective_name");
+				electiveArray.add(electiveName);
+				electiveArray.add("~");
+			}
+
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+
+		return electiveArray;
 	}
+	
 }

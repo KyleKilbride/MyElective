@@ -6,6 +6,7 @@
 <!DOCTYPE html>
 
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
+<!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 	String s = request.getParameter("newsession");
 
@@ -31,6 +32,9 @@
 		ElectiveController electiveController = new ElectiveController();
 		RatingController ratingController = new RatingController();
 		ArrayList ratingArrLst = ratingController.getRecentRating(4);
+		
+		session.setAttribute("allElectives",
+				electiveController.getElectiveNames());
 
 		session.setAttribute("featuredElective",
 				electiveController.getFeaturedElective());
@@ -44,49 +48,58 @@
 	}
 %>
 <html>
-<head>
-<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-<link href="css/index.css" rel="stylesheet" type="text/css">
-<link rel="stylesheet"
-	href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>MyElective</title>
-</head>
-<body>
-	<div class="container-fluid">
+	<head>
+		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="css/index.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<title>MyElective</title>
+	</head>
+	<body>
+		<div id="mainDiv" data-electives="${sessionScope.allElectives}" class="container-fluid">
 		<!-- navbar row -->
-		<div class="row-fluid" id="navBarRow">
-			<div class="col-md-6">
-				<nav class="navbar navbar-inverse navbar-fixed-top">
-					<div class="container-fluid">
-						<div class="navbar-header">
-							<a class="navbar-brand" href="index.jsp"> MyElective </a>
-							<button class="navbar-toggle" data-toggle="collapse"
-								data-target=".navbar-collapse">
-								<span class="sr-only">Toggle navigation</span> <span
-									class="icon-bar"></span> <span class="icon-bar"></span> <span
-									class="icon-bar"></span>
-							</button>
-						</div>
-						<div class="collapse navbar-collapse">
-							<ul class="nav navbar-nav">
-								<li><a href="AllElectives.jsp">All Electives</a></li>
-							</ul>
-							<form class="navbar-form navbar-right" role="search">
-								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Search">
-									<button type="submit" class="btn btn-default">Submit</button>
-								</div>
-							</form>
+			<div class="row-fluid" id="navBarRow">
+				<div class="col-md-6">
+					<nav class="navbar navbar-inverse navbar-fixed-top">
+						<div class="container-fluid">
+							<div class="navbar-header"> <a class="navbar-brand" href="index.jsp"> MyElective </a>
+								<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+									<span class="sr-only">Toggle navigation</span> 
+									<span class="icon-bar"></span> <span class="icon-bar"></span> 
+									<span class="icon-bar"></span>
+								</button>
+							</div>
+							<div class="collapse navbar-collapse">
+								<ul class="nav navbar-nav">
+									<li><a href="AllElectives.jsp">All Electives</a></li>
+								</ul>
+								<form class="navbar-form navbar-right" role="search">
+									<div class="form-group">
+										<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
+										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+										<link rel="stylesheet" href="/resources/demos/style.css">
+										<script type="text/javascript">
+											$(function() {
+												var electives = document.getElementById("mainDiv"), allElectives;
+												allElectives = mainDiv.getAttribute("data-electives");
+												allElectives = allElectives.substring(1);
+												allElectives = allElectives.substring(0,allElectives.length - 4);
+												var names = allElectives.split(", ~, ");
+												$("#search").autocomplete({source : names});
+											});
+										</script>
+										<input type="text" class="form-control" placeholder="Search" id="search">
+										<button type="submit" class="btn btn-default">Submit</button>
+									</div>
+								</form>
 							<div id="loginSignupText">
 								<p class="navbar-text navbar-right">
 									<%
 										if (session.getAttribute("userName") == null) {
-											System.out.println("gets in if "
-													+ session.getAttribute("userName"));
+											System.out.println("gets in if "+ session.getAttribute("userName"));
 									%>
-									<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log
-										In/Sign Up</a>
+									<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
 									<%
 										} else if (session.getAttribute("userName") != null) {
 											System.out.println("gets in else "
