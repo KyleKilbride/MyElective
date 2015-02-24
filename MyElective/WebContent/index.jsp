@@ -6,6 +6,20 @@
 
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 <%
+	request.getSession(false);
+	User user = (User)session.getAttribute("user");
+	
+	ElectiveController electiveController = new ElectiveController();
+	RatingController ratingController = new RatingController();
+	ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	
+	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	
+	session.setAttribute("recentRatingBean1", (Rating)ratingArrLst.get(0));
+	session.setAttribute("recentRatingBean2", (Rating)ratingArrLst.get(1));
+	session.setAttribute("recentRatingBean3", (Rating)ratingArrLst.get(2));
+	session.setAttribute("recentRatingBean4", (Rating)ratingArrLst.get(3));
+	
 	String s = request.getParameter("newsession");
 
 	if(s != null){
@@ -27,16 +41,6 @@
 	    }
 	}else{
 		System.out.println("Here tooooooo");
-		request.getSession(false);
-		User user = (User)session.getAttribute("user");
-		
-		ElectiveController electiveController = new ElectiveController();
-		RatingController ratingController = new RatingController();
-		ArrayList ratingArrLst = ratingController.getRecentRating(4);
-		
-		session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-		
-		session.setAttribute("recentRatingBean1", (Rating)ratingArrLst.get(1));
 		
 		if(user != null){
 			session.setAttribute("userName", user.getFirstName());
@@ -98,7 +102,9 @@
 			<!-- featuredElectives row -->
 			<div class="row" id="featuredElectivesRow">
 				<div class="col-sm-12" id="featuredElectives">
-					<h2 id="featuredElectivesHeader">Featured Elective ${sessionScope.featuredElective.getName()}</h2>
+					<h2 id="featuredElectivesHeader">Featured Elective</h2>
+					<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
+					<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
 					<div class="col-xs-12">
                     	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
 					</div>
@@ -110,18 +116,26 @@
 						<h2>Recent Reviews</h2>
 					</div>
 					<div class="col-sm-6" id="recentReview1">
-						recent review 1 : ${sessionScope.recentRatingBean1.getComment() }
+						<h2>Elective id: ${ratingController.getElectiveName(sessionScope.recentRatingBean1.getElectiveID())}</h2>
+						<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+						<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
 					</div>
 					<div class="col-sm-6" id="recentReview2">
-						recent review 2
+						<h2>Elective id: ${sessionScope.recentRatingBean2.getElectiveID()}</h2>
+						<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+						<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
 					</div>
 				</div>
 				<div class="row-fluid" id="recentReviewsRow2"><!-- recentReviewsRow2 TODO this has to be not nested row-->
 					<div class="col-sm-6" id="recentReview3">
-						recent review 3
+						<h2>Elective id: ${sessionScope.recentRatingBean3.getElectiveID()}</h2>
+						<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+						<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
 					</div>
 					<div class="col-sm-6" id="recentReview4">
-						recent review 4
+						<h2>Elective id: ${sessionScope.recentRatingBean4.getElectiveID()}</h2>
+						<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
+						<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
 					</div>
 				</div><!-- /.recentReviewsRow2 -->
 			</div><!-- /.recentReviewsRow -->
