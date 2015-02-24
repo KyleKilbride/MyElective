@@ -1,7 +1,5 @@
-<%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
+	pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
 
 <!DOCTYPE html>
 
@@ -29,12 +27,7 @@
 		User user = (User) session.getAttribute("user");
 
 		ElectiveController electiveController = new ElectiveController();
-		RatingController ratingController = new RatingController();
-		ArrayList ratingArrLst = ratingController.getRecentRating(4);
-
 		session.setAttribute("allElectives", electiveController.getElectiveNames());
-		session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-		session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
 		if (user != null) {
 			session.setAttribute("userName", user.getFirstName());
@@ -51,10 +44,11 @@
 		<title>MyElective</title>
 	</head>
 	<body>
-		<div id="mainDiv" data-electives="${sessionScope.allElectives}" class="container-fluid">
+		<div class="container-fluid">
 		<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
+				<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 						<div class="container-fluid">
 							<div class="navbar-header">
@@ -71,11 +65,13 @@
 									<li><a href="AllElectives.jsp">All Electives</a></li>
 								</ul>
 								<form class="navbar-form navbar-right" role="search">
-									<div class="form-group">
+									<div class="form-group" id="searchDiv" data-electives="${sessionScope.allElectives}">
+										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 										<script type="text/javascript">
 											$(function() {
-												var electives = document.getElementById("mainDiv"), allElectives;
-												allElectives = mainDiv.getAttribute("data-electives");
+												var electives = document.getElementById("searchDiv"), allElectives;
+												allElectives = searchDiv.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 4);
 												var names = allElectives.split(", ~, ");
@@ -98,55 +94,46 @@
 											else if (session.getAttribute("userName") != null) {
 										  		System.out.println("gets in else " + session.getAttribute("userName"));
 										%>
-										${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
+											${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
 										<%
 										}
 										%>
 									</p>
 								</div>
 							</div>
-						</div>
-					<!-- /.container-fluid -->
+						</div><!-- /.container-fluid -->
 					</nav>
-				</div>
-			<!-- /.col-md-12 -->
-			</div>
-		<!-- /.row-fluid -->
-		<div>
-			<h2 id="allElectivesHeader">All Electives</h2>
+				</div><!-- /.col-md-12 -->
+			</div><!-- /.row-fluid -->
 			<div>
-				<script type="text/javascript" id="electives">
-				var electives = document.getElementById("mainDiv"), allElectives;
-				allElectives = mainDiv.getAttribute("data-electives");
-				allElectives = allElectives.substring(1);
-				allElectives = allElectives.substring(0,allElectives.length - 4);
-				var names = allElectives.split(", ~, ");
-					var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
-					var j = 0;
-					for (var i = 0; i < names.length; i++) {
-						if (j==3) {
-							table += "</tr><tr>";
-							j=0;
+				<h2 id="allElectivesHeader">All Electives</h2>
+				<div id="tableDiv" data-electives="${sessionScope.allElectives}">
+					<script type="text/javascript" id="electives">
+						var electives = document.getElementById("tableDiv"), allElectives;
+						allElectives = tableDiv.getAttribute("data-electives");
+						allElectives = allElectives.substring(1);
+						allElectives = allElectives.substring(0,allElectives.length - 4);
+						var names = allElectives.split(", ~, ");
+						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
+						var j = 0;
+						for (var i = 0; i < names.length; i++) {
+							if (j==3) {
+								table += "</tr><tr>";
+								j=0;
+							}
+							table += "<td align=\"center\">";
+							table += "<a href=#>";
+							table += names[i];
+							table += "</a>";
+							table += "</td>";
+							j++;
 						}
-						table += "<td align=\"center\">";
-						table += "<a href=#>";
-						table += names[i];
-						table += "</a>";
-						table += "</td>";
-						j++;
-					}
-					table += "</tr></table>";
-					document.write(table);
-				</script>
+						table += "</tr></table>";
+						document.write(table);
+					</script>
 				</div>
 			</div>
-		</div>
-	<!-- /.container fluid -->
-
-</body>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-
-<script src="js/bootstrap.min.js"></script>
-
+		</div><!-- /.container fluid -->
+	</body>
+	<script src="js/bootstrap.min.js"></script>
 </html>

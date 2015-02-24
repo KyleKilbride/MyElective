@@ -113,7 +113,7 @@ public class ElectiveController {
 			PreparedStatement pSt1 = dbConnection
 					.prepareStatement(SQL_SELECT_NAME);
 			ResultSet result1 = pSt1.executeQuery();
-
+			
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
 				electiveArray.add(electiveName);
