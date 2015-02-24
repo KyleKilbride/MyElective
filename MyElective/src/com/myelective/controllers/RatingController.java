@@ -19,13 +19,21 @@ import com.myelective.jbdc.DBUtility;
  * @version 0.2
  *
  */
+
+/**
+ * A class used to access, return and add Rating data to
+ * the SQL Database.
+ * 
+ * @author Matthew Boyd
+ * @version 0.2
+ *
+ */
 public class RatingController {
 	
 	private Connection dbConnection;
 	
 	/** Select statement for returning the 4 most recent Ratings from database*/
 	private String SQL_GET_RECENT_RATINGS = "SELECT * FROM ratings ORDER BY id DESC LIMIT ?";
-	private String SQL_GET_ELECTIVE_NAME = "SELECT elective_name FROM electives WHERE id = ?";
 
 	/**
 	 * Default Constructor
@@ -75,20 +83,4 @@ public class RatingController {
 		
 		return ratingBeanAL;
 	}
-	
-	public String getElectiveName(int num){
-		PreparedStatement getName;
-		String electiveName = "nothing";
-		try {
-			getName = dbConnection.prepareStatement(SQL_GET_ELECTIVE_NAME);
-			getName.setInt(1, num);
-			String resultGetName = getName.executeQuery().toString();
-			System.out.println("THISSSSS" + resultGetName);
-			electiveName = resultGetName;
-		} catch (SQLException e) {
-			
-			e.printStackTrace();
-		}
-		return electiveName;
-	} 
 }

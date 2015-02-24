@@ -42,8 +42,18 @@
 	    }
 	}else{
 		System.out.println("Here tooooooo");
+		request.getSession(false);
 		
-		if(user != null){
+		session.setAttribute("allElectives",
+				electiveController.getElectiveNames());
+
+		session.setAttribute("featuredElective",
+				electiveController.getFeaturedElective());
+
+		session.setAttribute("recentRatingBean1",
+				(Rating) ratingArrLst.get(1));
+
+		if (user != null) {
 			session.setAttribute("userName", user.getFirstName());
 		}
 	}
@@ -52,6 +62,8 @@
 	<head>
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="css/index.css" rel="stylesheet" type="text/css">
+		
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MyElective</title>
@@ -61,6 +73,7 @@
 			<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
+					<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
@@ -76,12 +89,22 @@
 					    </div>
 					    <div class="collapse navbar-collapse">
 						    <ul class="nav navbar-nav">
-						    	<li><a href="#">All Electives</a></li>
+						    	<li><a href="AllElectives.jsp">All Electives</a></li>
 						    </ul>
 						    <form class="navbar-form navbar-right" role="search">
 							  <div class="form-group">
+								  <script type="text/javascript">
+										$(function() {
+											var electives = document.getElementById("mainDiv"), allElectives;
+											allElectives = mainDiv.getAttribute("data-electives");
+											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(0,allElectives.length - 4);
+											var names = allElectives.split(", ~, ");
+											$("#search").autocomplete({source : names});
+										});
+								</script>
 							    <input type="text" class="form-control" placeholder="Search">
-							    <button type="submit" class="btn btn-default">Submit</button>
+							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
 						    <div id="loginSignupText">
@@ -98,20 +121,69 @@
 						</div>
 					  </div><!-- /.container-fluid -->
 					</nav>
+					
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
+		
+			<!-- CONTENT HEADER -->
 			<!-- featuredElectives row -->
-			<div class="row" id="featuredElectivesRow">
-				<div class="col-sm-12" id="featuredElectives">
-					<h2 id="featuredElectivesHeader">Featured Elective</h2>
-					<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
-					<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
-					<div class="col-xs-12">
-                    	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
-					</div>
+			<header class="intro-header" id="featuredElectivesRow">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" id="featuredElectives">
+							<div class="site-heading">
+								<h2 id="featuredElectivesHeader">Featured Elective</h2>
+								<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
+								<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
+								<div class="col-xs-12">
+			                    	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
+								</div>
+							</div>
+						</div>
+					</div><!-- /.row-fluid -->
 				</div>
-			</div><!-- /.row-fluid -->
-			<div class="row-fluid" id="recentReviewsContainer"><!-- recentReviewsContainer-->
+			</header>
+			
+			<!-- MAIN CONTENT -->
+			<div class="container">
+	        	<div class="row">
+	           	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+						<h2>Recent Reviews</h2>
+	           	    	<div class="post-preview">
+	           	    	<a href="#">
+	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean1.getElectiveID()}</h2>
+							<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+							<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+						</a>
+	           	    	</div>
+	           	    	<hr/>
+	           	    	<div class="post-preview">
+	           	    	<a href="#">
+	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean2.getElectiveID()}</h2>
+							<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+							<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+						</a>
+	           	    	</div>
+	           	    	<hr/>
+	           	    	<div class="post-preview">
+	           	    	<a href="#">
+	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean3.getElectiveID()}</h2>
+							<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+							<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+						</a>
+	           	    	</div>
+	           	    	<hr/>
+	           	    	<div class="post-preview">
+	           	    	<a href="#">
+	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean4.getElectiveID()}</h2>
+							<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
+							<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
+						</a>
+	           	    	</div>
+	           	    </div>
+           	    </div>
+          	</div>
+<%-- 			<div class="row-fluid" id="recentReviewsContainer"><!-- recentReviewsContainer-->
 				<div class="row-fluid" id="recentReviewsRow1">
 					<div class="row-fluid" id="recentReviewTitle">
 						<h2>Recent Reviews</h2>
@@ -127,7 +199,7 @@
 						<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
 					</div>
 				</div>
-				<div class="row-fluid" id="recentReviewsRow2"><!-- recentReviewsRow2 TODO this has to be not nested row-->
+				<div class="row-fluid" id="recentReviewsRow2">
 					<div class="col-sm-6" id="recentReview3">
 						<h2>Elective id: ${sessionScope.recentRatingBean3.getElectiveID()}</h2>
 						<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
@@ -139,7 +211,9 @@
 						<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
 					</div>
 				</div><!-- /.recentReviewsRow2 -->
-			</div><!-- /.recentReviewsRow -->
+			</div><!-- /.recentReviewsRow --> --%>
+			
+			
 		</div> <!-- /.container fluid -->
 	</body>
 	<script src="js/jquery-1.11.2.min.js"></script>
