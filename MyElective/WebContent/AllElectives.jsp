@@ -118,7 +118,6 @@
 		<div>
 			<h2 id="allElectivesHeader">All Electives</h2>
 			<div>
-				
 				<script type="text/javascript" id="electives">
 				var electives = document.getElementById("mainDiv"), allElectives;
 				allElectives = mainDiv.getAttribute("data-electives");
@@ -132,7 +131,7 @@
 							table += "</tr><tr>";
 							j=0;
 						}
-						table += "<td>";
+						table += "<td align=\"center\">";
 						table += "<a href=#>";
 						table += names[i];
 						table += "</a>";
@@ -142,12 +141,12 @@
 					table += "</tr></table>";
 					document.write(table);
 				</script>
+				</div>
 			</div>
 		</div>
-	</div>
 	<!-- /.container fluid -->
-</body>
-<script src="c"></script>
+	</body>
+
 <script src="js/bootstrap.min.js"></script>
 
 </html>
