@@ -45,6 +45,7 @@
 	<head>
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="css/index.css" rel="stylesheet" type="text/css">
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MyElective</title>
@@ -71,10 +72,6 @@
 								</ul>
 								<form class="navbar-form navbar-right" role="search">
 									<div class="form-group">
-										<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-										<link rel="stylesheet" href="/resources/demos/style.css">
 										<script type="text/javascript">
 											$(function() {
 												var electives = document.getElementById("mainDiv"), allElectives;
@@ -145,7 +142,10 @@
 			</div>
 		</div>
 	<!-- /.container fluid -->
-	</body>
+
+</body>
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 
 <script src="js/bootstrap.min.js"></script>
 

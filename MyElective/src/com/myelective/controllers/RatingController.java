@@ -3,12 +3,22 @@ package com.myelective.controllers;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import beans.Elective;
 import beans.Rating;
 
 import com.myelective.jbdc.DBUtility;
+
+/**
+ * A class used to access, return and add Rating data to
+ * the SQL Database.
+ * 
+ * @author Matthew Boyd
+ * @version 0.2
+ *
+ */
 
 /**
  * A class used to access, return and add Rating data to
