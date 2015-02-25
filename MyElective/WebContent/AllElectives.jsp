@@ -1,3 +1,4 @@
+
 <%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
@@ -8,40 +9,21 @@
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
-	String s = request.getParameter("newsession");
 
-	if (s != null) {
-		try {
-			response.setHeader("Cache-Control", "no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-			response.setHeader("Cache-Control", "no-store"); //Directs caches not to store the page under any circumstance
-			response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-			response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
-			session.setAttribute("userName", null);
-			
-			System.out.println("I got in here s!=null");
-			session.invalidate();
-			response.sendRedirect("AllElectives.jsp");
-			//request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println(e);
-		}
-	} else {
-		System.out.println("Here tooooooo");
-		request.getSession(false);
-		User user = (User) session.getAttribute("user");
+	System.out.println("Here tooooooo");
+	request.getSession(false);
+	User user = (User) session.getAttribute("user");
 
-		ElectiveController electiveController = new ElectiveController();
-		RatingController ratingController = new RatingController();
-		ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	ElectiveController electiveController = new ElectiveController();
+	RatingController ratingController = new RatingController();
+	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 
-		session.setAttribute("allElectives", electiveController.getElectiveNames());
-		session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-		session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
+	session.setAttribute("allElectives", electiveController.getElectiveNames());
+	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
-		if (user != null) {
-			session.setAttribute("userName", user.getFirstName());
-		}
+	if (user != null) {
+		session.setAttribute("userName", user.getFirstName());
 	}
 %>
 <html>
@@ -101,7 +83,7 @@
 											else if (session.getAttribute("userName") != null) {
 										  		System.out.println("gets in else " + session.getAttribute("userName"));
 										%>
-										${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
+										${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText">Logout</a>
 										<%
 										}
 										%>
