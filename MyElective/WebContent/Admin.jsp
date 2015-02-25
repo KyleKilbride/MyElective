@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
 
 <!DOCTYPE html>
-
+<!-- fuck you kyle-->
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
