@@ -8,6 +8,10 @@
 <%
 	String s = request.getParameter("newsession");
 
+	if(session.getAttribute("userStatus")!= null || session.getAttribute("userStatus").equals("user")){
+		response.sendRedirect("index.jsp");
+	}
+
 	if (s != null) {
 		try {
 			response.setHeader("Cache-Control", "no-cache"); //Forces caches to obtain a new copy of the page from the origin server
@@ -114,33 +118,6 @@
 					</nav>
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
-			<div>
-				<h2 id="allElectivesHeader">All Electives</h2>
-				<div>
-					<script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
-						allElectives = tableScript.getAttribute("data-electives");
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(0,allElectives.length - 4);
-						var names = allElectives.split(", ~, ");
-						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
-						var j = 0;
-						for (var i = 0; i < names.length; i++) {
-							if (j==3) {
-								table += "</tr><tr>";
-								j=0;
-							}
-							table += "<td align=\"center\">";
-							table += "<a href=#>";
-							table += names[i];
-							table += "</a>";
-							table += "</td>";
-							j++;
-						}
-						table += "</tr></table>";
-						document.write(table);
-					</script>
-				</div>
-			</div>
 		</div><!-- /.container fluid -->
 	</body>
 	<script src="js/bootstrap.min.js"></script>

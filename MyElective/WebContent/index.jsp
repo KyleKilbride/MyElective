@@ -7,7 +7,7 @@
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 	String s = request.getParameter("newsession");
-
+	
 	if(s != null){
 		try
 	    {				
@@ -16,6 +16,7 @@
 	        response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
 	        response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
 	        session.setAttribute("userName", null);
+	        session.setAttribute("userStatus", null);
 	        System.out.println("I got in here s!=null");
 	        //request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
 	    }
@@ -43,6 +44,7 @@
 		
 		if (user != null) {
 			session.setAttribute("userName", user.getFirstName());
+			session.setAttribute("userStatus", user.getStatus());
 		}
 	}
 %>
@@ -73,17 +75,24 @@
 					      		</button>
 					    	</div>
 					    	<div class="collapse navbar-collapse">
-						    	<ul class="nav navbar-nav">
-						    		<li><a href="AllElectives.jsp">All Electives</a></li>
-						    	</ul>
+								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    			<li><a href="Admin.jsp">Admin</a></li>
+						    		</ul>
+						   		<%}
+						   		else{%>
+						   			<ul class="nav navbar-nav">
+						   				<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		</ul>
+						    	<%}%>
 						    	<form class="navbar-form navbar-right" role="search">
-									<div class="form-group" id="searchDiv" data-electives="${sessionScope.allElectives}">
+									<div class="form-group">
 							  			<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-									  	<script type="text/javascript">
+									  	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 											$(function() {
-												var electives = document.getElementById("searchDiv"), allElectives;
-												allElectives = searchDiv.getAttribute("data-electives");
+												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 4);
 												var names = allElectives.split(", ~, ");
@@ -99,12 +108,14 @@
 							    		<%
 							    			if(session.getAttribute("userName") == null){
 							    				System.out.println("gets in if "+ session.getAttribute("userName"));
+							    				System.out.println("gets in if "+ session.getAttribute("userStatus"));
 							    		%>
 								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
 								  		<%
 								  		}
 							    			else if(session.getAttribute("userName") != null){ 
 								  				System.out.println("gets in else " + session.getAttribute("userName"));
+								  				System.out.println("gets in else "+ session.getAttribute("userStatus"));
 								  		%>
 								  			${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText" >Logout</a>
 								  		<%
