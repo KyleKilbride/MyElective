@@ -8,7 +8,7 @@
 <%
 	String s = request.getParameter("newsession");
 
-	if(session.getAttribute("userStatus")!= null || session.getAttribute("userStatus").equals("user")){
+	if(session.getAttribute("userStatus")== null || session.getAttribute("userStatus").equals("user")){
 		response.sendRedirect("index.jsp");
 	}
 
@@ -20,6 +20,7 @@
 			response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
 			session.setAttribute("userName", null);
 			session.setAttribute("userStatus", null);
+			//session.setAttribute("adminAction", null);
 			System.out.println("I got in here s!=null");
 			//request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
 		} catch (Exception e) {
@@ -118,6 +119,78 @@
 					</nav>
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
+	<br/><br/><br/><br/><br/>		
+			
+			<div>			
+			<%if(session.getAttribute("adminAction")==null){ %>
+				<form action="adminServlet" id="adminForm" method="post">
+					<input type="submit" name="editElective" value="Edit Elective">
+					<input type="submit" name="removeElective" value="Remove Elective">
+					<input type="submit" name="addElective" value="Add Elective"><br/><br/>
+					<input type="submit" name="editComment" value="Edit Comment">
+					<input type="submit" name="removeComment" value="Remove Comment"><br/><br/>
+					<input type="submit" name="editUser" value="Edit User">
+					<input type="submit" name="removeUser" value="Remove User">
+				</form>
+			<% } 
+			else if(session.getAttribute("adminAction")=="editElective"){%>
+				<form action="adminServlet" method="POST">
+					<select name="mydropdown">
+						<option value="Milk">Fresh Milk</option>
+						<option value="Cheese">Old Cheese</option>
+						<option value="Bread">Hot Bread</option>
+					</select>
+				</form>		
+			<%}
+			else if(session.getAttribute("adminAction")=="removeElective"){%>	
+				<form action="adminServlet" method="POST">
+					<select name="mydropdown">
+						<option value="Milk">Fresh Milk</option>
+						<option value="Cheese">Old Cheese</option>
+						<option value="Bread">Hot Bread</option>
+					</select>
+				</form>	
+			<%}
+			else if(session.getAttribute("adminAction")=="addElective"){%>	
+				<form action="adminServlet" method="POST">
+					<select name="mydropdown">
+						<option value="Milk">Fresh Milk</option>
+						<option value="Cheese">Old Cheese</option>
+						<option value="Bread">Hot Bread</option>
+					</select>
+				</form>		
+			<%} 
+			else if(session.getAttribute("adminAction")=="editComment"){%>	
+				<form action="adminServlet" method="POST">
+					<select name="mydropdown">
+						<option value="Milk">Fresh Milk</option>
+						<option value="Cheese">Old Cheese</option>
+						<option value="Bread">Hot Bread</option>
+					</select>
+				</form>		
+			<%} 
+			else if(session.getAttribute("adminAction")=="removeComment"){%>	
+				<form action="adminServlet" method="POST">
+					<select name="mydropdown">
+						<option value="Milk">Fresh Milk</option>
+						<option value="Cheese">Old Cheese</option>
+						<option value="Bread">Hot Bread</option>
+					</select>
+				</form>		
+			<%}
+			else if(session.getAttribute("adminAction")=="editUser"){%>	
+					
+			<%}
+			else if(session.getAttribute("adminAction")=="removeUser"){%>	
+					
+			<%}%>
+			
+			<%
+			if(session.getAttribute("adminAction")==null){System.out.println("null");}
+			else{System.out.println(session.getAttribute("adminAction"));}
+			%>
+			</div>
+			
 		</div><!-- /.container fluid -->
 	</body>
 	<script src="js/bootstrap.min.js"></script>
