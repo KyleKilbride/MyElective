@@ -27,6 +27,12 @@
 	session.setAttribute("allElectives",
 			electiveController.getElectiveNames());
 
+	System.out.println("Here tooooooo");
+	request.getSession(false);
+		
+	session.setAttribute("allElectives",
+			electiveController.getElectiveNames());
+
 	session.setAttribute("featuredElective",
 			electiveController.getFeaturedElective());
 
