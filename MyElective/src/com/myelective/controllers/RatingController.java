@@ -19,15 +19,6 @@ import com.myelective.jbdc.DBUtility;
  * @version 0.2
  *
  */
-
-/**
- * A class used to access, return and add Rating data to
- * the SQL Database.
- * 
- * @author Matthew Boyd
- * @version 0.2
- *
- */
 public class RatingController {
 	
 	private Connection dbConnection;
