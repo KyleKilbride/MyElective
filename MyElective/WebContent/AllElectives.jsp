@@ -17,7 +17,10 @@
 			response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
 			response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
 			session.setAttribute("userName", null);
+			
 			System.out.println("I got in here s!=null");
+			session.invalidate();
+			response.sendRedirect("AllElectives.jsp");
 			//request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

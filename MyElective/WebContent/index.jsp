@@ -31,9 +31,9 @@
 	        response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
 	        response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
 	        response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
-	        session.setAttribute("userName", null);
+	        session.removeAttribute("userName");
 	        System.out.println("I got in here s!=null");
-	        //request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
+	        //session.invalidate();request.getSession().invalidate(); //do not think this is necessary -- Kyle K
 	    }
 	    catch(Exception e)
 	    {
