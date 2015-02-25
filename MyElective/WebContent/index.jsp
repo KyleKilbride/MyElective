@@ -21,42 +21,24 @@
 	session.setAttribute("recentRatingBean3", (Rating)ratingArrLst.get(2));
 	session.setAttribute("recentRatingBean4", (Rating)ratingArrLst.get(3));
 	
-	String s = request.getParameter("newsession");
+	System.out.println("Here tooooooo");
+	request.getSession(false);
+	
+	session.setAttribute("allElectives",
+			electiveController.getElectiveNames());
 
-	if(s != null){
-		try
-	    {	
-			
-	        response.setHeader("Cache-Control","no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-	        response.setHeader("Cache-Control","no-store"); //Directs caches not to store the page under any circumstance
-	        response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-	        response.setHeader("Pragma","no-cache"); //HTTP 1.0 backward compatibility
-	        session.setAttribute("userName", null);
-	        System.out.println("I got in here s!=null");
-	        //request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
-	    }
-	    catch(Exception e)
-	    {
-	        System.out.println(e.getMessage());
-	        System.out.println(e);
-	    }
-	}else{
-		System.out.println("Here tooooooo");
-		request.getSession(false);
-		
-		session.setAttribute("allElectives",
-				electiveController.getElectiveNames());
+	session.setAttribute("featuredElective",
+			electiveController.getFeaturedElective());
 
-		session.setAttribute("featuredElective",
-				electiveController.getFeaturedElective());
+	session.setAttribute("recentRatingBean1",
+			(Rating) ratingArrLst.get(1));
 
-		session.setAttribute("recentRatingBean1",
-				(Rating) ratingArrLst.get(1));
-
-		if (user != null) {
-			session.setAttribute("userName", user.getFirstName());
-		}
+	if (user != null) {
+		session.setAttribute("userName", user.getFirstName());
 	}
+	
+	
+	
 %>
 <html>
 	<head>
@@ -114,7 +96,7 @@
 								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
 								  	<%}else if(session.getAttribute("userName") != null){ 
 								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText" >Logout</a>
+								  		${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>
 								  	<%}%>
 								</p>
 							</div>
