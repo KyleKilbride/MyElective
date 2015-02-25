@@ -33,6 +33,9 @@
 		User user = (User) session.getAttribute("user");
 
 		ElectiveController electiveController = new ElectiveController();
+		RatingController ratingController = new RatingController();
+		ArrayList ratingArrLst = ratingController.getRecentRating(4);
+		
 		session.setAttribute("allElectives", electiveController.getElectiveNames());
 
 		if (user != null) {
