@@ -108,6 +108,7 @@ public class RatingController {
 			e.setName(r.getString("elective_name"));
 			e.setRating(r.getInt("average_rating"));
 			e.setDescription(r.getString("description"));
+			
 			return e;
 		}else
 			return null;
