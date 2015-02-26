@@ -10,13 +10,14 @@ body{
 	background-color: #f5f5f5;
 }
 
-.container-fluid{
-	/* height: 125%; */
-}
-
 #loginSignupContainer{
 	margin-top: 1.5%;
 	margin-bottom: 2.5%;
+}
+
+#containerDIV{
+	padding-right: 0 !important;
+	padding-left: 0 !important;
 }
 
 #featuredElectivesRow{
