@@ -10,6 +10,7 @@ package beans;
 
 public class User  {
 	
+	private int userID;
 	/** The Users usernmae */
 	private String username;
 	/** The Users password */
@@ -31,6 +32,15 @@ public class User  {
 	public User(){
 		
 	}
+	
+	public int getUserID() {
+		return userID;
+	}
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
+
 
 	/**
 	 * Getter for the USers username
