@@ -9,6 +9,7 @@ import java.util.Date;
 
 import beans.Elective;
 import beans.Rating;
+import beans.User;
 
 import com.myelective.jbdc.DBUtility;
 
@@ -106,18 +107,47 @@ public class RatingController {
 		return ratingBeanAL;
 	}
 	
-	public Elective getElective(int num) throws SQLException{
-		PreparedStatement query = dbConnection.prepareStatement("SELECT elective_name FROM electives WHERE id=?");
-		query.setInt(1, num);
+	public User getUser(int id) throws SQLException{
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM users WHERE id=?");
+		query.setInt(1, id);
+		ResultSet r = query.executeQuery();
+		
+		if(r != null){
+			User u = new User();
+			r.next();
+			u.setFirstName("first_name");
+			u.setLastName("last_name");
+			u.setEmailAddress("email_address");
+			u.setPassword("password");
+			u.setProgram("program");
+			u.setUsername("username");
+			
+			return u;
+		}
+		
+		return null;
+	}
+	
+	public Elective getElective(int id) throws SQLException{
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE id=?");
+		query.setInt(1, id);
 		ResultSet r = query.executeQuery();
 		
 		if(r != null){
 			Elective e = new Elective();
 			r.next();
 			e.setName(r.getString("elective_name"));
-			
+			e.setRating(r.getInt("average_rating"));
+			e.setDescription(r.getString("description"));
 			return e;
 		}else
 			return null;
+	}
+	
+	public ArrayList<Rating> getRatings(){
+		
+		
+		
+		return null;
 	}
 }
