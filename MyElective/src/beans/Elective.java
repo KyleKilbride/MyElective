@@ -10,6 +10,8 @@ import java.util.ArrayList;
 */
 public class Elective {
 	
+	/** the elective id **/
+	private int electiveID;
 	/** The course code for the class */
 	private String courseCode;
 	/** The name for the class */
@@ -21,12 +23,30 @@ public class Elective {
 	/** A collection for all Comment objects for the class */
 	private ArrayList<Rating> comments;
 	
+	
 	/**
 	 *  Default constructor
 	 */
 	public Elective(){
 		
 	}
+	
+	/** 
+	 * Getter for the electiveID
+	 * @return	the electiveID
+	 */
+	public int getElectiveID() {
+		return electiveID;
+	}
+
+	/**
+	 * Setter for the electiveID
+	 * @param electiveID
+	 */
+	public void setElectiveID(int electiveID) {
+		this.electiveID = electiveID;
+	}
+
 	
 	/** 
 	 * Getter for the course code

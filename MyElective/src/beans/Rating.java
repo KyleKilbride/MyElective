@@ -22,6 +22,8 @@ public class Rating {
 	private Date date;
 	/** The course ID that the rating is linked too */
 	private int electiveID;
+	/** The user ID of the user that rated */
+	private int userID;
 
 	/**
 	 * Default Constructor
@@ -111,5 +113,13 @@ public class Rating {
 		this.electiveID = electiveID;
 	}
 	
+	public int getUserID() {
+		return userID;
+	}
 
+
+	public void setUserID(int userID) {
+		this.userID = userID;
+	}
 }
+

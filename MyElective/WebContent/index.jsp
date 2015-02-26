@@ -16,10 +16,13 @@
 	
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	
+	Elective featuredElective = (Elective)electiveController.getFeaturedElective();
+	
 	session.setAttribute("recentRatingBean1", ratingArrLst.get(0));
 	session.setAttribute("recentRatingBean2", ratingArrLst.get(1));
 	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
 	session.setAttribute("recentRatingBean4", ratingArrLst.get(3));
+
 
 	Rating rating1 = (Rating)session.getAttribute("recentRatingBean1");
 	Rating rating2 = (Rating)session.getAttribute("recentRatingBean2");
@@ -119,7 +122,7 @@
 								<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
 								<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
 								<div class="col-xs-12">
-			                    	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
+			                    	<a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getElectiveID()%>">View</a>
 								</div>
 							</div>
 						</div>
@@ -135,7 +138,7 @@
 							<h2 class="post-title" id="RecentReviewHeader">Recent Reviews</h2>
 						</div>						
 	           	    	<div class="post-preview">
-		           	    	<a href="#">
+		           	    	<a href="FullElective.jsp?ElectiveID=<%=rating1.getElectiveID()%>">
 		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
 								<p>"${sessionScope.recentRatingBean1.getComment()}"</p>
 								<p>${sessionScope.recentRatingBean1.getRating()} / 10</p>
@@ -143,7 +146,7 @@
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-		           	    	<a href="#"> 
+		           	    	<a href="FullElective.jsp?ElectiveID=<%=rating2.getElectiveID()%>"> 
 		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
 								<p>"${sessionScope.recentRatingBean2.getComment()}"</p>
 								<p>${sessionScope.recentRatingBean2.getRating()} / 10</p>
@@ -151,7 +154,7 @@
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-		           	    	<a href="#">
+		           	    	<a href="FullElective.jsp?ElectiveID=<%=rating3.getElectiveID()%>">
 		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>	           	    		
 								<p>"${sessionScope.recentRatingBean3.getComment()}"</p>
 								<p>${sessionScope.recentRatingBean3.getRating()} / 10</p>
@@ -159,7 +162,7 @@
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-		           	    	<a href="#">
+		           	    	<a href="FullElective.jsp?ElectiveID=<%=rating4.getElectiveID()%>">
 		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating4.getElectiveID()).getName() + "</h2>"); %>	           	    		
 								<p>"${sessionScope.recentRatingBean4.getComment()}"</p>
 								<p>${sessionScope.recentRatingBean4.getRating()} / 10</p>
