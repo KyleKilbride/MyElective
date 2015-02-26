@@ -1,4 +1,3 @@
-<%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
 
@@ -14,8 +13,10 @@
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 	
+	session.setAttribute("userName", null);
+    session.setAttribute("userStatus", null);
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	
+	session.setAttribute("allElectives",electiveController.getElectiveNames());
 	session.setAttribute("recentRatingBean1", ratingArrLst.get(0));
 	session.setAttribute("recentRatingBean2", ratingArrLst.get(1));
 	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
@@ -27,18 +28,12 @@
 	Rating rating3 = (Rating)session.getAttribute("recentRatingBean3");
 	Rating rating4 = (Rating)session.getAttribute("recentRatingBean4");
 
-	request.getSession(false);
-	
-	session.setAttribute("allElectives",electiveController.getElectiveNames());
-
-	session.setAttribute("featuredElective",
-			electiveController.getFeaturedElective());
-
-	session.setAttribute("recentRatingBean1",
-			(Rating) ratingArrLst.get(1));
+	//request.getSession(false);
+	session.setAttribute("recentRatingBean1",(Rating) ratingArrLst.get(1));
 
 	if (user != null) {
 		session.setAttribute("userName", user.getFirstName());
+		session.setAttribute("userStatus", user.getStatus());
 	}
 	
 %>
@@ -73,22 +68,31 @@
 					      </button>
 					    </div>
 					    <div class="collapse navbar-collapse">
-						    <ul class="nav navbar-nav">
-						    	<li><a href="AllElectives.jsp">All Electives</a></li>
-						    </ul>
+								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    			<li><a href="Admin.jsp">Admin</a></li>
+						    		</ul>
+						   		<%}
+						   		else{%>
+						   			<ul class="nav navbar-nav">
+						   				<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		</ul>
+						    	<%}%>
 						    <form class="navbar-form navbar-right" role="search">
 							  <div class="form-group">
-								  <script type="text/javascript">
+							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+								 	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
-											var electives = document.getElementById("mainDiv"), allElectives;
-											allElectives = mainDiv.getAttribute("data-electives");
+											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 4);
 											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search">
+							    <input type="text" class="form-control" placeholder="Search" id="search">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
@@ -174,6 +178,6 @@
 			
 		</div> <!-- /.container fluid -->
 	</body>
-	<script src="js/jquery-1.11.2.min.js"></script>
+	
 	<script src="js/bootstrap.min.js"></script>
 </html>
