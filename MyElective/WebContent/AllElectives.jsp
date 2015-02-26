@@ -1,4 +1,3 @@
-
 <%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"
@@ -10,7 +9,7 @@
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 
-	System.out.println("Here tooooooo");
+
 	request.getSession(false);
 	User user = (User) session.getAttribute("user");
 

@@ -110,6 +110,4 @@ public class Rating {
 	public void setElectiveID(int electiveID) {
 		this.electiveID = electiveID;
 	}
-	
-
 }

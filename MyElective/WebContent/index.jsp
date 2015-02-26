@@ -16,22 +16,21 @@
 	
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	
-	session.setAttribute("recentRatingBean1", (Rating)ratingArrLst.get(0));
-	session.setAttribute("recentRatingBean2", (Rating)ratingArrLst.get(1));
-	session.setAttribute("recentRatingBean3", (Rating)ratingArrLst.get(2));
-	session.setAttribute("recentRatingBean4", (Rating)ratingArrLst.get(3));
+	session.setAttribute("recentRatingBean1", ratingArrLst.get(0));
+	session.setAttribute("recentRatingBean2", ratingArrLst.get(1));
+	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
+	session.setAttribute("recentRatingBean4", ratingArrLst.get(3));
 	
-	System.out.println("Here tooooooo");
-	request.getSession(false);
-	
-	session.setAttribute("allElectives",
-			electiveController.getElectiveNames());
 
-	System.out.println("Here tooooooo");
+
+	Rating rating1 = (Rating)session.getAttribute("recentRatingBean1");
+	Rating rating2 = (Rating)session.getAttribute("recentRatingBean2");
+	Rating rating3 = (Rating)session.getAttribute("recentRatingBean3");
+	Rating rating4 = (Rating)session.getAttribute("recentRatingBean4");
+
 	request.getSession(false);
-		
-	session.setAttribute("allElectives",
-			electiveController.getElectiveNames());
+	
+	session.setAttribute("allElectives",electiveController.getElectiveNames());
 
 	session.setAttribute("featuredElective",
 			electiveController.getFeaturedElective());
@@ -42,8 +41,6 @@
 	if (user != null) {
 		session.setAttribute("userName", user.getFirstName());
 	}
-	
-	
 	
 %>
 <html>
@@ -61,6 +58,7 @@
 			<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
+					
 					<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
@@ -109,7 +107,6 @@
 						</div>
 					  </div><!-- /.container-fluid -->
 					</nav>
-					
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
 		
@@ -136,70 +133,44 @@
 			<div class="container">
 	        	<div class="row">
 	           	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<h2>Recent Reviews</h2>
+						<div class="post-preview">
+							<h2 class="post-title" id="RecentReviewHeader">Recent Reviews</h2>
+						</div>						
 	           	    	<div class="post-preview">
-	           	    	<a href="#">
-	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean1.getElectiveID()}</h2>
-							<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-							<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
-						</a>
+		           	    	<a href="#">
+		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
+								<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+								<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+							</a>
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-	           	    	<a href="#">
-	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean2.getElectiveID()}</h2>
-							<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-							<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
-						</a>
+		           	    	<a href="#"> 
+		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
+								<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+								<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+							</a>
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-	           	    	<a href="#">
-	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean3.getElectiveID()}</h2>
-							<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-							<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
-						</a>
+		           	    	<a href="#">
+		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>	           	    		
+								<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+								<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+							</a>
 	           	    	</div>
 	           	    	<hr/>
 	           	    	<div class="post-preview">
-	           	    	<a href="#">
-	           	    		<h2 class="post-title">Elective id: ${sessionScope.recentRatingBean4.getElectiveID()}</h2>
-							<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
-							<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
-						</a>
-	           	    	</div>
+		           	    	<a href="#">
+		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating4.getElectiveID()).getName() + "</h2>"); %>	           	    		
+								<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
+								<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
+							</a>
+	           	    	</div> 
 	           	    </div>
            	    </div>
           	</div>
-<%-- 			<div class="row-fluid" id="recentReviewsContainer"><!-- recentReviewsContainer-->
-				<div class="row-fluid" id="recentReviewsRow1">
-					<div class="row-fluid" id="recentReviewTitle">
-						<h2>Recent Reviews</h2>
-					</div>
-					<div class="col-sm-6" id="recentReview1">
-						<h2>Elective id: ${sessionScope.recentRatingBean1.getElectiveID()}</h2>
-						<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-						<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
-					</div>
-					<div class="col-sm-6" id="recentReview2">
-						<h2>Elective id: ${sessionScope.recentRatingBean2.getElectiveID()}</h2>
-						<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-						<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
-					</div>
-				</div>
-				<div class="row-fluid" id="recentReviewsRow2">
-					<div class="col-sm-6" id="recentReview3">
-						<h2>Elective id: ${sessionScope.recentRatingBean3.getElectiveID()}</h2>
-						<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-						<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
-					</div>
-					<div class="col-sm-6" id="recentReview4">
-						<h2>Elective id: ${sessionScope.recentRatingBean4.getElectiveID()}</h2>
-						<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
-						<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
-					</div>
-				</div><!-- /.recentReviewsRow2 -->
-			</div><!-- /.recentReviewsRow --> --%>
+
 			
 			
 		</div> <!-- /.container fluid -->

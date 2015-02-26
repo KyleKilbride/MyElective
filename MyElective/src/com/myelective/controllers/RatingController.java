@@ -19,15 +19,6 @@ import com.myelective.jbdc.DBUtility;
  * @version 0.2
  *
  */
-
-/**
- * A class used to access, return and add Rating data to
- * the SQL Database.
- * 
- * @author Matthew Boyd
- * @version 0.2
- *
- */
 public class RatingController {
 	
 	private Connection dbConnection;
@@ -82,5 +73,20 @@ public class RatingController {
 		}
 		
 		return ratingBeanAL;
+	}
+	
+	public Elective getElective(int num) throws SQLException{
+		PreparedStatement query = dbConnection.prepareStatement("SELECT elective_name FROM electives WHERE id=?");
+		query.setInt(1, num);
+		ResultSet r = query.executeQuery();
+		
+		if(r != null){
+			Elective e = new Elective();
+			r.next();
+			e.setName(r.getString("elective_name"));
+			
+			return e;
+		}else
+			return null;
 	}
 }

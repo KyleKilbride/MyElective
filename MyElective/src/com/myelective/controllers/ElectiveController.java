@@ -121,6 +121,7 @@ public Elective getFeaturedElective(){
 
 		return electiveArray;
 	}
-	
+
 
 }
+
