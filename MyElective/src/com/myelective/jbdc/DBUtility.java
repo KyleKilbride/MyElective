@@ -31,9 +31,8 @@ public class DBUtility {
 				String url = "jdbc:mysql://localhost:3306/";  
 				String dbName = "my_elective";  
 				String driver = "com.mysql.jdbc.Driver";  
-				String userName = "root"; 
+				String userName = "root";  
 				String password = "root";
-
 				
 				Class.forName(driver).newInstance();
 				connection = DriverManager  

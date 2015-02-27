@@ -8,18 +8,12 @@
 
 <%
 	ElectiveController electiveController = new ElectiveController();
-	RatingController ratingcontroller = new RatingController();
+	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
 
 	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
 
-	Elective elective = electiveController.getElective(electiveID);
-	
-	ArrayList<Rating> electiveRatings = ratingcontroller.getElectiveRatings(electiveID);
-
-
-
-
+	Elective elective = ratingController.getElective(electiveID);
 %>
 
 <html>
@@ -99,16 +93,15 @@
 			<p>Description: <%=elective.getDescription()%></p>
 			<p>Rating: <%=elective.getRating()%>
 			
-			<%for(Rating rating: electiveRatings){
-				User user = userController.getUser(rating.getUserID());
-				out.print("<p><b>" + user.getUsername() + "</b>   " + rating.getDate().toString() + "</p>");
+			<%for(Rating rating: elective.getComments()){
+				User user = ratingController.getUser(rating.getUserID());
+				//out.print("<p><b>" + user.getUsername() + "</b>   " + rating.getDate().toString() + "</p>");
+				out.print("<p><b>" + user.getUsername() + "</b>");
 				out.print("<p>Rating: " + rating.getRating() + "    " + rating.getHoursPerWeek() + " hours per week </p>");
 				out.print("<p>" + rating.getComment() + "</p>");
-				out.print("<br /><hr /><br />");
+				out.print("<hr />");
 			}%>
 
-			
-			
 		</div> <!-- /.container fluid -->
 	</body>
 	<script src="js/jquery-1.11.2.min.js"></script>
