@@ -1,3 +1,8 @@
+<<<<<<< HEAD
 MyElective/.classpath
 MyElective/.project
 MyElective/.settings/
+=======
+MyElective/.settings/
+MyElective/src/com/myelective/jbdc/DBUtility.java
+>>>>>>> 21cb48856164ae411eb4e9d53aecde7df34ac5d5
