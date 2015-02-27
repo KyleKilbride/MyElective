@@ -5,12 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import beans.Elective;
 import beans.Rating;
 import beans.User;
-
 
 import com.myelective.jbdc.DBUtility;
 
@@ -28,42 +26,12 @@ public class RatingController {
 	
 	/** Select statement for returning the 4 most recent Ratings from database*/
 	private String SQL_GET_RECENT_RATINGS = "SELECT * FROM ratings ORDER BY id DESC LIMIT ?";
-	
-	private String SQL_SELECT_ALL_FOR_ELECTIVE = "SELECT * FROM ratings WHERE electives_id=?";
 
 	/**
 	 * Default Constructor
 	 */
 	public RatingController(){
 		dbConnection = DBUtility.getConnection();
-	}
-	
-	public ArrayList<Rating> getElectiveRatings(int electiveID){
-		
-		ArrayList<Rating> ratings = new ArrayList<Rating>();
-		
-		try{
-			
-			PreparedStatement pSt1 = dbConnection.prepareStatement(SQL_SELECT_ALL_FOR_ELECTIVE);
-			pSt1.setInt(1, electiveID);
-			ResultSet result1 = pSt1.executeQuery();
-			
-			while (result1.next()) {
-				Rating rating = new Rating();
-				rating.setRating(result1.getInt("rating"));
-				rating.setHoursPerWeek(result1.getInt("hours_per_week"));
-				rating.setComment(result1.getString("comment"));
-				rating.setElectiveID(result1.getInt("electives_id"));
-				rating.setDate(new Date(result1.getInt("date")));
-				rating.setUserID(result1.getInt("users_id"));
-				ratings.add(rating);
-			}
-			
-		}catch(Exception e){
-			System.out.println(e);
-		}
-		
-		return ratings;
 	}
 	
 	/**
@@ -116,16 +84,15 @@ public class RatingController {
 		if(r != null){
 			User u = new User();
 			r.next();
-			u.setFirstName("first_name");
-			u.setLastName("last_name");
-			u.setEmailAddress("email_address");
-			u.setPassword("password");
-			u.setProgram("program");
-			u.setUsername("username");
+			u.setFirstName(r.getString("first_name"));
+			u.setLastName(r.getString("last_name"));
+			u.setEmailAddress(r.getString("email_address"));
+			u.setPassword(r.getString("password"));
+			u.setProgram(r.getString("program"));
+			u.setUsername(r.getString("user_name"));
 			
 			return u;
 		}
-		
 		return null;
 	}
 	
@@ -137,19 +104,35 @@ public class RatingController {
 		if(r != null){
 			Elective e = new Elective();
 			r.next();
+			e.setId(r.getInt("id"));
 			e.setName(r.getString("elective_name"));
 			e.setRating(r.getInt("average_rating"));
+			e.setCourseCode(r.getString("course_code"));
 			e.setDescription(r.getString("description"));
-			
+			e.setComments(this.getRatings(id));
 			return e;
 		}else
 			return null;
 	}
 	
-	public ArrayList<Rating> getRatings(){
+	public ArrayList<Rating> getRatings(int id) throws SQLException{
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM ratings WHERE electives_id=?");
+		query.setInt(1, id);
+		ResultSet r = query.executeQuery();
 		
+		ArrayList<Rating> ratingList = new ArrayList<Rating>();
 		
+		while(r.next()){
+			Rating rating = new Rating();
+			rating.setComment(r.getString("comment"));
+			rating.setRating(r.getInt("rating"));
+			rating.setHoursPerWeek(r.getInt("hours_per_week"));
+			rating.setElectiveID(r.getInt("electives_id"));
+			//rating.setDate(r.getDate("date_modified"));
+			rating.setUserID(r.getInt("users_id"));
+			ratingList.add(rating);
+		}
 		
-		return null;
+		return ratingList;
 	}
 }

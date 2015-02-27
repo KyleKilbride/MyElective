@@ -65,6 +65,7 @@ public Elective getFeaturedElective(){
 				
 				if(result2.next()){ //moves cursor to first(and only) returned row and returns true if a valid row
 					//Sets fields for Elective object
+					electiveBean.setId(result2.getInt("id"));
 					electiveBean.setCourseCode(result2.getString("course_code"));
 					electiveBean.setName(result2.getString("elective_name"));
 					electiveBean.setDescription(result2.getString("description"));

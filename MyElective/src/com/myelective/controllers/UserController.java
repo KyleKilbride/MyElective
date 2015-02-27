@@ -19,11 +19,10 @@ public class UserController {
 	
 	private Connection dbConnection;
 	
-	private String SQL_SELECT_USER = "SELECT * FROM users WHERE id=?";
 	//Select statement used to verify email and password match for login
 	private String SQL_SELECT_EMAIL = "SELECT * FROM users WHERE email_address=? AND password=?";
 	//Select statement used to verify username and password match for login
-	private String SQL_SELECT_USER_PW = "SELECT * FROM users WHERE user_name=? AND password=?";
+	private String SQL_SELECT_USER = "SELECT * FROM users WHERE user_name=? AND password=?";
 	
 	//Select statement used to see if username exists in database
 	private String SQL_SELECT_CHECKUSER = "SELECT * FROM users WHERE user_name=?";
@@ -36,30 +35,6 @@ public class UserController {
 	
 	public UserController(){
 		dbConnection = DBUtility.getConnection();
-	}
-	
-	public User getUser(int userID){
-		User user = new User();
-		
-		try{
-			
-			PreparedStatement pSt1 = dbConnection.prepareStatement(SQL_SELECT_USER);
-			pSt1.setInt(1, userID);
-			ResultSet result1 = pSt1.executeQuery();
-			
-			if(result1.next()){
-				user.setUserID(result1.getInt("id"));
-				user.setFirstName(result1.getString("first_name"));
-				user.setLastName(result1.getString("last_name"));
-				user.setUsername(result1.getString("user_name"));
-				user.setProgram(result1.getString("program"));
-			}
-			
-		} catch (Exception e) {  
-            System.out.println(e);  
-        }
-		
-		return user;
 	}
 	
 	/**
@@ -92,7 +67,7 @@ public class UserController {
         	}
         	
         	if(userName == null){	//if email/pass doesn't return a User
-        		userPassPST = dbConnection.prepareStatement(SQL_SELECT_USER_PW);
+        		userPassPST = dbConnection.prepareStatement(SQL_SELECT_USER);
         		userPassPST.setString(1, name);
         		userPassPST.setString(2, pass);
         		ResultSet rsUserPass = userPassPST.executeQuery();

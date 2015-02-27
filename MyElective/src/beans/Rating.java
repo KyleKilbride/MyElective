@@ -12,7 +12,7 @@ import java.util.Date;
 */
 public class Rating {
 	
-	/** The invidual rating for the course*/
+	/** The individual rating for the course*/
 	private int rating;
 	/** The amount of hours for this course */
 	private int hoursPerWeek;
@@ -22,7 +22,7 @@ public class Rating {
 	private Date date;
 	/** The course ID that the rating is linked too */
 	private int electiveID;
-	/** The user ID of the user that rated */
+	
 	private int userID;
 
 	/**
@@ -96,30 +96,21 @@ public class Rating {
 		this.date = date;
 	}
 	
-	
-	/**
-	 * Getter for the Course ID the rating is for
-	 * @return Course ID
-	 */
-	public int getElectiveID() {
+	public int getElectiveID(){
 		return electiveID;
 	}
-
-	/**
-	 * Setter for the Course ID the rating is for
-	 * @param electiveID
-	 */
-	public void setElectiveID(int electiveID) {
-		this.electiveID = electiveID;
+	
+	public void setElectiveID(int n){
+		this.electiveID = n;
 	}
 	
-	public int getUserID() {
+	public int getUserID(){
 		return userID;
 	}
-
-
-	public void setUserID(int userID) {
-		this.userID = userID;
+	
+	public void setUserID(int userId){
+		this.userID = userId;
 	}
-}
+	
 
+}

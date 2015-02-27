@@ -2,47 +2,22 @@
 	pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
 
 <!DOCTYPE html>
-<!-- fuck you kyle-->
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
-	String s = request.getParameter("newsession");
+	request.getSession(false);
+	User user = (User) session.getAttribute("user");
 
 	if(session.getAttribute("userStatus")== null || session.getAttribute("userStatus").equals("user")){
 		response.sendRedirect("index.jsp");
 	}
 
-	if (s != null) {
-		try {
-			response.setHeader("Cache-Control", "no-cache"); //Forces caches to obtain a new copy of the page from the origin server
-			response.setHeader("Cache-Control", "no-store"); //Directs caches not to store the page under any circumstance
-			response.setDateHeader("Expires", 0); //Causes the proxy cache to see the page as "stale"
-			response.setHeader("Pragma", "no-cache"); //HTTP 1.0 backward compatibility
-			session.setAttribute("userName", null);
-			session.setAttribute("userStatus", null);
-			//session.setAttribute("adminAction", null);
-			System.out.println("I got in here s!=null");
-			//request.getSession().invalidate(); //session.invalidate(); //do not think this is necessary -- Kyle K
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			System.out.println(e);
-		}
-	} else {
-		System.out.println("Here tooooooo");
-		request.getSession(false);
-		User user = (User) session.getAttribute("user");
-
-		ElectiveController electiveController = new ElectiveController();
-		RatingController ratingController = new RatingController();
-		ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	ElectiveController electiveController = new ElectiveController();
+	RatingController ratingController = new RatingController();
+	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
-		session.setAttribute("allElectives", electiveController.getElectiveNames());
+	session.setAttribute("allElectives", electiveController.getElectiveNames());
 
-		if (user != null) {
-			session.setAttribute("userName", user.getFirstName());
-			session.setAttribute("userStatus", user.getStatus());
-		}
-	}
 %>
 <html>
 	<head>
@@ -130,71 +105,98 @@
 					<input type="submit" name="editElective" value="Edit Elective">
 					<input type="submit" name="removeElective" value="Remove Elective">
 					<input type="submit" name="addElective" value="Add Elective"><br/><br/>
-					<input type="submit" name="editComment" value="Edit Comment">
-					<input type="submit" name="removeComment" value="Remove Comment"><br/><br/>
-					<input type="submit" name="editUser" value="Edit User">
-					<input type="submit" name="removeUser" value="Remove User">
 				</form>
 			<% } 
+					
 			else if(session.getAttribute("adminAction")=="editElective"){%>
-				<form action="adminServlet" method="POST">
-					<select name="mydropdown">
-						<option value="Milk">Fresh Milk</option>
-						<option value="Cheese">Old Cheese</option>
-						<option value="Bread">Hot Bread</option>
-					</select>
-				</form>		
-			<%}
-			else if(session.getAttribute("adminAction")=="removeElective"){%>	
-				<form action="adminServlet" method="POST">
-					<select name="mydropdown">
-						<option value="Milk">Fresh Milk</option>
-						<option value="Cheese">Old Cheese</option>
-						<option value="Bread">Hot Bread</option>
-					</select>
-				</form>	
-			<%}
-			else if(session.getAttribute("adminAction")=="addElective"){%>	
-				<form action="adminServlet" method="POST">
-					<select name="mydropdown">
-						<option value="Milk">Fresh Milk</option>
-						<option value="Cheese">Old Cheese</option>
-						<option value="Bread">Hot Bread</option>
-					</select>
-				</form>		
-			<%} 
-			else if(session.getAttribute("adminAction")=="editComment"){%>	
-				<form action="adminServlet" method="POST">
-					<select name="mydropdown">
-						<option value="Milk">Fresh Milk</option>
-						<option value="Cheese">Old Cheese</option>
-						<option value="Bread">Hot Bread</option>
-					</select>
-				</form>		
-			<%} 
-			else if(session.getAttribute("adminAction")=="removeComment"){%>	
-				<form action="adminServlet" method="POST">
-					<select name="mydropdown">
-						<option value="Milk">Fresh Milk</option>
-						<option value="Cheese">Old Cheese</option>
-						<option value="Bread">Hot Bread</option>
-					</select>
-				</form>		
-			<%}
-			else if(session.getAttribute("adminAction")=="editUser"){%>	
-					
-			<%}
-			else if(session.getAttribute("adminAction")=="removeUser"){%>	
-					
+				<p>Select Elective to Edit</p>
+				<form action="adminServlet" method="POST">				
+					<script type="text/javascript" id="editElectivesScript" data-electives="${sessionScope.allElectives}">
+						var dropdown = "<select name=\"editElectivesDrop\" onchange=\"adminServlet\"><option value=\"\"></option>";
+						allElectives = editElectivesScript.getAttribute("data-electives");
+						allElectives = allElectives.substring(1);
+						allElectives = allElectives.substring(0,allElectives.length - 4);
+						var names = allElectives.split(", ~, ");
+						for(var i=0;i<names.length; i++){
+							dropdown += "<option value=";
+							dropdown += names[i];
+							dropdown += "\">";
+							dropdown += names[i];
+							dropdown += "</option>";
+						}
+						dropdown += "</select><input type=\"submit\" name=\"editElectiveSubmit\" value=\"Submit\"></input>";
+						//session.setAttribute("editElectiveChoice", electiveController.getElectiveNames());
+						document.write(dropdown);
+						//<input></input>
+					</script>					
+				</form>
+				<%if(session.getAttribute("electiveToEdit")==null){%>
+					<form action="" method="post">
+						Username: <input type="textfield" name="username" />
+						Country : <input type="textfield" name="country" />
+						Url : <input type="textfield" name="Url" />
+						<input type="submit" value="Submit" />
+					</form>
+				<%} %>					
+			<%}else if(session.getAttribute("adminAction")=="removeElective"){%>	
+			<p>Select Elective to Remove</p>
+			<form action="adminServlet" method="POST">				
+				<script type="text/javascript" id="removeElectivesScript" data-electives="${sessionScope.allElectives}">
+					var dropdown = "<select name=\"mydropdown\"><option value=\"\"></option>";allElectives = editUsersScript.getAttribute("data-electives");
+					allElectives = removeElectivesScript.getAttribute("data-electives");
+					allElectives = allElectives.substring(1);
+					allElectives = allElectives.substring(0,allElectives.length - 4);
+					var names = allElectives.split(", ~, ");
+					for(var i=0;i<names.length; i++){
+						dropdown += "<option value=";
+						dropdown += names[i];
+						dropdown += "\">";
+						dropdown += names[i];
+						dropdown += "</option>";
+					}
+					dropdown += "</select>";
+					document.write(dropdown);
+				</script>
+			</form>	
+		<%}
+		else if(session.getAttribute("adminAction")=="addElective"){%>	
+			<p>Select Elective to Add</p>
+			<form action="adminServlet" method="POST">				
+				<script type="text/javascript" id="addElectivesScript" data-electives="${sessionScope.allElectives}">
+				var dropdown = "<select name=\"mydropdown\"><option value=\"\"></option>";	allElectives = editUsersScript.getAttribute("data-electives");
+					allElectives = addElectivesScript.getAttribute("data-electives");
+					allElectives = allElectives.substring(1);
+					allElectives = allElectives.substring(0,allElectives.length - 4);
+					var names = allElectives.split(", ~, ");
+					for(var i=0;i<names.length; i++){
+						dropdown += "<option value=";
+						dropdown += names[i];
+						dropdown += "\">";
+						dropdown += names[i];
+						dropdown += "</option>";
+					}
+					dropdown += "</select>";
+					document.write(dropdown);
+				</script>
+			</form>		
+		<%}
+						else if(session.getAttribute("adminAction")=="editElectiveSubmit"){%>
+			<script type="text/javascript" >
+			
+			System.out.println(session.getAttribute("editElectivesDrop"));
+        		
+    		</script>
 			<%}%>
 			
-			<%
-			if(session.getAttribute("adminAction")==null){System.out.println("null");}
-			else{System.out.println(session.getAttribute("adminAction"));}
-			%>
-			</div>
 			
+				
+			</div>			
 		</div><!-- /.container fluid -->
+					<%
+			if(session.getAttribute("adminAction")==null){System.out.println("adminAction: " + "null");}
+			else{System.out.println("adminAction: " + session.getAttribute("adminAction"));}
+					System.out.println("electiveToEdit: " + session.getAttribute("editElectiveSubmit"));
+			%>
 	</body>
 	<script src="js/bootstrap.min.js"></script>
 </html>
