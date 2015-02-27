@@ -22,6 +22,7 @@ public class Rating {
 	private Date date;
 	/** The course ID that the rating is linked too */
 	private int electiveID;
+	
 	private int userID;
 
 	/**

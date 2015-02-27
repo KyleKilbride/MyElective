@@ -13,6 +13,11 @@
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 	
+	
+	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	
+	Elective featuredElective = (Elective)electiveController.getFeaturedElective();
+
 	session.setAttribute("userName", null);
     session.setAttribute("userStatus", null);
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
@@ -88,7 +93,7 @@
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(",  ");
+											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
@@ -124,7 +129,7 @@
 								<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
 								<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
 								<div class="col-xs-12">
-			                    	<a class="btn btn-default" id="featuredViewButton" href="#">View</a>
+			                    	<a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getId()%>">View</a>
 								</div>
 							</div>
 						</div>
