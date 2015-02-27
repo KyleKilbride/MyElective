@@ -24,7 +24,6 @@ public class ElectiveController {
 	private String SQL_SELECT_ID = "SELECT id FROM electives";
 	/** Select statement to return specified row from Electives table */
 	private String SQL_SELECT_ALL = "SELECT * FROM electives WHERE id=?";
-
 	private String SQL_SELECT_NAME = "SELECT elective_name FROM electives ORDER BY elective_name";
 
 	/**
@@ -111,8 +110,8 @@ public Elective getFeaturedElective(){
 
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
-				electiveArray.add(electiveName);
-				electiveArray.add("~");
+				electiveArray.add(" " + electiveName);
+				//electiveArray.add(" ");
 			}
 
 		} catch (Exception e) {
@@ -120,5 +119,24 @@ public Elective getFeaturedElective(){
 		}
 
 		return electiveArray;
+	}
+	
+	public Elective getElective(String electiveName) {
+		Elective elective = new Elective();
+		
+		try {
+			System.out.println(electiveName);
+			electiveName=electiveName.substring(1);
+			System.out.println("TEST1");
+			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT * FROM electives where elective_name = '" + electiveName + "'");
+			System.out.println("TEST2");
+			ResultSet result1 = pSt1.executeQuery();
+			System.out.println("TEST3");
+			elective.setCourseCode(result1.getString("course_code"));
+			System.out.println("TEST4");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return elective;
 	}
 }

@@ -19,16 +19,17 @@ public class AdminServlet extends HttpServlet{
 		
 		if (request.getParameter("editElective") != null) {
 			session.setAttribute("adminAction", "editElective");
-		    // Invoke FirstServlet's job here.
+			String selectedName = request.getParameter("A");
+			//if(selectedName != null){
+			
+			session.setAttribute("electiveToEdit", selectedName);
+		//	}
 		} else if (request.getParameter("removeElective") != null) {
 			session.setAttribute("adminAction", "removeElective");
 		    // Invoke SecondServlet's job here.
 		} else if (request.getParameter("addElective") != null) {
 			session.setAttribute("adminAction", "addElective");
 		    // Invoke SecondServlet's job here.
-		} else if (request.getParameter("editElectiveSubmit") != null) {
-			session.setAttribute("adminAction", "editElectiveSubmit");
-			// Invoke SecondServlet's job here.
 		}
 		response.sendRedirect("Admin.jsp");
 	}
