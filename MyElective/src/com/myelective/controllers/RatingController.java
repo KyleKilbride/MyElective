@@ -115,6 +115,28 @@ public class RatingController {
 			return null;
 	}
 	
+	public Elective getElectiveByString(String selectedElective) throws SQLException{
+		if(selectedElective.contains("'")){
+			selectedElective = selectedElective.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE elective_name=?");
+		query.setString(1, selectedElective);
+		ResultSet r = query.executeQuery();
+		
+		if(r != null){
+			Elective e = new Elective();
+			r.next();
+			e.setId(r.getInt("id"));
+			e.setName(r.getString("elective_name"));
+			e.setRating(r.getInt("average_rating"));
+			e.setCourseCode(r.getString("course_code"));
+			e.setDescription(r.getString("description"));
+		//	e.setComments(this.getRatings(id));
+			return e;
+		}else
+			return null;
+	}
+	
 	public ArrayList<Rating> getRatings(int id) throws SQLException{
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM ratings WHERE electives_id=?");
 		query.setInt(1, id);
@@ -134,5 +156,65 @@ public class RatingController {
 		}
 		
 		return ratingList;
+	}
+	
+	public void editElectiveName(String newName, String currentName)throws SQLException{
+		if(newName.contains("'")){
+			newName = newName.replace("'", "''");
+		}
+		if(currentName.contains("'")){
+			currentName = currentName.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE electives SET elective_name = '" + newName + "' WHERE elective_name = '" + currentName + "'");
+		query.executeUpdate();
+		return;
+	}
+
+	public void editElectiveCourseCode(String newCode, String currentCode)throws SQLException{
+		if(newCode.contains("'")){
+			newCode = newCode.replace("'", "''");
+		}
+		if(currentCode.contains("'")){
+			currentCode = currentCode.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE electives SET course_code = '" + newCode + "' WHERE course_code = '" + currentCode + "'");
+		query.executeUpdate();
+		return;
+	}
+
+	public void editElectiveDescription(String newDesc, String currentDesc)throws SQLException{
+		if(newDesc.contains("'")){
+			newDesc = newDesc.replace("'", "''");
+		}
+		if(currentDesc.contains("'")){
+			currentDesc = currentDesc.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE electives SET description = '" + newDesc + "' WHERE description = '" + currentDesc + "'");
+		query.executeUpdate();
+		return;
+	}
+	
+	public void removeElective(String electiveName)throws SQLException{
+		if(electiveName.contains("'")){
+			electiveName = electiveName.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("DELETE FROM electives WHERE elective_name = '" + electiveName + "'");
+		query.executeUpdate();
+		return;
+	}
+	
+	public void addElective(String electiveName, String electiveCode, String electiveDesc)throws SQLException{
+		if(electiveName.contains("'")){
+			electiveName = electiveName.replace("'", "''");
+		}
+		if(electiveCode.contains("'")){
+			electiveCode = electiveName.replace("'", "''");
+		}
+		if(electiveName.contains("'")){
+			electiveDesc = electiveDesc.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("INSERT INTO electives (course_code, elective_name, description, average_rating) VALUES ('" + electiveCode + "', '" + electiveName + "', '" + electiveDesc + "', '0')");
+		query.executeUpdate();
+		return;
 	}
 }

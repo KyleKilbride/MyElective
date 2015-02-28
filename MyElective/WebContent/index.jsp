@@ -93,7 +93,7 @@
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(", ~, ");
+											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>

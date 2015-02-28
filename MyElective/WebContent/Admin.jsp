@@ -18,7 +18,7 @@
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-
+	
 %>
 <html>
 	<head>
@@ -57,7 +57,7 @@
 						    		<ul class="nav navbar-nav">
 						    			<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
-						    	<%}%>
+						    	  <%}%>
 								<form class="navbar-form navbar-right" role="search">
 									<div class="form-group">
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -77,20 +77,8 @@
 								</form>
 								<div id="loginSignupText">
 									<p class="navbar-text navbar-right">
-										<%
-											if (session.getAttribute("userName") == null) {
-												System.out.println("gets in if " + session.getAttribute("userName"));
-										%>
-										<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-										<%
-										} 
-											else if (session.getAttribute("userName") != null) {
-										  		System.out.println("gets in else " + session.getAttribute("userName"));
-										%>
 											${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
-										<%
-										}
-										%>
+										
 									</p>
 								</div>
 							</div>
@@ -100,15 +88,14 @@
 			</div><!-- /.row-fluid -->
 			<br/><br/><br/><br/><br/>			
 			<div>		
-				<%if(session.getAttribute("adminAction")==null){ %>
-					<form action="adminServlet" method="post">
-						<input type="submit" name="editElective" value="Edit Elective">
-						<input type="submit" name="removeElective" value="Remove Elective">
-						<input type="submit" name="addElective" value="Add Elective"><br/><br/>
-					</form>
-				<%} 
-				else if(session.getAttribute("adminAction")=="editElective"){%>			
-					<p>Select Elective to Edit</p>
+				<form action="adminServlet" method="post">
+					<input type="submit" name="editElective" value="Edit Elective">
+					<input type="submit" name="removeElective" value="Remove Elective">
+					<input type="submit" name="addElective" value="Add Elective"><br/><br/>
+				</form>
+				<br/><br/>
+				<% if(session.getAttribute("adminAction")=="editElective"){%>			
+					<p><b>Select Elective to Edit</b></p>
 					<form action="" method="POST">		
 						<select name="editElectivesDrop">
 							<option value=""></option>	
@@ -118,24 +105,82 @@
 						</select>
 						<input type="submit" value="Select Elective"></input>			
 					</form>
-					<form action="adminServlet" method="post">	
+					<form action="adminServlet" method="post" id="editElectivesForm">	
 						<%String editElectivesDropSelection[] = request.getParameterValues("editElectivesDrop");
 						if(editElectivesDropSelection != null){ 
 							String selectedElective="";
 							for(int i=0; i<editElectivesDropSelection.length; i++){
 								selectedElective += editElectivesDropSelection[i];
-						}%>	
+								selectedElective = selectedElective.substring(1);
+							}%>	
 						<br/>
-						<%Elective elective = electiveController.getElective(selectedElective);%>			
-						<b>Elective Name:</b> <%=selectedElective%> <input type="text" name="text" placeholder="New Elective Name	"/>
-						<input type="submit" value="Submit New Name"></input>
-						<br/><br/>
-						<%=elective.getCourseCode() %>
-						<br/>	
+						<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
 					</form>
-							<%}%>			
-						
-						<%}%>	
+					<form action="adminServlet" method="POST">		
+						<b>Elective Name:</b> <%=elective.getName()%> <input type="text" name="editElectiveNewName" size="50" placeholder="New Elective Name"/>
+						<input type="submit" value="Submit New Name" />
+						<input hidden="true" type="text" name="editElectiveCurrentName" value="<%=elective.getName()%>"/>
+					</form>
+					<br/><br/>
+					<form action="adminServlet" method="POST">
+						<b>Elective Course Code:</b> <%=elective.getCourseCode()%> <input type="text" name="editElectiveNewCode" placeholder="New Elective Course Code"/>
+						<input type="submit" value="Submit Course Code"></input>
+						<input hidden="true" type="text" name="editElectiveCurrentCode" value="<%=elective.getCourseCode()%>"/>
+					</form>
+					<br/><br/>
+					<form action="adminServlet" method="POST" id="editElectivesDescForm">	
+						<b>Elective Description:</b><%=elective.getDescription()%> 
+						<br/><br/>
+						<textarea name="editElectiveNewDesc" placeholder="New Description" form="editElectivesDescForm" rows="5" cols="75"></textarea>
+						<br/></br>
+						<input type="submit" value="Submit New Description"></input>
+						<input hidden="true" type="text" name="editElectiveCurrentDesc" value="<%=elective.getDescription()%>"/>
+					</form>
+						<%}%>			
+					<%}%>
+					<%if(session.getAttribute("adminAction")=="removeElective"){%>
+						<p><b>Select Elective to Remove</b></p>
+						<form action="" method="POST">		
+							<select name="removeElectivesDrop">
+								<option value=""></option>	
+								<c:forEach items="${sessionScope.allElectives}" var="elective" >
+									<option value="${elective}" >${elective}</option>
+								</c:forEach>
+							</select>
+							<input type="submit" value="Select Elective"></input>			
+						</form>
+						<form action="adminServlet" method="post" id="removeElectivesForm">	
+							<%String removeElectivesDropSelection[] = request.getParameterValues("removeElectivesDrop");
+							if(removeElectivesDropSelection != null){ 
+								String selectedElective="";
+								for(int i=0; i<removeElectivesDropSelection.length; i++){
+									selectedElective += removeElectivesDropSelection[i];
+									selectedElective = selectedElective.substring(1);
+								}%>	
+							<br/>
+							<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
+						</form>
+						<form action="adminServlet" method="POST">	
+							<b>Selected Elective:  </b><%=elective.getName()%>
+							<br/>	
+							<b>Enter CONFIRM to continue: </b><input type="text" name="removeElectiveConfirm" placeholder="Are you sure?"/>
+							<input type="submit" value="Confirm Remove" />
+							<input hidden="true" type="text" name="removeElectiveName" value="<%=elective.getName()%>"/>
+						</form>
+							<%}%>
+					<%}%>
+					<%if(session.getAttribute("adminAction")=="addElective"){%>
+						<p><b>Enter Elective Information</b></p>
+						<form action="adminServlet" method="POST" id="addElectivesForm">
+							<b>Elective Name: </b><input type="text" name="addElectiveName" placeholder="Elective Name"/>
+							<br/><br/>
+							<b>Elective Code: </b><input type="text" name="addElectiveCode" placeholder="Elective Code"/>
+							<br/><br/>
+							<b>Elective Description: </b><textarea name="addElectiveDesc" placeholder="Elective Description" form="addElectivesForm" rows="5" cols="75"></textarea>
+							<br/><br/>
+							<input type="submit" value="Add New Elective"></input>
+						</form>
+					<%}%>		
 				</div>			
 			</div><!-- /.container fluid -->
 	</body>
