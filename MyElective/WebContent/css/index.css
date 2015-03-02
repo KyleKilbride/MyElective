@@ -10,13 +10,14 @@ body{
 	background-color: #f5f5f5;
 }
 
-.container-fluid{
-	/* height: 125%; */
-}
-
 #loginSignupContainer{
 	margin-top: 1.5%;
 	margin-bottom: 2.5%;
+}
+
+#featuredElective{
+	padding-bottom: 250px;	
+	padding-top: 200px;
 }
 
 #featuredElectivesRow{
@@ -30,20 +31,24 @@ body{
 	color: #f5f5f5;
 }
 
+.glyphicon-chevron-right{
+	font-size: 35px;
+}
+
+#viewFEButton{
+	
+	
+	
+	margin-bottom: 37px;
+}
+
 #navBarRow{
 	height: 51px;
 }
 
-#recentReviewsContainer{
-	height: 75%;
-}
-
-#recentReviewsRow1{
-	height: 55%;
-}
-
-#recentReviewsRow2{
-	height: 36.5%
+#recentReviews{
+	padding-bottom: 250px;
+	padding-top: 200px;
 }
 
 #signUpHeader, #loginHeader{
@@ -82,6 +87,11 @@ body{
 
 .btn:hover{
 	background-color: #f5f5f5;
+}
+
+#fullHeader{
+	padding-left: 0 !important;
+	padding-right: 0 !important;
 }
 
 .btn:focus{
@@ -229,6 +239,10 @@ body{
   .post-preview > a > .post-title {
     font-size: 36px;
   }
+}
+
+#headerIntro{
+	padding-bottom: 300px;
 }
 
 
