@@ -95,7 +95,7 @@
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(", ~, ");
+											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
@@ -109,9 +109,8 @@
 							    	<%if(session.getAttribute("userName") == null){
 							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
-								  	<%}else if(session.getAttribute("userName") != null){ 
-								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		<li>${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){%>
+								  		<li><a href="logoutServlet" class="navbar-link" id="logoutText" > Logout</a></li>
 								  	<%}%>
 								</ul>  	
 								<!-- </p> -->
@@ -153,19 +152,25 @@
 		    <section id="recentReviews" class="container content-section text-center">
 		        <div class="row">
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+			            </a>
 		            </div>
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+			            </a>
 		            </div>
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+			            </a>
 		            </div>
 		        </div>
 		    </section>		    

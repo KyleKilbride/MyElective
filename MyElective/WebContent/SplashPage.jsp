@@ -4,9 +4,9 @@
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <% 
-if(session.getAttribute("userStatus")!=null){
-	response.sendRedirect("index.jsp");
-}
+	if(session.getAttribute("userStatus")!=null){
+		response.sendRedirect("index.jsp");
+	}
 
 	LoginServlet ls = new LoginServlet();
 %>
@@ -19,21 +19,16 @@ if(session.getAttribute("userStatus")!=null){
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+	<link href="css/grayscale.css" rel="stylesheet" type="text/css">
+	<link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 	<link href="css/SplashPage.css" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>MyElective</title>
 </head>
 	<body>
-		<div class="container-fluid" id="loginSignupContainer">
-			<div class="row-fluid" id="signinLoginRow">
-				<div class="col-sm-12">
-					<div class="loginCreateButtons">
-						<div>
-							<span class="logo"><a href="index.jsp">MyElective</a></span>
-						</div>
-						<div ng-controller="ModalDemoCtrl">
-						    <script type="text/ng-template" id="loginModal.html">
+				<script type="text/ng-template" id="loginModal.html">
         				<div class="modal-header">
         				    <h3 class="modal-title">Log In</h3>
         				</div>
@@ -89,8 +84,16 @@ if(session.getAttribute("userStatus")!=null){
 							</form>       				    
       				    </div>					
 					</script>
-						    <button class="btn btn-default" ng-click="open('md', 1)" id="loginButton">Log In</button>
-						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
+		<div class="container-fluid" id="loginSignupContainer">
+			<div class="row-fluid" id="signinLoginRow">
+				<div class="col-sm-12">
+					<div class="loginCreateButtons">
+						<div>
+							<span class="logo"><a href="index.jsp">MyElective</a></span>
+						</div>
+						<div ng-controller="ModalDemoCtrl">
+						    <button class="btn btn-default" ng-click="open('md', 1)" id="login">Log In</button>
+						    <button class="btn btn-default" ng-click="open('md', 2)" id="createAccount">Create Account</button>
 					    </div> <!-- /modaldemocntrl -->
 					</div><!-- /logincreatebuttons -->	
 				</div> <!-- / col-sm-12 -->

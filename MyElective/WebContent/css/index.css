@@ -241,6 +241,14 @@ body{
   }
 }
 
+#recentLink{
+	color: #fff;
+}
+
+#recentLink:hover{
+	color: #42dca3;
+}
+
 #headerIntro{
 	padding-bottom: 300px;
 }
