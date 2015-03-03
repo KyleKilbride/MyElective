@@ -44,20 +44,22 @@
 %>
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="css/index.css" rel="stylesheet" type="text/css">
-		
+		<link href="css/grayscale.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 		<title>MyElective</title>
 	</head>
-	<body>
-		<div class="container-fluid">
+	<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
+		<div class="container-fluid" id="fullHeader">
 			<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
-					
 					<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
@@ -102,15 +104,17 @@
 							  </div>
 							</form>
 						    <div id="loginSignupText">
-							    <p class="navbar-text navbar-right">
+							    <!-- <p class="navbar-text navbar-right"> -->
+							    <ul class="nav navbar-nav navbar-right">
 							    	<%if(session.getAttribute("userName") == null){
 							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
-								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){ 
 								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>
+								  		<li>${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
-								</p>
+								</ul>  	
+								<!-- </p> -->
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -118,68 +122,56 @@
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
 		
-			<!-- CONTENT HEADER -->
-			<!-- featuredElectives row -->
-			<header class="intro-header" id="featuredElectivesRow">
-				<div class="container-fluid">
-					<div class="row">
-						<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1" id="featuredElectives">
-							<div class="site-heading">
-								<h2 id="featuredElectivesHeader">Featured Elective</h2>
-								<h3 id="featuredElectiveTitle">${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
-								<p id="featuredElectiveDescription">${sessionScope.featuredElective.getDescription()}</p>
-								<div class="col-xs-12">
-			                    	<a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getId()%>">View</a>
-								</div>
-							</div>
-						</div>
-					</div><!-- /.row-fluid -->
-				</div>
-			</header>
+		    <header class="intro" id="headerIntro">
+		        <div class="intro-body">
+		            <div class="container">
+		                <div class="row">
+		                    <div class="col-md-8 col-md-offset-2">
+		                        <h1 class="brand-heading">MyElective</h1>
+		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elevtice class of their liking.</p>
+		                        <a href="#featuredElective" class="btn btn-circle page-scroll">
+		                            <i class="fa fa-angle-double-down animated"></i>
+		                        </a>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </header>			
 			
-			<!-- MAIN CONTENT -->
-			<div class="container">
-	        	<div class="row">
-	           	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<div class="post-preview">
-							<h2 class="post-title" id="RecentReviewHeader">Recent Reviews</h2>
-						</div>						
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-								<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#"> 
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-								<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>	           	    		
-								<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating4.getElectiveID()).getName() + "</h2>"); %>	           	    		
-								<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
-							</a>
-	           	    	</div> 
-	           	    </div>
-           	    </div>
-          	</div>			
+			<!-- About Section -->
+		    <section id="featuredElective" class="container content-section text-center">
+		        <div class="row">
+		            <div class="col-lg-8 col-lg-offset-2">
+		                <h2>Featured Elective</h2>
+		                <h3>${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
+		                <p>${sessionScope.featuredElective.getDescription()}</p>
+		                <a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getId()%>">View</a>
+		            </div>
+		        </div>
+		    </section>
+
+		    <section id="recentReviews" class="container content-section text-center">
+		        <div class="row">
+		            <div class="col-lg-4">
+		                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
+		                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+		                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+		            </div>
+		            <div class="col-lg-4">
+		                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
+		                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+		                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+		            </div>
+		            <div class="col-lg-4">
+		                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
+		                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+		                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+		            </div>
+		        </div>
+		    </section>		    
 		</div> <!-- /.container fluid -->
 	</body>
-	
+	<script src="js/jquery.easing.min.js"></script>
+	<script src="js/grayscale.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </html>
