@@ -1,4 +1,3 @@
-<%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
 
@@ -58,7 +57,7 @@
 											allElectives = mainDiv.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(", ~, ");
+											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>

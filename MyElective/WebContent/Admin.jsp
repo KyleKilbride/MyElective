@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
@@ -9,7 +10,7 @@
 	User user = (User) session.getAttribute("user");
 
 	if(session.getAttribute("userStatus")== null || session.getAttribute("userStatus").equals("user")){
-		response.sendRedirect("index.jsp");
+		response.sendRedirect("SplashPage.jsp");
 	}
 
 	ElectiveController electiveController = new ElectiveController();
@@ -17,7 +18,7 @@
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-
+	
 %>
 <html>
 	<head>
@@ -56,7 +57,7 @@
 						    		<ul class="nav navbar-nav">
 						    			<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
-						    	<%}%>
+						    	  <%}%>
 								<form class="navbar-form navbar-right" role="search">
 									<div class="form-group">
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -66,7 +67,7 @@
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 4);
-												var names = allElectives.split(", ~, ");
+												var names = allElectives.split(",  ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
@@ -76,20 +77,8 @@
 								</form>
 								<div id="loginSignupText">
 									<p class="navbar-text navbar-right">
-										<%
-											if (session.getAttribute("userName") == null) {
-												System.out.println("gets in if " + session.getAttribute("userName"));
-										%>
-										<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-										<%
-										} 
-											else if (session.getAttribute("userName") != null) {
-										  		System.out.println("gets in else " + session.getAttribute("userName"));
-										%>
 											${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
-										<%
-										}
-										%>
+										
 									</p>
 								</div>
 							</div>
@@ -97,106 +86,103 @@
 					</nav>
 				</div><!-- /.col-md-12 -->
 			</div><!-- /.row-fluid -->
-	<br/><br/><br/><br/><br/>		
-			
-			<div>			
-			<%if(session.getAttribute("adminAction")==null){ %>
-				<form action="adminServlet" id="adminForm" method="post">
+			<br/><br/><br/><br/><br/>			
+			<div>		
+				<form action="adminServlet" method="post">
 					<input type="submit" name="editElective" value="Edit Elective">
 					<input type="submit" name="removeElective" value="Remove Elective">
 					<input type="submit" name="addElective" value="Add Elective"><br/><br/>
 				</form>
-			<% } 
-					
-			else if(session.getAttribute("adminAction")=="editElective"){%>
-				<p>Select Elective to Edit</p>
-				<form action="adminServlet" method="POST">				
-					<script type="text/javascript" id="editElectivesScript" data-electives="${sessionScope.allElectives}">
-						var dropdown = "<select name=\"editElectivesDrop\" onchange=\"adminServlet\"><option value=\"\"></option>";
-						allElectives = editElectivesScript.getAttribute("data-electives");
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(0,allElectives.length - 4);
-						var names = allElectives.split(", ~, ");
-						for(var i=0;i<names.length; i++){
-							dropdown += "<option value=";
-							dropdown += names[i];
-							dropdown += "\">";
-							dropdown += names[i];
-							dropdown += "</option>";
-						}
-						dropdown += "</select><input type=\"submit\" name=\"editElectiveSubmit\" value=\"Submit\"></input>";
-						//session.setAttribute("editElectiveChoice", electiveController.getElectiveNames());
-						document.write(dropdown);
-						//<input></input>
-					</script>					
-				</form>
-				<%if(session.getAttribute("electiveToEdit")==null){%>
-					<form action="" method="post">
-						Username: <input type="textfield" name="username" />
-						Country : <input type="textfield" name="country" />
-						Url : <input type="textfield" name="Url" />
-						<input type="submit" value="Submit" />
+				<br/><br/>
+				<% if(session.getAttribute("adminAction")=="editElective"){%>			
+					<p><b>Select Elective to Edit</b></p>
+					<form action="" method="POST">		
+						<select name="editElectivesDrop">
+							<option value=""></option>	
+							<c:forEach items="${sessionScope.allElectives}" var="elective" >
+								<option value="${elective}" >${elective}</option>
+							</c:forEach>
+						</select>
+						<input type="submit" value="Select Elective"></input>			
 					</form>
-				<%} %>					
-			<%}else if(session.getAttribute("adminAction")=="removeElective"){%>	
-			<p>Select Elective to Remove</p>
-			<form action="adminServlet" method="POST">				
-				<script type="text/javascript" id="removeElectivesScript" data-electives="${sessionScope.allElectives}">
-					var dropdown = "<select name=\"mydropdown\"><option value=\"\"></option>";allElectives = editUsersScript.getAttribute("data-electives");
-					allElectives = removeElectivesScript.getAttribute("data-electives");
-					allElectives = allElectives.substring(1);
-					allElectives = allElectives.substring(0,allElectives.length - 4);
-					var names = allElectives.split(", ~, ");
-					for(var i=0;i<names.length; i++){
-						dropdown += "<option value=";
-						dropdown += names[i];
-						dropdown += "\">";
-						dropdown += names[i];
-						dropdown += "</option>";
-					}
-					dropdown += "</select>";
-					document.write(dropdown);
-				</script>
-			</form>	
-		<%}
-		else if(session.getAttribute("adminAction")=="addElective"){%>	
-			<p>Select Elective to Add</p>
-			<form action="adminServlet" method="POST">				
-				<script type="text/javascript" id="addElectivesScript" data-electives="${sessionScope.allElectives}">
-				var dropdown = "<select name=\"mydropdown\"><option value=\"\"></option>";	allElectives = editUsersScript.getAttribute("data-electives");
-					allElectives = addElectivesScript.getAttribute("data-electives");
-					allElectives = allElectives.substring(1);
-					allElectives = allElectives.substring(0,allElectives.length - 4);
-					var names = allElectives.split(", ~, ");
-					for(var i=0;i<names.length; i++){
-						dropdown += "<option value=";
-						dropdown += names[i];
-						dropdown += "\">";
-						dropdown += names[i];
-						dropdown += "</option>";
-					}
-					dropdown += "</select>";
-					document.write(dropdown);
-				</script>
-			</form>		
-		<%}
-						else if(session.getAttribute("adminAction")=="editElectiveSubmit"){%>
-			<script type="text/javascript" >
-			
-			System.out.println(session.getAttribute("editElectivesDrop"));
-        		
-    		</script>
-			<%}%>
-			
-			
-				
-			</div>			
-		</div><!-- /.container fluid -->
-					<%
-			if(session.getAttribute("adminAction")==null){System.out.println("adminAction: " + "null");}
-			else{System.out.println("adminAction: " + session.getAttribute("adminAction"));}
-					System.out.println("electiveToEdit: " + session.getAttribute("editElectiveSubmit"));
-			%>
+					<form action="adminServlet" method="post" id="editElectivesForm">	
+						<%String editElectivesDropSelection[] = request.getParameterValues("editElectivesDrop");
+						if(editElectivesDropSelection != null){ 
+							String selectedElective="";
+							for(int i=0; i<editElectivesDropSelection.length; i++){
+								selectedElective += editElectivesDropSelection[i];
+								selectedElective = selectedElective.substring(1);
+							}%>	
+						<br/>
+						<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
+					</form>
+					<form action="adminServlet" method="POST">		
+						<b>Elective Name:</b> <%=elective.getName()%> <input type="text" name="editElectiveNewName" size="50" placeholder="New Elective Name"/>
+						<input type="submit" value="Submit New Name" />
+						<input hidden="true" type="text" name="editElectiveCurrentName" value="<%=elective.getName()%>"/>
+					</form>
+					<br/><br/>
+					<form action="adminServlet" method="POST">
+						<b>Elective Course Code:</b> <%=elective.getCourseCode()%> <input type="text" name="editElectiveNewCode" placeholder="New Elective Course Code"/>
+						<input type="submit" value="Submit Course Code"></input>
+						<input hidden="true" type="text" name="editElectiveCurrentCode" value="<%=elective.getCourseCode()%>"/>
+					</form>
+					<br/><br/>
+					<form action="adminServlet" method="POST" id="editElectivesDescForm">	
+						<b>Elective Description:</b><%=elective.getDescription()%> 
+						<br/><br/>
+						<textarea name="editElectiveNewDesc" placeholder="New Description" form="editElectivesDescForm" rows="5" cols="75"></textarea>
+						<br/></br>
+						<input type="submit" value="Submit New Description"></input>
+						<input hidden="true" type="text" name="editElectiveCurrentDesc" value="<%=elective.getDescription()%>"/>
+					</form>
+						<%}%>			
+					<%}%>
+					<%if(session.getAttribute("adminAction")=="removeElective"){%>
+						<p><b>Select Elective to Remove</b></p>
+						<form action="" method="POST">		
+							<select name="removeElectivesDrop">
+								<option value=""></option>	
+								<c:forEach items="${sessionScope.allElectives}" var="elective" >
+									<option value="${elective}" >${elective}</option>
+								</c:forEach>
+							</select>
+							<input type="submit" value="Select Elective"></input>			
+						</form>
+						<form action="adminServlet" method="post" id="removeElectivesForm">	
+							<%String removeElectivesDropSelection[] = request.getParameterValues("removeElectivesDrop");
+							if(removeElectivesDropSelection != null){ 
+								String selectedElective="";
+								for(int i=0; i<removeElectivesDropSelection.length; i++){
+									selectedElective += removeElectivesDropSelection[i];
+									selectedElective = selectedElective.substring(1);
+								}%>	
+							<br/>
+							<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
+						</form>
+						<form action="adminServlet" method="POST">	
+							<b>Selected Elective:  </b><%=elective.getName()%>
+							<br/>	
+							<b>Enter CONFIRM to continue: </b><input type="text" name="removeElectiveConfirm" placeholder="Are you sure?"/>
+							<input type="submit" value="Confirm Remove" />
+							<input hidden="true" type="text" name="removeElectiveName" value="<%=elective.getName()%>"/>
+						</form>
+							<%}%>
+					<%}%>
+					<%if(session.getAttribute("adminAction")=="addElective"){%>
+						<p><b>Enter Elective Information</b></p>
+						<form action="adminServlet" method="POST" id="addElectivesForm">
+							<b>Elective Name: </b><input type="text" name="addElectiveName" placeholder="Elective Name"/>
+							<br/><br/>
+							<b>Elective Code: </b><input type="text" name="addElectiveCode" placeholder="Elective Code"/>
+							<br/><br/>
+							<b>Elective Description: </b><textarea name="addElectiveDesc" placeholder="Elective Description" form="addElectivesForm" rows="5" cols="75"></textarea>
+							<br/><br/>
+							<input type="submit" value="Add New Elective"></input>
+						</form>
+					<%}%>		
+				</div>			
+			</div><!-- /.container fluid -->
 	</body>
 	<script src="js/bootstrap.min.js"></script>
 </html>

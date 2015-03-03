@@ -169,48 +169,6 @@
 		            </div>
 		        </div>
 		    </section>		    
-			<%-- <!-- MAIN CONTENT -->
-			<div class="container" id="featuredElective">
-	        	<div class="row">
-	           	    <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
-						<div class="post-preview">
-							<h2 class="post-title" id="RecentReviewHeader">Recent Reviews</h2>
-						</div>						
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-								<p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#"> 
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-								<p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>	           	    		
-								<p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
-							</a>
-	           	    	</div>
-	           	    	<hr/>
-	           	    	<div class="post-preview">
-		           	    	<a href="#">
-		           	    		<% out.write("<h2 class=\"post-title\">" + ratingController.getElective(rating4.getElectiveID()).getName() + "</h2>"); %>	           	    		
-								<p>Review: ${sessionScope.recentRatingBean4.getComment()}</p>
-								<p>Rating out of 10: ${sessionScope.recentRatingBean4.getRating()}</p>
-							</a>
-	           	    	</div> 
-	           	    </div>
-           	    </div>
-          	</div>
-			 --%>
 		</div> <!-- /.container fluid -->
 	</body>
 	<script src="js/jquery.easing.min.js"></script>
