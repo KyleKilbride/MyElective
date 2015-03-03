@@ -32,7 +32,7 @@ public class DBUtility {
 				String dbName = "my_elective";  
 				String driver = "com.mysql.jdbc.Driver";  
 				String userName = "root"; 
-				String password = "root";
+				String password = "yA540004";
 
 				
 				Class.forName(driver).newInstance();
