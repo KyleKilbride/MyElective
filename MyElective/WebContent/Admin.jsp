@@ -66,12 +66,12 @@
 											$(function() {			
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 4);
+												allElectives = allElectives.substring(0,allElectives.length - 1);
 												var names = allElectives.split(",  ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search">
+										<input type="text" name="searchScriptForm" class="form-control" placeholder="Search" id="search">
 										<button type="submit" class="btn btn-default">Submit</button>	
 									</div>
 								</form>

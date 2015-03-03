@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import beans.Elective;
 
@@ -25,7 +26,8 @@ public class ElectiveController {
 	/** Select statement to return specified row from Electives table */
 	private String SQL_SELECT_ALL = "SELECT * FROM electives WHERE id=?";
 	private String SQL_SELECT_NAME = "SELECT elective_name FROM electives ORDER BY elective_name";
-
+	private String SQL_SELECT_NAME_ID = "SELECT id FROM electives ORDER BY elective_name";
+	
 	/**
 	 * Default constructor
 	 */
@@ -80,26 +82,27 @@ public Elective getFeaturedElective(){
 		return electiveBean;
 	}
 
-/*	public ArrayList<Elective> getElectiveNames() {
-		ArrayList<Elective> electiveArray = new ArrayList<Elective>();
-		
+	public ArrayList<Elective> getElectiveArray() {
+		ArrayList<Elective> electiveArray = new ArrayList<Elective>();		
 		try {
-			PreparedStatement pSt1 = dbConnection
-					.prepareStatement(SQL_SELECT_NAME);
+			PreparedStatement pSt1 = dbConnection.prepareStatement(SQL_SELECT_ALL);
 			ResultSet result1 = pSt1.executeQuery();
-
+			
 			while (result1.next()) {
 				Elective electiveBean = new Elective();
+				electiveBean.setId(result1.getInt("id"));
+				electiveBean.setCourseCode(result1.getString("course_code"));
 				electiveBean.setName(result1.getString("elective_name"));
+				electiveBean.setDescription(result1.getString("description"));
+				electiveBean.setRating(Integer.parseInt(result1.getString("average_rating")));
 				electiveArray.add(electiveBean);
 			}
 
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-
 		return electiveArray;
-	}*/
+	}
 	
 	public ArrayList<String> getElectiveNames() {
 		ArrayList<String> electiveArray = new ArrayList<String>();
@@ -112,7 +115,6 @@ public Elective getFeaturedElective(){
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
 				electiveArray.add(" " + electiveName);
-				//electiveArray.add(" ");
 			}
 
 		} catch (Exception e) {
@@ -123,18 +125,13 @@ public Elective getFeaturedElective(){
 	}
 	
 	public Elective getElective(String electiveName) {
-		Elective elective = new Elective();
-		
+		Elective elective = new Elective();		
 		try {
 			System.out.println(electiveName);
 			electiveName=electiveName.substring(1);
-			System.out.println("TEST1");
 			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT * FROM electives where elective_name = '" + electiveName + "'");
-			System.out.println("TEST2");
 			ResultSet result1 = pSt1.executeQuery();
-			System.out.println("TEST3");
 			elective.setCourseCode(result1.getString("course_code"));
-			System.out.println("TEST4");
 		} catch (Exception e) {
 			System.out.println(e);
 		}

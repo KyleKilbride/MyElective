@@ -69,7 +69,7 @@
 											$(function() {
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 4);
+												allElectives = allElectives.substring(0,allElectives.length - 1);
 												var names = allElectives.split(",  ");
 												$("#search").autocomplete({source : names});
 											});
@@ -108,9 +108,11 @@
 				<h2 id="allElectivesHeader">All Electives</h2>
 				<div>
 					<script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
+				//	var RatingController rc = new RatingController();
 						allElectives = tableScript.getAttribute("data-electives");
 						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(0,allElectives.length - 4);
+						allElectives = allElectives.substring(1);
+						allElectives = allElectives.substring(0,allElectives.length - 1);
 						var names = allElectives.split(",  ");
 						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
 						var j = 0;
@@ -120,9 +122,11 @@
 								j=0;
 							}
 							table += "<td>";
-							table += "<a href=#>";
+						//	var id = ratingController.getIdByName(names[i]);
+							
+						//	table += "<a href=FullElective.jsp?ElectiveID=\"" + id + "\">";
 							table += names[i];
-							table += "</a>";
+						//	table += "</a>";
 							table += "</td>";
 							j++;
 						}

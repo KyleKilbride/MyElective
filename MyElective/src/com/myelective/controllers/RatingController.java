@@ -137,6 +137,16 @@ public class RatingController {
 			return null;
 	}
 	
+	public int getIdByName(String name) throws SQLException{
+		PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT id FROM electives WHERE elective_name='" + name + "'");
+		ResultSet result1 = pSt1.executeQuery();
+		while(result1.next()){
+			int id = result1.getInt("id");
+			return id;
+		}
+		return -1;	
+	}
+	
 	public ArrayList<Rating> getRatings(int id) throws SQLException{
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM ratings WHERE electives_id=?");
 		query.setInt(1, id);

@@ -10,9 +10,23 @@
 	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
 
-	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
-
-	Elective elective = ratingController.getElective(electiveID);
+	Elective elective;
+	System.out.println(request.getAttribute("search"));
+	System.out.println(request.getAttribute("ElectiveID"));
+	System.out.println(request.getAttribute("searchScriptForm"));
+	System.out.println(request.getAttribute("allElectives"));
+	System.out.println(request.getAttribute("searchScript"));
+	System.out.println(request.getAttribute("data-electives"));
+	
+	
+	
+	if(request.getParameter("ElectiveID") == null){
+		elective = ratingController.getElectiveByString(request.getParameter("searchScriptForm"));	
+	}
+	else{
+		int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
+		elective = ratingController.getElective(electiveID);
+	}
 %>
 
 <html>
@@ -56,7 +70,7 @@
 											var electives = document.getElementById("mainDiv"), allElectives;
 											allElectives = mainDiv.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
