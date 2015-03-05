@@ -1,28 +1,24 @@
-<%@page import="com.myelective.controllers.RatingController"%>
 <%@page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"
-	import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
+	pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
-
 	request.getSession(false);
-	//User user = (User) session.getAttribute("user");
+	User user = (User) session.getAttribute("user");
+	
+	if(session.getAttribute("userStatus")== null){
+		response.sendRedirect("SplashPage.jsp");
+	}
 
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
-
+		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
-
-//	if (user != null) {
-//		session.setAttribute("userName", user.getFirstName());
-//	}
+	//session.setAttribute("userName", user.getFirstName());
 %>
 <html>
 	<head>
@@ -38,6 +34,7 @@
 		<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
+				<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 						<div class="container-fluid">
 							<div class="navbar-header">
@@ -60,13 +57,13 @@
 						    		<ul class="nav navbar-nav">
 						    			<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
-						    	<%}%>
+						    	  <%}%>
 								<form class="navbar-form navbar-right" role="search">
 									<div class="form-group">
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-								 		<script type="text/javascript"  id="searchScript" data-electives="${sessionScope.allElectives}" >
-											$(function() {
+										<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+											$(function() {			
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 1);
@@ -74,70 +71,50 @@
 												$("#search").autocomplete({source : names});
 											});
 										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search">
+										<input type="text" name="searchScriptForm" class="form-control" placeholder="Search" id="search">
 										<button type="submit" class="btn btn-default">Submit</button>	
 									</div>
 								</form>
 								<div id="loginSignupText">
 									<p class="navbar-text navbar-right">
-										<%
-											if (session.getAttribute("userName") == null) {
-												System.out.println("gets in if " + session.getAttribute("userName"));
-										%>
-										<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-										<%
-										} 
-											else if (session.getAttribute("userName") != null) {
-										  		System.out.println("gets in else " + session.getAttribute("userName"));
-										%>
-										<ul>
-											<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
-											<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
-										</ul>
-										<%}%>
+											<a href="EditUser.jsp">${sessionScope.user.getUsername()}</a>
+											<a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>							
 									</p>
 								</div>
 							</div>
-						</div>
-					<!-- /.container-fluid -->
+						</div><!-- /.container-fluid -->
 					</nav>
-				</div>
-			<!-- /.col-md-12 -->
-			</div>
-			<!-- /.row-fluid -->
-			<div>
-				<h2 id="allElectivesHeader">All Electives</h2>
-				<div>
-					<script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
-				//	var RatingController rc = new RatingController();
-						allElectives = tableScript.getAttribute("data-electives");
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(0,allElectives.length - 1);
-						var names = allElectives.split(",  ");
-						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
-						var j = 0;
-						for (var i = 0; i < names.length; i++) {
-							if (j==3) {
-								table += "</tr><tr>";
-								j=0;
-							}
-							table += "<td>";
-						//	var id = ratingController.getIdByName(names[i]);
-							
-						//	table += "<a href=FullElective.jsp?ElectiveID=\"" + id + "\">";
-							table += names[i];
-						//	table += "</a>";
-							table += "</td>";
-							j++;
-						}
-						table += "</tr></table>";
-						document.write(table);
-					</script>
-				</div>
-			</div>
-		</div>
-	<!-- /.container fluid -->
+				</div><!-- /.col-md-12 -->
+			</div><!-- /.row-fluid -->
+		</div><!-- /.container fluid -->
+		<br/>
+		<br/>
+		<b>Edit User</b>
+		<br/>
+		<br/>
+		<form action="editUserServlet" method="POST" id="editUserForm">
+			<b>Current First Name:</b> <%=user.getFirstName()%> <input type="text" maxlength="100" name="editUserFirstName" placeholder="New User First Name"/>			
+			<br/><br/>
+			<b>Current Last Name:</b> <%=user.getLastName()%> <input type="text" maxlength="100" name="editUserLastName" placeholder="New User Last Name"/>
+			<br/><br/>
+			<b>Current Program:</b> <%=user.getProgram()%> <input type="text" name="editUserProgram" maxlength="200" size="100" placeholder="New User Program"/>
+			<br/><br/>			
+			<b>Enter New Password:</b> <input type="password" name="editUserPassword" maxlength="100" placeholder="New User Password"/>
+			<br/><br/>
+			<b>Confirm New Password:</b> <input type="password" name="editUserConfirmPassword" maxlength="100" placeholder="Confirm New User Password"/>
+			<br/><br/>
+			<script type="text/javascript">
+				$(function() {			
+					if(document.getElementById("editUserPassword")){
+						
+
+					}
+				});							
+			</script>
+			<input type="submit" value="Submit"></input>
+			<input hidden="true" type="text" name="editUserEmail" value="<%=user.getEmailAddress()%>"/>
+			
+		</form>
 	</body>
 	<script src="js/bootstrap.min.js"></script>
 </html>

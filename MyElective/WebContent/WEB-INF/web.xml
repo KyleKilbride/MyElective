@@ -18,6 +18,11 @@
     	<servlet-class>com.myelective.servlets.AdminServlet</servlet-class>
     </servlet>
     
+    <servlet>
+    	<servlet-name>edituser</servlet-name>
+    	<servlet-class>com.myelective.servlets.EditUserServlet</servlet-class>
+    </servlet>
+    
     <servlet>  
         <servlet-name>index</servlet-name>  
         <servlet-class>com.myelective.servlets.IndexServlet</servlet-class>  
@@ -52,6 +57,11 @@
         <servlet-name>admin</servlet-name>  
         <url-pattern>/adminServlet</url-pattern>  
     </servlet-mapping>    
+  
+  	<servlet-mapping>  
+        <servlet-name>edituser</servlet-name>  
+        <url-pattern>/editUserServlet</url-pattern>  
+    </servlet-mapping>
   
     <welcome-file-list>  
         <welcome-file>index.jsp</welcome-file>  

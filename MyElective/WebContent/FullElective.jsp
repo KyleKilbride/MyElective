@@ -86,7 +86,7 @@
 								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
 								  	<%}else if(session.getAttribute("userName") != null){ 
 								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getFirstName()}</a><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</p>
 							</div>

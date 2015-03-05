@@ -73,11 +73,11 @@ public class SignupServlet extends HttpServlet {
 		}else{
 		
 			if(userDAO.checkEmailNotUsed(email)){ //If email is used
-				out.print("<p style=\"color:red\">Sorry, Email already is use.</p>");    
+				out.print("<p style=\"color:red\">Sorry, Email already in use.</p>");    
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
 				rd.include(request,response);
 			}else if(userDAO.checkUsername(userName)){ //If username is used
-				out.print("<p style=\"color:red\">Sorry, username already is use.</p>");    
+				out.print("<p style=\"color:red\">Sorry, username already in use.</p>");    
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
 			}

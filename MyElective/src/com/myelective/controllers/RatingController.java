@@ -227,4 +227,40 @@ public class RatingController {
 		query.executeUpdate();
 		return;
 	}
+	
+	public void editUserFirstName(String newName, String editUserEmail)throws SQLException{
+		if(newName.contains("'")){
+			newName = newName.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE users SET first_name = '" + newName + "' WHERE email_address = '" + editUserEmail + "'");
+		query.executeUpdate();
+		return;
+	}
+	
+	public void editUserLastName(String newName, String editUserEmail)throws SQLException{
+		if(newName.contains("'")){
+			newName = newName.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE users SET last_name = '" + newName + "' WHERE email_address = '" + editUserEmail + "'");
+		query.executeUpdate();
+		return;
+	}
+	
+	public void editUserProgram(String newProgram, String editUserEmail)throws SQLException{
+		if(newProgram.contains("'")){
+			newProgram = newProgram.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE users SET program = '" + newProgram + "' WHERE email_address = '" + editUserEmail + "'");
+		query.executeUpdate();
+		return;
+	}
+	
+	public void editUserPassword(String newPassword, String editUserEmail)throws SQLException{
+		if(newPassword.contains("'")){
+			newPassword = newPassword.replace("'", "''");
+		}
+		PreparedStatement query = dbConnection.prepareStatement("UPDATE users SET password = '" + newPassword + "' WHERE email_address = '" + editUserEmail + "'");
+		query.executeUpdate();
+		return;
+	}		
 }
