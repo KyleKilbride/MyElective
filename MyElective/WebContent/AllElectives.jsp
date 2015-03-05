@@ -27,7 +27,7 @@
 <html>
 	<head>
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="css/index.css" rel="stylesheet" type="text/css">
+		<link href="css/grayscale.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
 		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -39,103 +39,93 @@
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
 					<nav class="navbar navbar-inverse navbar-fixed-top">
-						<div class="container-fluid">
-							<div class="navbar-header">
-								<a class="navbar-brand" href="index.jsp"> MyElective </a>
-								<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-									<span class="sr-only">Toggle navigation</span> 
-									<span class="icon-bar"></span> 
-									<span class="icon-bar"></span> 
-									<span class="icon-bar"></span>
-								</button>
-							</div>
-							<div class="collapse navbar-collapse">
+					  <div class="container-fluid">
+					    <div class="navbar-header">
+					      <a class="navbar-brand" href="index.jsp">
+					        MyElective
+					      </a>
+					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
+					    </div>
+					    <div class="collapse navbar-collapse">
 								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
 						    		<ul class="nav navbar-nav">
 						    			<li><a href="AllElectives.jsp">All Electives</a></li>
 						    			<li><a href="Admin.jsp">Admin</a></li>
 						    		</ul>
-						    	<%}
-						    	else{%>
-						    		<ul class="nav navbar-nav">
-						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						   		<%}
+						   		else{%>
+						   			<ul class="nav navbar-nav">
+						   				<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	<%}%>
-								<form class="navbar-form navbar-right" role="search">
-									<div class="form-group">
-										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-								 		<script type="text/javascript"  id="searchScript" data-electives="${sessionScope.allElectives}" >
-											$(function() {
-												allElectives = searchScript.getAttribute("data-electives");
-												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 1);
-												var names = allElectives.split(",  ");
-												$("#search").autocomplete({source : names});
-											});
-										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search">
-										<button type="submit" class="btn btn-default">Submit</button>	
-									</div>
-								</form>
-								<div id="loginSignupText">
-									<p class="navbar-text navbar-right">
-										<%
-											if (session.getAttribute("userName") == null) {
-												System.out.println("gets in if " + session.getAttribute("userName"));
-										%>
-										<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-										<%
-										} 
-											else if (session.getAttribute("userName") != null) {
-										  		System.out.println("gets in else " + session.getAttribute("userName"));
-										%>
-										<ul>
-											<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
-											<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
-										</ul>
-										<%}%>
-									</p>
-								</div>
+						    <form class="navbar-form navbar-right" role="search">
+							  <div class="form-group">
+							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+								 	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+										$(function() {
+											allElectives = searchScript.getAttribute("data-electives");
+											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(0,allElectives.length - 4);
+											var names = allElectives.split(",  ");
+											$("#search").autocomplete({source : names});
+										});
+								</script>
+							    <input type="text" class="form-control" placeholder="Search" id="search">
+							    <button type="submit" class="btn btn-default">Submit</button>							    
+							  </div>
+							</form>
+						    <div id="loginSignupText">
+							    <!-- <p class="navbar-text navbar-right"> -->
+							    <ul class="nav navbar-nav navbar-right">
+							    	<%if(session.getAttribute("userName") == null){
+							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){ 
+								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  	<%}%>
+								</ul>  	
+								<!-- </p> -->
 							</div>
 						</div>
-					<!-- /.container-fluid -->
+					  </div><!-- /.container-fluid -->
 					</nav>
 				</div>
 			<!-- /.col-md-12 -->
 			</div>
-			<!-- /.row-fluid -->
-			<div>
-				<h2 id="allElectivesHeader">All Electives</h2>
-				<div>
-					<script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
-				//	var RatingController rc = new RatingController();
-						allElectives = tableScript.getAttribute("data-electives");
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(1);
-						allElectives = allElectives.substring(0,allElectives.length - 1);
-						var names = allElectives.split(",  ");
-						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
-						var j = 0;
-						for (var i = 0; i < names.length; i++) {
-							if (j==3) {
-								table += "</tr><tr>";
-								j=0;
+			<!-- /.row-fluid -->	
+		    <section class="container content-section text-center" id="allElectives">
+		        <div class="row">
+		            <div class="col-lg-8 col-lg-offset-2">
+		                <h2 id="allElectivesHeader">All Electives</h2>
+		                <script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
+							allElectives = tableScript.getAttribute("data-electives");
+							allElectives = allElectives.substring(1);
+							allElectives = allElectives.substring(0,allElectives.length - 4);
+							var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+							var names = allElectives.split(", ");
+							var n = 0;
+							var x = 0;
+							for(var i = 0; i < letters.length; i++){
+								var letter = letters[n];
+								if(names[x].charAt(0) === letter){
+									document.write("<h1>" + letter + "</h1>");
+									while(names[x].charAt(0) === letter){
+										document.write("<span>"+names[x++]+"</span><br/>");
+									}
+								}
+								n++;
 							}
-							table += "<td>";
-						//	var id = ratingController.getIdByName(names[i]);
-							
-						//	table += "<a href=FullElective.jsp?ElectiveID=\"" + id + "\">";
-							table += names[i];
-						//	table += "</a>";
-							table += "</td>";
-							j++;
-						}
-						table += "</tr></table>";
-						document.write(table);
-					</script>
-				</div>
-			</div>
+						 </script> 
+		            </div>
+		        </div>
+		    </section>
 		</div>
 	<!-- /.container fluid -->
 	</body>

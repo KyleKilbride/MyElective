@@ -12,7 +12,7 @@
 	RatingController ratingController = new RatingController();
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
-	
+		
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	
 	Elective featuredElective = (Elective)electiveController.getFeaturedElective();
@@ -103,17 +103,13 @@
 							  </div>
 							</form>
 						    <div id="loginSignupText">
-							    <!-- <p class="navbar-text navbar-right"> -->
 							    <ul class="nav navbar-nav navbar-right">
-							    	<%if(session.getAttribute("userName") == null){
-							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
+							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
-								  	<%}else if(session.getAttribute("userName") != null){ 
-								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){%>
+							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
-								<!-- </p> -->
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -127,7 +123,7 @@
 		                <div class="row">
 		                    <div class="col-md-8 col-md-offset-2">
 		                        <h1 class="brand-heading">MyElective</h1>
-		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elective class of their liking.</p>
+		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elevtice class of their liking.</p>
 		                        <a href="#featuredElective" class="btn btn-circle page-scroll">
 		                            <i class="fa fa-angle-double-down animated"></i>
 		                        </a>
@@ -152,19 +148,25 @@
 		    <section id="recentReviews" class="container content-section text-center">
 		        <div class="row">
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+			            </a>
 		            </div>
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+			            </a>
 		            </div>
 		            <div class="col-lg-4">
-		                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
-		                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-		                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+			            <a href="#" id="recentLink">
+			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
+			                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
+			                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+			            </a>
 		            </div>
 		        </div>
 		    </section>		    

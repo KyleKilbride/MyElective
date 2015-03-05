@@ -10,6 +10,7 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($scope
 	      templateUrl: 'loginModal.html',
 	      controller: 'ModalInstanceCtrl',
 	      size: size,
+	      windowClass: 'center-modal',
 	      resolve: {
 	        items: function () {
 	          return $scope.items;
@@ -22,6 +23,7 @@ angular.module('ui.bootstrap.demo').controller('ModalDemoCtrl', function ($scope
 			templateUrl: 'signupModal.html',
 			controller: 'ModalInstanceCtrl',
 			size: size,
+			windowClass: 'center-modal',
 			resolve: {
 				items: function () {
 					return $scope.items;
@@ -57,8 +59,3 @@ angular.module('ui.bootstrap.demo').controller('ModalInstanceCtrl', function ($s
     $modalInstance.dismiss('cancel');
   };
 });
-
-
-
-
-

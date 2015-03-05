@@ -60,9 +60,17 @@
 					      </button>
 					    </div>
 					    <div class="collapse navbar-collapse">
-						    <ul class="nav navbar-nav">
-						    	<li><a href="AllElectives.jsp">All Electives</a></li>
-						    </ul>
+							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    			<li><a href="Admin.jsp">Admin</a></li>
+						    		</ul>
+						   		<%}
+						   		else{%>
+						   			<ul class="nav navbar-nav">
+						   				<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		</ul>
+						    	<%}%>
 						    <form class="navbar-form navbar-right" role="search">
 							  <div class="form-group">
 								  <script type="text/javascript">
@@ -80,15 +88,13 @@
 							  </div>
 							</form>
 						    <div id="loginSignupText">
-							    <p class="navbar-text navbar-right">
-							    	<%if(session.getAttribute("userName") == null){
-							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
-								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-								  	<%}else if(session.getAttribute("userName") != null){ 
-								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		<li><a href="EditUser.jsp">${sessionScope.user.getFirstName()}</a><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+							    <ul class="nav navbar-nav navbar-right">
+							    	<%if(session.getAttribute("userName") == null){%>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){%>
+								  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
-								</p>
+								</ul>
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->

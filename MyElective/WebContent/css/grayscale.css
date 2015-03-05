@@ -17,6 +17,11 @@ html {
     height: 100%;
 }
 
+#allElectives{
+	padding-top: 60px;
+	padding-bottom: 30px;
+}
+
 h1,
 h2,
 h3,
