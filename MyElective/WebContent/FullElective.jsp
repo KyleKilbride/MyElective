@@ -6,27 +6,19 @@
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 
 <%
+	request.getSession(false);
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
+	session.setAttribute("allElectives",electiveController.getElectiveNames());
+	
+	if(session.getAttribute("searchElective") != null){
+		Elective elective = (Elective) session.getAttribute("searchElective");
+		int electiveID = elective.getId();
+	}
 
-	Elective elective;
-	System.out.println(request.getAttribute("search"));
-	System.out.println(request.getAttribute("ElectiveID"));
-	System.out.println(request.getAttribute("searchScriptForm"));
-	System.out.println(request.getAttribute("allElectives"));
-	System.out.println(request.getAttribute("searchScript"));
-	System.out.println(request.getAttribute("data-electives"));
-	
-	
-	
-	if(request.getParameter("ElectiveID") == null){
-		elective = ratingController.getElectiveByString(request.getParameter("searchScriptForm"));	
-	}
-	else{
 		int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
-		elective = ratingController.getElective(electiveID);
-	}
+		Elective elective = ratingController.getElective(electiveID);	
 %>
 
 <html>
@@ -49,7 +41,7 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					      <a class="navbar-brand" href="#">
+					      <a class="navbar-brand" href="index.jsp">
 					        MyElective
 					      </a>
 					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -71,9 +63,11 @@
 						   				<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	<%}%>
-						    <form class="navbar-form navbar-right" role="search">
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 							  <div class="form-group">
-								  <script type="text/javascript">
+							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+								  	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
 											var electives = document.getElementById("mainDiv"), allElectives;
 											allElectives = mainDiv.getAttribute("data-electives");
@@ -83,7 +77,7 @@
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search">
+							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>

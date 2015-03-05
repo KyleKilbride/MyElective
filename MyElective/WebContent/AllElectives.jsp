@@ -63,7 +63,7 @@
 						   				<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	<%}%>
-						    <form class="navbar-form navbar-right" role="search">
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 							  <div class="form-group">
 							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
@@ -71,12 +71,12 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search">
+							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
