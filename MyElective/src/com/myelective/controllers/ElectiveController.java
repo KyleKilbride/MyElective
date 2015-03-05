@@ -24,7 +24,6 @@ public class ElectiveController {
 	private String SQL_SELECT_ID = "SELECT id FROM electives";
 	/** Select statement to return specified row from Electives table */
 	private String SQL_SELECT_ALL = "SELECT * FROM electives WHERE id=?";
-
 	private String SQL_SELECT_NAME = "SELECT elective_name FROM electives ORDER BY elective_name";
 
 	/**
@@ -33,39 +32,13 @@ public class ElectiveController {
 	public ElectiveController() {
 		dbConnection = DBUtility.getConnection();
 	}
-	
-	public Elective getElective(int electiveID){
-		Elective elective = new Elective();
-		
-		try{
-			
-			PreparedStatement pSt1 = dbConnection.prepareStatement(SQL_SELECT_ALL);
-			pSt1.setInt(1, electiveID);
-			
-			ResultSet result1 = pSt1.executeQuery();
-			
-			if(result1.next()){ //moves cursor to first(and only) returned row and returns true if a valid row
-				//Sets fields for Elective object
-				elective.setElectiveID(Integer.parseInt(result1.getString("id")));
-				elective.setCourseCode(result1.getString("course_code"));
-				elective.setName(result1.getString("elective_name"));
-				elective.setDescription(result1.getString("description"));
-				elective.setRating(Integer.parseInt(result1.getString("average_rating")));
-			}
-			
-		}catch (Exception e) {  
-            System.out.println(e);  
-        }
-		
-		return elective;
-	}
 
 	/**
 	 * Returns a randomly selected Elective object from the database
 	 * 
 	 * @return random Elective
 	 */
-	public Elective getFeaturedElective(){
+public Elective getFeaturedElective(){
 		
 		Calendar calendar = Calendar.getInstance();
 		int dayOfYear = calendar.get(Calendar.DAY_OF_YEAR); //gets the current nth day of the year
@@ -91,7 +64,7 @@ public class ElectiveController {
 				
 				if(result2.next()){ //moves cursor to first(and only) returned row and returns true if a valid row
 					//Sets fields for Elective object
-					electiveBean.setElectiveID(Integer.parseInt(result2.getString("id")));
+					electiveBean.setId(result2.getInt("id"));
 					electiveBean.setCourseCode(result2.getString("course_code"));
 					electiveBean.setName(result2.getString("elective_name"));
 					electiveBean.setDescription(result2.getString("description"));
@@ -138,8 +111,8 @@ public class ElectiveController {
 
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
-				electiveArray.add(electiveName);
-				electiveArray.add("~");
+				electiveArray.add(" " + electiveName);
+				//electiveArray.add(" ");
 			}
 
 		} catch (Exception e) {
@@ -148,7 +121,23 @@ public class ElectiveController {
 
 		return electiveArray;
 	}
-
-
+	
+	public Elective getElective(String electiveName) {
+		Elective elective = new Elective();
+		
+		try {
+			System.out.println(electiveName);
+			electiveName=electiveName.substring(1);
+			System.out.println("TEST1");
+			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT * FROM electives where elective_name = '" + electiveName + "'");
+			System.out.println("TEST2");
+			ResultSet result1 = pSt1.executeQuery();
+			System.out.println("TEST3");
+			elective.setCourseCode(result1.getString("course_code"));
+			System.out.println("TEST4");
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		return elective;
+	}
 }
-

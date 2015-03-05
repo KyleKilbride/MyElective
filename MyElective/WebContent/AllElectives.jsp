@@ -9,9 +9,8 @@
 <!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 
-
 	request.getSession(false);
-	User user = (User) session.getAttribute("user");
+	//User user = (User) session.getAttribute("user");
 
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
@@ -21,9 +20,9 @@
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
-	if (user != null) {
-		session.setAttribute("userName", user.getFirstName());
-	}
+//	if (user != null) {
+//		session.setAttribute("userName", user.getFirstName());
+//	}
 %>
 <html>
 	<head>
@@ -35,7 +34,7 @@
 		<title>MyElective</title>
 	</head>
 	<body>
-		<div id="mainDiv" data-electives="${sessionScope.allElectives}" class="container-fluid">
+		<div class="container-fluid">
 		<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
@@ -51,18 +50,27 @@
 								</button>
 							</div>
 							<div class="collapse navbar-collapse">
-								<ul class="nav navbar-nav">
-									<li><a href="AllElectives.jsp">All Electives</a></li>
-								</ul>
+								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    			<li><a href="Admin.jsp">Admin</a></li>
+						    		</ul>
+						    	<%}
+						    	else{%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		</ul>
+						    	<%}%>
 								<form class="navbar-form navbar-right" role="search">
 									<div class="form-group">
-										<script type="text/javascript">
+										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+								 		<script type="text/javascript"  id="searchScript" data-electives="${sessionScope.allElectives}" >
 											$(function() {
-												var electives = document.getElementById("mainDiv"), allElectives;
-												allElectives = mainDiv.getAttribute("data-electives");
+												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 4);
-												var names = allElectives.split(", ~, ");
+												var names = allElectives.split(",  ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
@@ -95,41 +103,36 @@
 				</div>
 			<!-- /.col-md-12 -->
 			</div>
-		<!-- /.row-fluid -->
-		<div>
-			<h2 id="allElectivesHeader">All Electives</h2>
+			<!-- /.row-fluid -->
 			<div>
-				
-				<script type="text/javascript" id="electives">
-				var electives = document.getElementById("mainDiv"), allElectives;
-				allElectives = mainDiv.getAttribute("data-electives");
-				allElectives = allElectives.substring(1);
-				allElectives = allElectives.substring(0,allElectives.length - 4);
-				var names = allElectives.split(", ~, ");
-					var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
-					var j = 0;
-					for (var i = 0; i < names.length; i++) {
-						if (j==3) {
-							table += "</tr><tr>";
-							j=0;
+				<h2 id="allElectivesHeader">All Electives</h2>
+				<div>
+					<script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
+						allElectives = tableScript.getAttribute("data-electives");
+						allElectives = allElectives.substring(1);
+						allElectives = allElectives.substring(0,allElectives.length - 4);
+						var names = allElectives.split(",  ");
+						var table = "<table border=\"1\"><col width=\"33%\"><col width=\"33%\"><col width=\"33%\"><tr>";
+						var j = 0;
+						for (var i = 0; i < names.length; i++) {
+							if (j==3) {
+								table += "</tr><tr>";
+								j=0;
+							}
+							table += "<td>";
+							table += "<a href=#>";
+							table += names[i];
+							table += "</a>";
+							table += "</td>";
+							j++;
 						}
-						table += "<td>";
-						table += "<a href=#>";
-						table += names[i];
-						table += "</a>";
-						table += "</td>";
-						j++;
-					}
-					table += "</tr></table>";
-					document.write(table);
-				</script>
+						table += "</tr></table>";
+						document.write(table);
+					</script>
+				</div>
 			</div>
 		</div>
-	</div>
 	<!-- /.container fluid -->
-</body>
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-<script src="js/bootstrap.min.js"></script>
-
+	</body>
+	<script src="js/bootstrap.min.js"></script>
 </html>
