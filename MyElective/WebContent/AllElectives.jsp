@@ -14,11 +14,11 @@
 
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
-	ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	//ArrayList ratingArrLst = ratingController.getRecentRating(4);
 
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
+	//session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	//session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
 //	if (user != null) {
 //		session.setAttribute("userName", user.getFirstName());
@@ -26,11 +26,15 @@
 %>
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="css/index.css" rel="stylesheet" type="text/css">
 		<link href="css/grayscale.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+		<link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 		<title>MyElective</title>
 	</head>
 	<body>

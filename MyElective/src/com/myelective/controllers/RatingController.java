@@ -160,7 +160,7 @@ public class RatingController {
 			rating.setRating(r.getInt("rating"));
 			rating.setHoursPerWeek(r.getInt("hours_per_week"));
 			rating.setElectiveID(r.getInt("electives_id"));
-			//rating.setDate(r.getDate("date_modified"));
+		//	rating.setDate(r.getDate("date"));
 			rating.setUserID(r.getInt("users_id"));
 			ratingList.add(rating);
 		}

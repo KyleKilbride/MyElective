@@ -9,7 +9,7 @@ CREATE  TABLE `my_elective`.`electives` (
   `course_code` VARCHAR(8) NOT NULL,
   `elective_name` VARCHAR(200) NOT NULL ,  
   `description` VARCHAR(5000) NOT NULL,
-  `average_rating` int not null default '0',
+  `average_rating` int,
   PRIMARY KEY (`id`) );   
 
 CREATE  TABLE `my_elective`.`users` (

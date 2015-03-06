@@ -7,27 +7,22 @@
 
 <%
 	request.getSession(false);
+	//User user = (User)session.getAttribute("user");
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
 	session.setAttribute("allElectives",electiveController.getElectiveNames());
-	
-	if(session.getAttribute("searchElective") != null){
-		Elective elective = (Elective) session.getAttribute("searchElective");
-		int electiveID = elective.getId();
-	}
 
-		int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
-		Elective elective = ratingController.getElective(electiveID);	
+	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
+	Elective elective = ratingController.getElective(electiveID);	
 %>
 
 <html>
 	<head>
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<link href="css/index.css" rel="stylesheet" type="text/css">
-		
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MyElective</title>
 	</head>
@@ -36,16 +31,13 @@
 			<!-- navbar row -->
 			<div class="row-fluid" id="navBarRow">
 				<div class="col-md-6">
-					
 					<!-- NAVBAR -->
 					<nav class="navbar navbar-inverse navbar-fixed-top">
-					  <div class="container-fluid">
-					    <div class="navbar-header">
-					      <a class="navbar-brand" href="index.jsp">
-					        MyElective
-					      </a>
+						<div class="container-fluid">
+					    	<div class="navbar-header">
+					      <a class="navbar-brand" href="index.jsp">MyElective</a>
 					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					        <span class="sr-only">Toggle navigation</span>
+					      	<span class="sr-only">Toggle navigation</span>
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
 					        <span class="icon-bar"></span>
@@ -53,40 +45,39 @@
 					    </div>
 					    <div class="collapse navbar-collapse">
 							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
-						    		<ul class="nav navbar-nav">
-						    			<li><a href="AllElectives.jsp">All Electives</a></li>
-						    			<li><a href="Admin.jsp">Admin</a></li>
-						    		</ul>
-						   		<%}
+						    	<ul class="nav navbar-nav">
+						    		<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		<li><a href="Admin.jsp">Admin</a></li>
+						    	</ul>
+						   	<%}
 						   		else{%>
-						   			<ul class="nav navbar-nav">
-						   				<li><a href="AllElectives.jsp">All Electives</a></li>
-						    		</ul>
-						    	<%}%>
+						   		<ul class="nav navbar-nav">
+						   			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    	</ul>
+						    <%}%>
 						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
-							  <div class="form-group">
+								<div class="form-group">
 							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-								  	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+									<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
-											var electives = document.getElementById("mainDiv"), allElectives;
-											allElectives = mainDiv.getAttribute("data-electives");
+											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
-								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
-							    <button type="submit" class="btn btn-default">Submit</button>							    
-							  </div>
+									</script>
+							    	<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    	<button type="submit" class="btn btn-default">Submit</button>							    
+							  	</div>
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
 							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-								  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>
 							</div>
