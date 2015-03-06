@@ -14,11 +14,11 @@
 
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
-	ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	//ArrayList ratingArrLst = ratingController.getRecentRating(4);
 
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
+	//session.setAttribute("featuredElective", electiveController.getFeaturedElective());
+	//session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
 //	if (user != null) {
 //		session.setAttribute("userName", user.getFirstName());
@@ -26,11 +26,15 @@
 %>
 <html>
 	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
+		<link href="css/index.css" rel="stylesheet" type="text/css">
 		<link href="css/grayscale.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
-		<link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+		<link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 		<title>MyElective</title>
 	</head>
 	<body>
@@ -63,7 +67,7 @@
 						   				<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	<%}%>
-						    <form class="navbar-form navbar-right" role="search">
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 							  <div class="form-group">
 							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
@@ -71,12 +75,12 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(", ~, ");
+											allElectives = allElectives.substring(0,allElectives.length - 1);
+											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search">
+							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
@@ -88,7 +92,7 @@
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){ 
 								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		<li><a href="logoutServlet" class="navbar-link" id="logoutText" >${sessionScope.user.getFirstName()} Logout</a></li>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
 								<!-- </p> -->
@@ -99,8 +103,7 @@
 				</div>
 			<!-- /.col-md-12 -->
 			</div>
-			<!-- /.row-fluid -->
-			
+			<!-- /.row-fluid -->	
 		    <section class="container content-section text-center" id="allElectives">
 		        <div class="row">
 		            <div class="col-lg-8 col-lg-offset-2">

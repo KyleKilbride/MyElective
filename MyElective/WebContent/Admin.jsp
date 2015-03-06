@@ -18,7 +18,6 @@
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
-	
 %>
 <html>
 	<head>
@@ -58,7 +57,7 @@
 						    			<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	  <%}%>
-								<form class="navbar-form navbar-right" role="search">
+								<form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 									<div class="form-group">
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
@@ -66,19 +65,19 @@
 											$(function() {			
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 4);
+												allElectives = allElectives.substring(0,allElectives.length - 1);
 												var names = allElectives.split(",  ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search">
+										<input type="text" class="form-control" placeholder="Search" id="search" name="search">
 										<button type="submit" class="btn btn-default">Submit</button>	
 									</div>
 								</form>
 								<div id="loginSignupText">
 									<p class="navbar-text navbar-right">
-											${sessionScope.user.getFirstName()} <a href="index.jsp?newsession" class="navbar-link" id="logoutText">Logout</a>
-										
+											<a href="EditUser.jsp">${sessionScope.user.getUsername()}</a>
+											<a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>							
 									</p>
 								</div>
 							</div>
@@ -117,13 +116,13 @@
 						<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
 					</form>
 					<form action="adminServlet" method="POST">		
-						<b>Elective Name:</b> <%=elective.getName()%> <input type="text" name="editElectiveNewName" size="50" placeholder="New Elective Name"/>
+						<b>Elective Name:</b> <%=elective.getName()%> <input type="text" name="editElectiveNewName" size="50" maxlength="200" placeholder="New Elective Name"/>
 						<input type="submit" value="Submit New Name" />
 						<input hidden="true" type="text" name="editElectiveCurrentName" value="<%=elective.getName()%>"/>
 					</form>
 					<br/><br/>
 					<form action="adminServlet" method="POST">
-						<b>Elective Course Code:</b> <%=elective.getCourseCode()%> <input type="text" name="editElectiveNewCode" placeholder="New Elective Course Code"/>
+						<b>Elective Course Code:</b> <%=elective.getCourseCode()%> <input type="text" name="editElectiveNewCode" maxlength="8" placeholder="New Elective Course Code"/>
 						<input type="submit" value="Submit Course Code"></input>
 						<input hidden="true" type="text" name="editElectiveCurrentCode" value="<%=elective.getCourseCode()%>"/>
 					</form>
@@ -131,7 +130,7 @@
 					<form action="adminServlet" method="POST" id="editElectivesDescForm">	
 						<b>Elective Description:</b><%=elective.getDescription()%> 
 						<br/><br/>
-						<textarea name="editElectiveNewDesc" placeholder="New Description" form="editElectivesDescForm" rows="5" cols="75"></textarea>
+						<textarea name="editElectiveNewDesc" placeholder="New Description" form="editElectivesDescForm" rows="5" cols="75" maxlength="5000"></textarea>
 						<br/></br>
 						<input type="submit" value="Submit New Description"></input>
 						<input hidden="true" type="text" name="editElectiveCurrentDesc" value="<%=elective.getDescription()%>"/>
@@ -163,7 +162,7 @@
 						<form action="adminServlet" method="POST">	
 							<b>Selected Elective:  </b><%=elective.getName()%>
 							<br/>	
-							<b>Enter CONFIRM to continue: </b><input type="text" name="removeElectiveConfirm" placeholder="Are you sure?"/>
+							<b>Enter CONFIRM to continue: </b><input type="text" maxlength="7" name="removeElectiveConfirm" placeholder="Are you sure?"/>
 							<input type="submit" value="Confirm Remove" />
 							<input hidden="true" type="text" name="removeElectiveName" value="<%=elective.getName()%>"/>
 						</form>
@@ -172,11 +171,11 @@
 					<%if(session.getAttribute("adminAction")=="addElective"){%>
 						<p><b>Enter Elective Information</b></p>
 						<form action="adminServlet" method="POST" id="addElectivesForm">
-							<b>Elective Name: </b><input type="text" name="addElectiveName" placeholder="Elective Name"/>
+							<b>Elective Name: </b><input type="text" name="addElectiveName" maxlength="200" placeholder="Elective Name"/>
 							<br/><br/>
-							<b>Elective Code: </b><input type="text" name="addElectiveCode" placeholder="Elective Code"/>
+							<b>Elective Code: </b><input type="text" name="addElectiveCode" maxlength="8" placeholder="Elective Code"/>
 							<br/><br/>
-							<b>Elective Description: </b><textarea name="addElectiveDesc" placeholder="Elective Description" form="addElectivesForm" rows="5" cols="75"></textarea>
+							<b>Elective Description: </b><textarea name="addElectiveDesc" maxlength="5000" placeholder="Elective Description" form="addElectivesForm" rows="5" cols="75"></textarea>
 							<br/><br/>
 							<input type="submit" value="Add New Elective"></input>
 						</form>

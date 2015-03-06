@@ -12,10 +12,7 @@
 	RatingController ratingController = new RatingController();
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
-	
-	
-	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	
+			
 	Elective featuredElective = (Elective)electiveController.getFeaturedElective();
 
 	session.setAttribute("userName", null);
@@ -27,13 +24,11 @@
 	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
 	session.setAttribute("recentRatingBean4", ratingArrLst.get(3));
 	
-
 	Rating rating1 = (Rating)session.getAttribute("recentRatingBean1");
 	Rating rating2 = (Rating)session.getAttribute("recentRatingBean2");
 	Rating rating3 = (Rating)session.getAttribute("recentRatingBean3");
 	Rating rating4 = (Rating)session.getAttribute("recentRatingBean4");
 
-	//request.getSession(false);
 	session.setAttribute("recentRatingBean1",(Rating) ratingArrLst.get(1));
 
 	if (user != null) {
@@ -64,56 +59,51 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					      <a class="navbar-brand" href="#">
-					        MyElective
-					      </a>
-					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					        <span class="sr-only">Toggle navigation</span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					      </button>
+					   		<a class="navbar-brand" href="index.jsp">MyElective</a>
+					      	<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					       		<span class="sr-only">Toggle navigation</span>
+					       		<span class="icon-bar"></span>
+					        	<span class="icon-bar"></span>
+					        	<span class="icon-bar"></span>
+					      	</button>
 					    </div>
 					    <div class="collapse navbar-collapse">
-								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
-						    		<ul class="nav navbar-nav">
-						    			<li><a href="AllElectives.jsp">All Electives</a></li>
-						    			<li><a href="Admin.jsp">Admin</a></li>
-						    		</ul>
-						   		<%}
-						   		else{%>
-						   			<ul class="nav navbar-nav">
-						   				<li><a href="AllElectives.jsp">All Electives</a></li>
-						    		</ul>
-						    	<%}%>
-						    <form class="navbar-form navbar-right" role="search">
-							  <div class="form-group">
+							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    	<ul class="nav navbar-nav">
+						    		<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		<li><a href="Admin.jsp">Admin</a></li>
+						    	</ul>
+						   	<%}
+						   	else{%>
+						   		<ul class="nav navbar-nav">
+						   			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    	</ul>
+						    <%}%>
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
+								<div class="form-group">
 							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-								 	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+									<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(",  ");
 											$("#search").autocomplete({source : names});
 										});
-								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search">
-							    <button type="submit" class="btn btn-default">Submit</button>							    
-							  </div>
+									</script>
+							    	<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    	<button type="submit" class="btn btn-default">Submit</button>							    
+							  	</div>
 							</form>
 						    <div id="loginSignupText">
-							    <!-- <p class="navbar-text navbar-right"> -->
 							    <ul class="nav navbar-nav navbar-right">
-							    	<%if(session.getAttribute("userName") == null){
-							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
+							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-								  		<li><a href="logoutServlet" class="navbar-link" id="logoutText" > Logout</a></li>
+							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
-								<!-- </p> -->
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -152,21 +142,21 @@
 		    <section id="recentReviews" class="container content-section text-center">
 		        <div class="row">
 		            <div class="col-lg-4">
-			            <a href="#" id="recentLink">
+			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating1.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
 			                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
-			            <a href="#" id="recentLink">
+			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating2.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
 			                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
-			            <a href="#" id="recentLink">
+			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating3.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
 			                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
