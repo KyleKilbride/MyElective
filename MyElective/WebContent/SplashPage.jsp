@@ -28,7 +28,7 @@ if(session.getAttribute("userStatus")!=null){
 	function validate (){
 		
 		if(document.signupForm.user_pass_signup.value != document.signupForm.user_pass_conf_signup.value){
-			
+			document.getElementById("password_error").innerHTML = "Passwords do not match";
 			return false;
 		}
 	}
@@ -101,7 +101,7 @@ if(session.getAttribute("userStatus")!=null){
 								</div>
 								<div class="pure-control-group">
 									<label for="passwordConfirm">Confirm Password</label>
-									<input id="passwordConfirm" type="password" placeholder="Confirm Password" name="user_pass_conf_signup" required>
+									<input id="passwordConfirm" type="password" placeholder="Confirm Password" name="user_pass_conf_signup" required><label id="password_error" style="color: red;" />
 								</div>
 								<div class="pure-controls">
 									<input type="submit" class="pure-button" value="Sign up" > <input type="cancel" class="pure-button" value="Cancel" ng-click="ok()">

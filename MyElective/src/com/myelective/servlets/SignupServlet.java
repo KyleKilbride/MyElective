@@ -35,6 +35,7 @@ public class SignupServlet extends HttpServlet {
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
 		PrintWriter out = response.getWriter();
+		HttpSession session = request.getSession(false);
 		
 		//Gets Account Information from page
 		String userName = (String) request.getParameter("user_name_signup");
@@ -56,7 +57,6 @@ public class SignupServlet extends HttpServlet {
 			// Attempts to create new user in database, returns 1 if successful
 			int result = userDAO.createUser(userName, pass, firstName, lastName, email, program, "user");
 			if(result == 1){ // if account is created successfully
-				HttpSession session = request.getSession(false);
 				user.setUsername(userName);
 				user.setPassword(pass);
 				user.setFirstName(firstName);
@@ -66,19 +66,18 @@ public class SignupServlet extends HttpServlet {
 				user.setStatus("user");
 				session.setAttribute("user", user);
 				response.sendRedirect("index.jsp"); //send user to Account Creation Success
-			}else{ // if account is not created successfully
-				out.print("<p style=\"color:red\">Sorry, Error while creating account");    
+			}else{ // if account is not created successfully   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
 			}
 		}else{
 		
 			if(userDAO.checkEmailNotUsed(email)){ //If email is used
-				out.print("<p style=\"color:red\">Sorry, Email already is use.</p>");    
+				session.setAttribute("error", "Sorry, Email already is use.");    
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
 				rd.include(request,response);
 			}else if(userDAO.checkUsername(userName)){ //If username is used
-				out.print("<p style=\"color:red\">Sorry, username already is use.</p>");    
+				session.setAttribute("error", "Sorry, Username already is use.");    
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
 			}
