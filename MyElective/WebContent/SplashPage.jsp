@@ -113,7 +113,7 @@ if(session.getAttribute("userStatus")!=null){
 						    <button class="btn btn-default" ng-click="open('md', 2)" id="signupButton">Create Account</button>
 					    </div> <!-- /modaldemocntrl -->
 					</div><!-- /logincreatebuttons -->
-					<label id="error"></label>
+					<h2 style="color: red;"><%out.print(error); %></h2>
 				</div> <!-- / col-sm-12 -->
 			</div><!-- / row fluid -->
 		</div><!-- / container-fluid -->
