@@ -115,7 +115,7 @@ public Elective getFeaturedElective(){
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
 
-				electiveArray.add(" " + electiveName);
+				electiveArray.add(electiveName);
 			}
 
 		} catch (Exception e) {

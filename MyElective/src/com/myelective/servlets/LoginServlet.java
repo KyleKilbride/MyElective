@@ -50,10 +50,11 @@ public class LoginServlet extends HttpServlet {
 		
 
 		if(user.getUsername() == null){ //if login is unsuccessful
-            RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
-
+            RequestDispatcher rd = request.getRequestDispatcher("SplashPage.jsp");
+            session.setAttribute("error", "Username/Email or password incorrect");
             rd.include(request,response);
-            response.sendRedirect("SplashPage.jsp");
+            rd.forward(request, response);
+            //response.sendRedirect("SplashPage.jsp?error=loginError");
 		} else {
 			session.setAttribute("user", user);
 			response.sendRedirect("index.jsp");

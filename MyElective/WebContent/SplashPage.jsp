@@ -1,3 +1,4 @@
+<%@page import="javax.websocket.Session"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="com.myelective.servlets.LoginServlet" %>
@@ -9,6 +10,12 @@
 	}
 
 	LoginServlet ls = new LoginServlet();
+	
+	String error = (String)session.getAttribute("error");
+	if(error==null || error=="null"){
+		error="";
+	}
+
 %>
 <html ng-app="ui.bootstrap.demo" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
@@ -17,6 +24,15 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <head>
+	<script type="text/javascript">
+	function validate (){
+		
+		if(document.signupForm.user_pass_signup.value != document.signupForm.user_pass_conf_signup.value){
+			document.getElementById("password_error").innerHTML = "Passwords do not match";
+			return false;
+		}
+	}
+	</script>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="css/grayscale.css" rel="stylesheet" type="text/css">
@@ -53,33 +69,37 @@
         				    <h3 class="modal-title">Create Account</h3>
         				</div>
         				<div class="modal-body">
-							<form class="pure-form pure-form-aligned" action="signupServlet" method="post"> 
+							<form class="pure-form pure-form-aligned" name="signupForm" action="signupServlet" method="post" onsubmit="return validate()"> 
 								<div class="pure-control-group">
 									<label for="name">Username</label>
-									<input id="name" type="text" placeholder="username" name="user_name_signup">
+									<input id="name" type="text" placeholder="username" name="user_name_signup" required>
 								</div>
 								<div class="pure-control-group">
 									<label for="fName">First Name</label>
-									<input id="fName" type="text" placeholder="first name" name="userFirstName">
+									<input id="fName" type="text" placeholder="first name" name="userFirstName" required>
 								</div>
 								<div class="pure-control-group">
 									<label for="lName">Last Name</label>
-									<input id="lName" type="text" placeholder="last name" name="userLastName">
+									<input id="lName" type="text" placeholder="last name" name="userLastName" required>
 								</div>
 								<div class="pure-control-group">
 									<label for="email">E-mail</label>
-									<input id="email" type="text" placeholder="e-mail" name="email_signup">
+									<input id="email" type="text" placeholder="e-mail" name="email_signup" required>
 								</div>
 								<div class="pure-control-group">
 									<label for="prog">Program of Study</label>
-									<input id="prog" type="text" placeholder="program of study" name="prog_signup">
+									<input id="prog" type="text" placeholder="program of study" name="prog_signup" required>
 								</div>
 								<div class="pure-control-group">
 									<label for="password">Password</label>
-									<input id="password" type="text" placeholder="Password" name="user_pass_signup">
+									<input id="password" type="password" placeholder="Password" name="user_pass_signup" required>
+								</div>
+								<div class="pure-control-group">
+									<label for="passwordConfirm">Confirm Password</label>
+									<input id="passwordConfirm" type="password" placeholder="Confirm Password" name="user_pass_conf_signup" required><label id="password_error" style="color: red;" />
 								</div>
 								<div class="pure-controls">
-									<input type="submit" class="pure-button" value="Sign up" ng-click="ok()">
+									<input type="submit" class="pure-button" value="Sign up" > <input type="cancel" class="pure-button" value="Cancel" ng-click="ok()">
 								</div>
 							</form>       				    
       				    </div>					
@@ -95,7 +115,8 @@
 						    <button class="btn btn-default" ng-click="open('md', 1)" id="login">Log In</button>
 						    <button class="btn btn-default" ng-click="open('md', 2)" id="createAccount">Create Account</button>
 					    </div> <!-- /modaldemocntrl -->
-					</div><!-- /logincreatebuttons -->	
+					</div><!-- /logincreatebuttons -->
+					<h2 style="color: red;"><%out.print(error); %></h2>
 				</div> <!-- / col-sm-12 -->
 			</div><!-- / row fluid -->
 		</div><!-- / container-fluid -->
