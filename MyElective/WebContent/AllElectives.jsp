@@ -111,9 +111,9 @@
 		                <script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
 							allElectives = tableScript.getAttribute("data-electives");
 							allElectives = allElectives.substring(1);
-							allElectives = allElectives.substring(0,allElectives.length - 4);
+							allElectives = allElectives.substring(0,allElectives.length - 1);
 							var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-							var names = allElectives.split(", ");
+							var names = allElectives.split(",  ");
 							var n = 0;
 							var x = 0;
 							for(var i = 0; i < letters.length; i++){
