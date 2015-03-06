@@ -63,7 +63,7 @@
 						   				<li><a href="AllElectives.jsp">All Electives</a></li>
 						    		</ul>
 						    	<%}%>
-						    <form class="navbar-form navbar-right" role="search">
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 							  <div class="form-group">
 							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
@@ -71,24 +71,21 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(", ~, ");
+											allElectives = allElectives.substring(0,allElectives.length - 1);
+											var names = allElectives.split(", ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search">
+							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
 						    <div id="loginSignupText">
-							    <!-- <p class="navbar-text navbar-right"> -->
 							    <ul class="nav navbar-nav navbar-right">
-							    	<%if(session.getAttribute("userName") == null){
-							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
+							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
-								  	<%}else if(session.getAttribute("userName") != null){ 
-								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		<li><a href="logoutServlet" class="navbar-link" id="logoutText" >${sessionScope.user.getFirstName()} Logout</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){%>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
 								<!-- </p> -->
@@ -110,7 +107,7 @@
 							allElectives = allElectives.substring(1);
 							allElectives = allElectives.substring(0,allElectives.length - 1);
 							var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-							var names = allElectives.split(",  ");
+							var names = allElectives.split(", ");
 							var n = 0;
 							var x = 0;
 							for(var i = 0; i < letters.length; i++){

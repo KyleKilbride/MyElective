@@ -48,8 +48,7 @@
 							<div class="collapse navbar-collapse">
 								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
 						    		<ul class="nav navbar-nav">
-						    			<li><a href="AllElectives.jsp">All Electives</a></li>
-						    			<li><a href="Admin.jsp">Admin</a></li>
+						    			<li><a href="AllElectives.jsp">All Electives</a></li><li><a href="Admin.jsp">Admin</a></li>
 						    		</ul>
 						    	<%}
 						    	else{%>
@@ -66,7 +65,7 @@
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 1);
-												var names = allElectives.split(",  ");
+												var names = allElectives.split(", ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
@@ -154,7 +153,7 @@
 								String selectedElective="";
 								for(int i=0; i<removeElectivesDropSelection.length; i++){
 									selectedElective += removeElectivesDropSelection[i];
-									selectedElective = selectedElective.substring(1);
+									//selectedElective = selectedElective.substring(1);
 								}%>	
 							<br/>
 							<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
