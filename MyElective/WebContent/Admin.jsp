@@ -110,7 +110,7 @@
 							String selectedElective="";
 							for(int i=0; i<editElectivesDropSelection.length; i++){
 								selectedElective += editElectivesDropSelection[i];
-								selectedElective = selectedElective.substring(1);
+								//selectedElective = selectedElective.substring(1);
 							}%>	
 						<br/>
 						<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
