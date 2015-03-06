@@ -1,11 +1,13 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
-
+	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 <!DOCTYPE html>
 
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 
 <%
+	User loggedUser = (User)session.getAttribute("user");
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
@@ -13,6 +15,11 @@
 	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
 
 	Elective elective = ratingController.getElective(electiveID);
+	
+	if (loggedUser != null) {
+		session.setAttribute("userName", loggedUser.getFirstName());
+		session.setAttribute("userStatus", loggedUser.getStatus());
+	}
 %>
 
 <html>
@@ -85,21 +92,29 @@
 			<!-- CONTENT HEADER -->
 			<!-- featuredElectives row -->
 			
-			
 			<!-- MAIN CONTENT -->
-			<p>Name: <%=elective.getName()%></p>
-			<p>Course Code: <%=elective.getCourseCode()%>
-			<p>Description: <%=elective.getDescription()%></p>
-			<p>Rating: <%=elective.getRating()%>
-			
-			<%for(Rating rating: elective.getComments()){
-				User user = ratingController.getUser(rating.getUserID());
-				//out.print("<p><b>" + user.getUsername() + "</b>   " + rating.getDate().toString() + "</p>");
-				out.print("<p><b>" + user.getUsername() + "</b>");
-				out.print("<p>Rating: " + rating.getRating() + "    " + rating.getHoursPerWeek() + " hours per week </p>");
-				out.print("<p>" + rating.getComment() + "</p>");
-				out.print("<hr />");
-			}%>
+		    <section id="featuredElective" class="container content-section text-center">
+		        <div class="row">
+		            <div class="col-lg-8 col-lg-offset-2">
+		      			<h1><%=elective.getName()%> - <%=elective.getCourseCode()%></h1>
+						<p>Description: <%=elective.getDescription()%></p>
+						<p>Rating: <%=elective.getRating()%></p>
+						<%for(Rating rating: elective.getComments()){
+							User user = ratingController.getUser(rating.getUserID());
+							//out.print("<p><b>" + user.getUsername() + "</b>   " + rating.getDate().toString() + "</p>");
+							out.print("<p><b>" + user.getUsername() + "</b>");
+							out.print("<p>" + rating.getRating() + "    " + rating.getHoursPerWeek() + " hours per week </p>");
+							out.print("<p>\"" + rating.getComment() + "\"</p>");
+							out.print("<hr />");
+						}%>
+						<c:if test="${sessionScope.userName != null}">
+							<form action="" method="POST" id="reviewForm">
+								<textarea form="reviewForm" placeholder="Review" rows="5" cols="75"></textarea>
+							</form>
+						</c:if>
+		      		</div>
+		        </div>
+		    </section>
 
 		</div> <!-- /.container fluid -->
 	</body>
