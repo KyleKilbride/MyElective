@@ -58,6 +58,10 @@
 							<label for="password">Password</label>
 							<input id="password" type="text" placeholder="Password" name="user_pass_signup">
 						</div>
+						<div class="pure-control-group">
+							<label for="passwordConfirm">Confirm Password</label>
+							<input id="passwordCofirm" type="text" placeholder="Confirm Password" name="user_pass_conf_signup">
+						</div>
 						<div class="pure-controls">
 							<input type="submit" class="pure-button" value="Sign up">
 						</div>

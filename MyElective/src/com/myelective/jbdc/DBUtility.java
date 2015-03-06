@@ -23,6 +23,8 @@ public class DBUtility {
 	 */
 	public static Connection getConnection() {
 		
+		//jdbc:mysql://127.0.0.1:3306/?user=root
+		
 		if (connection != null){
 			return connection;
 		}else {
@@ -32,7 +34,7 @@ public class DBUtility {
 				String dbName = "my_elective";  
 				String driver = "com.mysql.jdbc.Driver";  
 				String userName = "root"; 
-				String password = "yA540004";
+				String password = "root";
 
 				
 				Class.forName(driver).newInstance();

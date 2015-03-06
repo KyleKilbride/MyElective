@@ -39,6 +39,7 @@ public class SignupServlet extends HttpServlet {
 		//Gets Account Information from page
 		String userName = (String) request.getParameter("user_name_signup");
 		String pass = (String) request.getParameter("user_pass_signup");
+		String confirmPass = (String) request.getParameter("user_pass_conf_signup");
 		String firstName = (String) request.getParameter("userFirstName");
 		String lastName = (String) request.getParameter("userLastName");
 		String program = (String) request.getParameter("prog_signup");
