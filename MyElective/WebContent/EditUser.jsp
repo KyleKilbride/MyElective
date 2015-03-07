@@ -9,7 +9,7 @@
 	request.getSession(false);
 	User user = (User) session.getAttribute("user");
 	
-	if(session.getAttribute("userName")== null){
+	if(session.getAttribute("user")== null){
 		response.sendRedirect("SplashPage.jsp");
 	}
 
@@ -120,6 +120,7 @@
 			<b>Confirm New Password:</b> <input type="password" name="editUserConfirmPassword" maxlength="100" size="25" placeholder="Confirm New User Password"/> 
 			<br/><br/>
 			<h2 style="color: red;"><%out.print(error); %></h2>
+			<%session.setAttribute("error", null);%>
 			<input type="submit" value="Submit"></input>
 			<input hidden="true" type="text" name="editUserEmail" value="<%=user.getEmailAddress()%>"/>
 			

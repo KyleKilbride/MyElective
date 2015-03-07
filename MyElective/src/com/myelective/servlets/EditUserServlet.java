@@ -73,10 +73,23 @@ public class EditUserServlet extends HttpServlet{
 			}
 			user.setPassword(password);
 		}
-		else{
+		else if(password.intern() == "" || confirmPassword.intern() == ""){
+			if(password.intern() == confirmPassword.intern()){
+				session.setAttribute("error", null);
+			}
+			else{
+				if(password.intern() != confirmPassword.intern()){
+					session.setAttribute("error", "Error. Passwords do not match");
+				}
+			}
+		}
+		else if(password.intern() != confirmPassword.intern()){
 			session.setAttribute("error", "Error. Passwords do not match");
 		}
-			
+		
+		
+		
+		
 		session.setAttribute("user", user);
         
 		response.sendRedirect("EditUser.jsp");
