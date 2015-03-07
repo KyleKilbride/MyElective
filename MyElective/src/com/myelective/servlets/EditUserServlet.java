@@ -28,6 +28,7 @@ public class EditUserServlet extends HttpServlet{
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 		
+		session.setAttribute("error", null);
 		User user = (User)session.getAttribute("user");
 		
 		String firstName = (String) request.getParameter("editUserFirstName");
@@ -72,7 +73,10 @@ public class EditUserServlet extends HttpServlet{
 			}
 			user.setPassword(password);
 		}
-		
+		else{
+			session.setAttribute("error", "Error. Passwords do not match");
+		}
+			
 		session.setAttribute("user", user);
         
 		response.sendRedirect("EditUser.jsp");

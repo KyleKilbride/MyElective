@@ -20,9 +20,10 @@
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
-//	if (user != null) {
-//		session.setAttribute("userName", user.getFirstName());
-//	}
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 <html>
 	<head>
@@ -76,7 +77,13 @@
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    		<%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+										<input type="hidden" name="viewid" value="AllElectives.jsp">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
@@ -112,9 +119,9 @@
 							var x = 0;
 							for(var i = 0; i < letters.length; i++){
 								var letter = letters[n];
-								if(names[x].charAt(0) === letter){
+								if(names[x].charAt(0) == letter){
 									document.write("<h1>" + letter + "</h1>");
-									while(names[x].charAt(0) === letter){
+									while(names[x].charAt(0) == letter){
 										document.write("<span>"+names[x++]+"</span><br/>");
 									}
 								}

@@ -18,6 +18,11 @@
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
+	
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 <html>
 	<head>
@@ -69,7 +74,13 @@
 												$("#search").autocomplete({source : names});
 											});
 										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+										<input type="hidden" name="viewid" value="Admin.jsp">
 										<button type="submit" class="btn btn-default">Submit</button>	
 									</div>
 								</form>

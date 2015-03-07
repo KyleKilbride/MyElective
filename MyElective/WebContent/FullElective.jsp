@@ -20,6 +20,11 @@
 		session.setAttribute("userName", loggedUser.getFirstName());
 		session.setAttribute("userStatus", loggedUser.getStatus());
 	}
+	
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 
 <html>
@@ -42,9 +47,7 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					      <a class="navbar-brand" href="index.jsp">
-					        MyElective
-					      </a>
+					      <a class="navbar-brand" href="index.jsp">MyElective</a>
 					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 					        <span class="sr-only">Toggle navigation</span>
 					        <span class="icon-bar"></span>
@@ -65,17 +68,25 @@
 						    		</ul>
 						    	<%}%>
 						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
-							  <div class="form-group">
-								  <script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+								<div class="form-group">
+									<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+								  	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(", ");
 											$("#search").autocomplete({source : names});
 										});
 								</script>
-							    <input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    <%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+								<input type="hidden" name="viewid" value="FullElective.jsp">
 							    <button type="submit" class="btn btn-default">Submit</button>							    
 							  </div>
 							</form>
@@ -120,9 +131,7 @@
 		      		</div>
 		        </div>
 		    </section>
-
 		</div> <!-- /.container fluid -->
 	</body>
-	<script src="js/jquery-1.11.2.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </html>
