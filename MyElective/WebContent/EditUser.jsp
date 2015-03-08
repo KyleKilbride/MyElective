@@ -9,7 +9,7 @@
 	request.getSession(false);
 	User user = (User) session.getAttribute("user");
 	
-	if(session.getAttribute("userStatus")== null){
+	if(session.getAttribute("user")== null){
 		response.sendRedirect("SplashPage.jsp");
 	}
 
@@ -19,6 +19,16 @@
 		
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
 	//session.setAttribute("userName", user.getFirstName());
+	
+	String error = (String)session.getAttribute("error");
+	if(error==null || error=="null"){
+		error="";
+	}
+	
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 <html>
 	<head>
@@ -67,11 +77,17 @@
 												allElectives = searchScript.getAttribute("data-electives");
 												allElectives = allElectives.substring(1);
 												allElectives = allElectives.substring(0,allElectives.length - 1);
-												var names = allElectives.split(",  ");
+												var names = allElectives.split(", ");
 												$("#search").autocomplete({source : names});
 											});
 										</script>
-										<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+										<input type="hidden" name="viewid" value="EditUser.jsp">
 										<button type="submit" class="btn btn-default">Submit</button>	
 									</div>
 								</form>
@@ -93,24 +109,18 @@
 		<br/>
 		<br/>
 		<form action="editUserServlet" method="POST" id="editUserForm">
-			<b>Current First Name:</b> <%=user.getFirstName()%> <input type="text" maxlength="100" name="editUserFirstName" placeholder="New User First Name"/>			
+			<b>Current First Name:</b> <%=user.getFirstName()%> <input type="text" maxlength="100" size="100" name="editUserFirstName" placeholder="New User First Name"/>			
 			<br/><br/>
-			<b>Current Last Name:</b> <%=user.getLastName()%> <input type="text" maxlength="100" name="editUserLastName" placeholder="New User Last Name"/>
+			<b>Current Last Name:</b> <%=user.getLastName()%> <input type="text" maxlength="100" size="100" name="editUserLastName" placeholder="New User Last Name"/>
 			<br/><br/>
 			<b>Current Program:</b> <%=user.getProgram()%> <input type="text" name="editUserProgram" maxlength="200" size="100" placeholder="New User Program"/>
 			<br/><br/>			
-			<b>Enter New Password:</b> <input type="password" name="editUserPassword" maxlength="100" placeholder="New User Password"/>
+			<b>Enter New Password:</b> <input type="password" name="editUserPassword" maxlength="100" size="25" placeholder="New User Password"/>
 			<br/><br/>
-			<b>Confirm New Password:</b> <input type="password" name="editUserConfirmPassword" maxlength="100" placeholder="Confirm New User Password"/>
+			<b>Confirm New Password:</b> <input type="password" name="editUserConfirmPassword" maxlength="100" size="25" placeholder="Confirm New User Password"/> 
 			<br/><br/>
-			<script type="text/javascript">
-				$(function() {			
-					if(document.getElementById("editUserPassword")){
-						
-
-					}
-				});							
-			</script>
+			<h2 style="color: red;"><%out.print(error); %></h2>
+			<%session.setAttribute("error", null);%>
 			<input type="submit" value="Submit"></input>
 			<input hidden="true" type="text" name="editUserEmail" value="<%=user.getEmailAddress()%>"/>
 			

@@ -36,6 +36,10 @@
 		session.setAttribute("userStatus", user.getStatus());
 	}
 	
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 <html>
 	<head>
@@ -92,13 +96,19 @@
 											$("#search").autocomplete({source : names});
 										});
 									</script>
-							    	<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    		<%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+										<input type="hidden" name="viewid" value="index.jsp">
 							    	<button type="submit" class="btn btn-default">Submit</button>							    
 							  	</div>
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
-							    	<%if(session.getAttribute("userName") == null){%>
+							   		<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
 							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>

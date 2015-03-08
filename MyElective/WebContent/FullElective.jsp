@@ -21,6 +21,11 @@
 		session.setAttribute("userName", loggedUser.getFirstName());
 		session.setAttribute("userStatus", loggedUser.getStatus());
 	}
+	
+	String searchError = (String)session.getAttribute("searchError");
+	if(searchError==null || searchError=="null"){
+		searchError="";
+	}
 %>
 
 <html>
@@ -46,31 +51,31 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					   		<a class="navbar-brand" href="index.jsp">MyElective</a>
-					      	<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					       		<span class="sr-only">Toggle navigation</span>
-					       		<span class="icon-bar"></span>
-					        	<span class="icon-bar"></span>
-					        	<span class="icon-bar"></span>
-					      	</button>
+					      <a class="navbar-brand" href="index.jsp">MyElective</a>
+					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					        <span class="sr-only">Toggle navigation</span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					        <span class="icon-bar"></span>
+					      </button>
 					    </div>
-					    <div class="collapse navbar-collapse">
-							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
-						    	<ul class="nav navbar-nav">
-						    		<li><a href="AllElectives.jsp">All Electives</a></li>
-						    		<li><a href="Admin.jsp">Admin</a></li>
-						    	</ul>
-						   	<%}
-						   	else{%>
-						   		<ul class="nav navbar-nav">
-						   			<li><a href="AllElectives.jsp">All Electives</a></li>
-						    	</ul>
-						    <%}%>
+					       <div class="collapse navbar-collapse">
+								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    		<ul class="nav navbar-nav">
+						    			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    			<li><a href="Admin.jsp">Admin</a></li>
+						    		</ul>
+						   		<%}
+						   		else{%>
+						   			<ul class="nav navbar-nav">
+						   				<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		</ul>
+						    	<%}%>
 						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
 								<div class="form-group">
-							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
-									<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
+								  	<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
@@ -78,20 +83,26 @@
 											var names = allElectives.split(", ");
 											$("#search").autocomplete({source : names});
 										});
-									</script>
-							    	<input type="text" class="form-control" placeholder="Search" id="search" name="search">
-							    	<button type="submit" class="btn btn-default">Submit</button>							    
-							  	</div>
+								</script>
+							    <%if(searchError.equals("")){ %>
+											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+										<%}else{ %>
+											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
+											<%session.setAttribute("searchError", null);%>
+										<%} %>
+								<input type="hidden" name="viewid" value="FullElective.jsp">
+							    <button type="submit" class="btn btn-default">Submit</button>							    
+							  </div>
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
 							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
-							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
-								</ul>  	
+								</ul>
+
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -127,9 +138,7 @@
 		      		</div>
 		        </div>
 		    </section>
-
 		</div> <!-- /.container fluid -->
 	</body>
-	<script src="js/jquery-1.11.2.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 </html>

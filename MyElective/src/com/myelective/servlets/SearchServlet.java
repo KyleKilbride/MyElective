@@ -24,10 +24,9 @@ public class SearchServlet extends HttpServlet{
 		HttpSession session = request.getSession(false);
 		session.setAttribute("searchElective", null);
 		String electiveName = (String) request.getParameter("search");
-		
+		String referer = (String) request.getParameter("viewid");
 		if(electiveName.intern() == ""){
-			/* NEEDS ERROR MESSAGE */
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(referer);
 			return;
 		}
 		
@@ -37,9 +36,9 @@ public class SearchServlet extends HttpServlet{
 				elective.setComments(rc.getRatings(elective.getId()));	
 			} catch (SQLException e) {
 				e.printStackTrace();
-				/* NEEDS ERROR MESSAGE */
+				session.setAttribute("searchError", "No Electives match that name");
 				session.setAttribute("searchElective", elective);
-				response.sendRedirect("index.jsp");
+				response.sendRedirect(referer);
 				return;
 			}
 		}	
