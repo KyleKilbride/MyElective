@@ -4,7 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import beans.Elective;
 import beans.Rating;
@@ -262,5 +266,15 @@ public class RatingController {
 		PreparedStatement query = dbConnection.prepareStatement("UPDATE users SET password = '" + newPassword + "' WHERE email_address = '" + editUserEmail + "'");
 		query.executeUpdate();
 		return;
-	}		
+	}	
+	
+	public void addRating(Rating rating) throws SQLException, ParseException{
+//		DateFormat df = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy");
+//		Date date = df.parse(String.valueOf(rating.getDate()));
+//		String s = date.toString();
+//		int dateInt = Integer.valueOf(s);
+		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
+		q.executeUpdate();
+		return;
+	}
 }

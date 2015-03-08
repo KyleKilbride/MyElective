@@ -1,0 +1,71 @@
+package com.myelective.servlets;
+
+import java.io.IOException;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import beans.Rating;
+import beans.User;
+
+import com.myelective.controllers.RatingController;
+
+/**
+ * Servlet implementation class CommentServlet
+ */
+@WebServlet("/CommentServlet")
+public class CommentServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    private RatingController ratingController;
+    private Rating rating;
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public CommentServlet() {
+        super();
+        
+        ratingController = new RatingController();
+        rating = new Rating();
+        
+    }
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		
+		try {
+			Date date = new Date();
+			User user = (User)session.getAttribute("user");
+			rating.setDate(date);
+			rating.setElectiveID(Integer.parseInt(session.getAttribute("ElectiveID").toString()));
+			rating.setHoursPerWeek(Integer.parseInt(request.getParameter("hoursAWeek").toString()));
+			rating.setComment(request.getParameter("reviewText").toString());
+			rating.setRating(Integer.parseInt(request.getParameter("reviewRating").toString()));	
+			rating.setUserID(user.getUserID());
+			ratingController.addRating(rating);
+		} catch (NumberFormatException | SQLException | ParseException e) {
+			e.printStackTrace();
+		}
+		
+		response.sendRedirect("FullElective.jsp?ElectiveID=" + session.getAttribute("ElectiveID"));
+	}
+
+}

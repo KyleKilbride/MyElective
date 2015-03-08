@@ -24,12 +24,27 @@ public class User  {
 	private String program;
 	/** The Users type (admin or user) */
 	private String status;
+	private int userID;
 	
 	/**
 	 * Default Constructor
 	 */
 	public User(){
 		
+	}
+	
+	/**
+	 * @return the userID
+	 */
+	public int getUserID() {
+		return userID;
+	}
+
+	/**
+	 * @param userID the userID to set
+	 */
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 
 	/**

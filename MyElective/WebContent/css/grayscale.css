@@ -22,6 +22,14 @@ html {
 	padding-bottom: 30px;
 }
 
+#fullElective{
+	padding-top: 60px !important;   
+}
+
+#reviewForm{
+	color: black;
+}
+
 h1,
 h2,
 h3,

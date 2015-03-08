@@ -24,6 +24,10 @@ a{
 	text-decoration: none;
 }
 
+.modal-body{
+	color: black;
+}
+
 a:hover{
 	text-decoration: none;
 }

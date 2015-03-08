@@ -64,6 +64,7 @@ public class UserController {
     			user.setEmailAddress(rsEmailPass.getString("email_address"));
     			user.setProgram(rsEmailPass.getString("program"));
     			user.setStatus(rsEmailPass.getString("status"));
+    			user.setUserID(rsEmailPass.getInt("id"));
         	}
         	
         	if(userName == null){	//if email/pass doesn't return a User
@@ -79,6 +80,7 @@ public class UserController {
         			user.setEmailAddress(rsUserPass.getString("email_address"));
         			user.setProgram(rsUserPass.getString("program"));
         			user.setStatus(rsUserPass.getString("status"));
+        			user.setUserID(rsUserPass.getInt("id"));
         		}
         	}
         } catch (Exception e) {  

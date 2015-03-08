@@ -13,7 +13,8 @@
 	UserController userController = new UserController();
 
 	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
-
+	session.setAttribute("ElectiveID", electiveID);
+	
 	Elective elective = ratingController.getElective(electiveID);
 	
 	if (loggedUser != null) {
@@ -24,11 +25,14 @@
 
 <html>
 	<head>
+		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
-		<link href="css/index.css" rel="stylesheet" type="text/css">
-		
+		<!-- <link href="css/index.css" rel="stylesheet" type="text/css"> -->
+		<link href="css/grayscale.css" rel="stylesheet" type="text/css">
 		<link rel="stylesheet" href="//code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css">
         <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.5.0/pure-min.css">
+		<link href="http://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<title>MyElective</title>
 	</head>
@@ -42,46 +46,52 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					      <a class="navbar-brand" href="#">
-					        MyElective
-					      </a>
-					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-					        <span class="sr-only">Toggle navigation</span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					        <span class="icon-bar"></span>
-					      </button>
+					   		<a class="navbar-brand" href="index.jsp">MyElective</a>
+					      	<button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+					       		<span class="sr-only">Toggle navigation</span>
+					       		<span class="icon-bar"></span>
+					        	<span class="icon-bar"></span>
+					        	<span class="icon-bar"></span>
+					      	</button>
 					    </div>
 					    <div class="collapse navbar-collapse">
-						    <ul class="nav navbar-nav">
-						    	<li><a href="AllElectives.jsp">All Electives</a></li>
-						    </ul>
-						    <form class="navbar-form navbar-right" role="search">
-							  <div class="form-group">
-								  <script type="text/javascript">
+							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
+						    	<ul class="nav navbar-nav">
+						    		<li><a href="AllElectives.jsp">All Electives</a></li>
+						    		<li><a href="Admin.jsp">Admin</a></li>
+						    	</ul>
+						   	<%}
+						   	else{%>
+						   		<ul class="nav navbar-nav">
+						   			<li><a href="AllElectives.jsp">All Electives</a></li>
+						    	</ul>
+						    <%}%>
+						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
+								<div class="form-group">
+							  		<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+									<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
+									<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
 										$(function() {
-											var electives = document.getElementById("mainDiv"), allElectives;
-											allElectives = mainDiv.getAttribute("data-electives");
+											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(0,allElectives.length - 4);
-											var names = allElectives.split(",  ");
+											allElectives = allElectives.substring(0,allElectives.length - 1);
+											var names = allElectives.split(", ");
 											$("#search").autocomplete({source : names});
 										});
-								</script>
-							    <input type="text" class="form-control" placeholder="Search">
-							    <button type="submit" class="btn btn-default">Submit</button>							    
-							  </div>
+									</script>
+							    	<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+							    	<button type="submit" class="btn btn-default">Submit</button>							    
+							  	</div>
 							</form>
 						    <div id="loginSignupText">
-							    <p class="navbar-text navbar-right">
-							    	<%if(session.getAttribute("userName") == null){
-							    		System.out.println("gets in if "+ session.getAttribute("userName"));%>
-								  		<a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a>
-								  	<%}else if(session.getAttribute("userName") != null){ 
-								  		System.out.println("gets in else " + session.getAttribute("userName"));%>
-								  		${sessionScope.user.getFirstName()} <a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a>
+							    <ul class="nav navbar-nav navbar-right">
+							    	<%if(session.getAttribute("userName") == null){%>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
+								  	<%}else if(session.getAttribute("userName") != null){%>
+							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
+							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
-								</p>
+								</ul>  	
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -93,7 +103,7 @@
 			<!-- featuredElectives row -->
 			
 			<!-- MAIN CONTENT -->
-		    <section id="featuredElective" class="container content-section text-center">
+		    <section id="fullElective" class="container content-section text-center">
 		        <div class="row">
 		            <div class="col-lg-8 col-lg-offset-2">
 		      			<h1><%=elective.getName()%> - <%=elective.getCourseCode()%></h1>
@@ -101,15 +111,17 @@
 						<p>Rating: <%=elective.getRating()%></p>
 						<%for(Rating rating: elective.getComments()){
 							User user = ratingController.getUser(rating.getUserID());
-							//out.print("<p><b>" + user.getUsername() + "</b>   " + rating.getDate().toString() + "</p>");
 							out.print("<p><b>" + user.getUsername() + "</b>");
-							out.print("<p>" + rating.getRating() + "    " + rating.getHoursPerWeek() + " hours per week </p>");
+							out.print("<p>" + rating.getRating() + "/10<br/>    " + rating.getHoursPerWeek() + " hours per week </p>");
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
 							out.print("<hr />");
 						}%>
 						<c:if test="${sessionScope.userName != null}">
-							<form action="" method="POST" id="reviewForm">
-								<textarea form="reviewForm" placeholder="Review" rows="5" cols="75"></textarea>
+							<form action="commentServlet" method="POST" id="reviewForm">
+								<span style="color:#ffffff">Rating: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
+								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
+								<span style="color:#ffffff">Hours a Week: </span><input name="hoursAWeek" maxlength="4" size="4"/>
+								<input type="submit" value="Submit"/>
 							</form>
 						</c:if>
 		      		</div>
