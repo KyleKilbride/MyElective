@@ -151,7 +151,8 @@
 		    </section>
 
 		    <section id="recentReviews" class="container content-section text-center">
-		        <div class="row">
+		        <h1>Recent Reaviews</h1>
+		        <div class="row" id="recentReviewsRow">
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating1.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
