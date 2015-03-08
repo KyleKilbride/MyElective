@@ -15,6 +15,7 @@
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
+	ArrayList<String> electiveNames = electiveController.getElectiveNames();
 
 	session.setAttribute("allElectives", electiveController.getElectiveNames());
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
@@ -109,25 +110,18 @@
 		        <div class="row">
 		            <div class="col-lg-8 col-lg-offset-2">
 		                <h2 id="allElectivesHeader">All Electives</h2>
-		                <script type="text/javascript" id="tableScript" data-electives="${sessionScope.allElectives}">
-							allElectives = tableScript.getAttribute("data-electives");
-							allElectives = allElectives.substring(1);
-							allElectives = allElectives.substring(0,allElectives.length - 1);
-							var letters = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-							var names = allElectives.split(",  ");
-							var n = 0;
-							var x = 0;
-							for(var i = 0; i < letters.length; i++){
-								var letter = letters[n];
-								if(names[x].charAt(0) == letter){
-									document.write("<h1>" + letter + "</h1>");
-									while(names[x].charAt(0) == letter){
-										document.write("<span>"+names[x++]+"</span><br/>");
-									}
-								}
-								n++;
-							}
-						 </script> 
+						 <%
+						 char startingLetter = ' ';
+						 for(String elective_name:electiveNames){
+							 if(elective_name.charAt(0) != startingLetter){
+								 startingLetter = elective_name.charAt(0);
+								 out.print("<h2>"+ startingLetter +"</h2>");
+							 }
+							 
+							 elective_name.replace(" ", "_");
+							 out.print("<a href='searchServlet?param1="+ elective_name +"'>"+ elective_name +"</a><br/>");
+						 }
+						 %>
 		            </div>
 		        </div>
 		    </section>

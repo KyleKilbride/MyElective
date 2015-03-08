@@ -47,4 +47,27 @@ public class SearchServlet extends HttpServlet{
 		response.sendRedirect("FullElective.jsp?ElectiveID="+elective.getId());
 		return;
 	}	
+	
+	public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {	
+		HttpSession session = request.getSession(false);
+		session.setAttribute("searchElective", null);
+		String electiveName = (String) request.getParameter("param1").replace("_", " ");
+		electiveName.replace("'", "''");
+		electiveName.replace("$", "''");
+		try {
+			elective = rc.getElectiveByString(electiveName);
+			elective.setComments(rc.getRatings(elective.getId()));	
+		} catch (SQLException e) {
+			e.printStackTrace();
+			/* NEEDS ERROR MESSAGE */
+			session.setAttribute("searchElective", elective);
+			response.sendRedirect("index.jsp");
+			return;
+		}
+			
+		
+		session.setAttribute("searchElective", elective);
+		response.sendRedirect("FullElective.jsp?ElectiveID="+elective.getId());
+		return;
+	}	
 }
