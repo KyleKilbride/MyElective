@@ -42,7 +42,7 @@
 					<nav class="navbar navbar-inverse navbar-fixed-top">
 					  <div class="container-fluid">
 					    <div class="navbar-header">
-					      <a class="navbar-brand" href="#">
+					      <a class="navbar-brand" href="index.jsp">
 					        MyElective
 					      </a>
 					      <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
