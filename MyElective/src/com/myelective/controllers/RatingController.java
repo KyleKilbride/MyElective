@@ -58,7 +58,7 @@ public class RatingController {
 				if(numberOf >= returnedRowNum){ //if query returns fewer than requested Ratings
 					numberOf = returnedRowNum;
 				}
-				
+				result1.first();
 				//Creates specified number of Rating objects from result set and adds them to Arraylist
 				for(int i = 0; i < numberOf; i++){	
 					Rating ratingBean = new Rating(); // creates a new Rating object
@@ -70,7 +70,7 @@ public class RatingController {
 					ratingBean.setElectiveID(result1.getInt("electives_id"));
 					
 					ratingBeanAL.add(ratingBean); //adds Rating object to ArrayList
-					result1.previous(); //moves cursor to previous row in result set
+					result1.next(); //moves cursor to previous row in result set
 				}
 			}
 		}catch(Exception e){
@@ -120,9 +120,6 @@ public class RatingController {
 	}
 	
 	public Elective getElectiveByString(String selectedElective) throws SQLException{
-		if(selectedElective.contains("'")){
-			selectedElective = selectedElective.replace("'", "''");
-		}
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE elective_name=?");
 		query.setString(1, selectedElective);
 		ResultSet r = query.executeQuery();
@@ -276,5 +273,24 @@ public class RatingController {
 		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
 		q.executeUpdate();
 		return;
+	}
+	
+	public ArrayList<String> getElectiveNamesSearchBar() {
+		ArrayList<String> electiveArray = new ArrayList<String>();
+		
+		try {
+			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT elective_name FROM electives ORDER BY elective_name");
+			ResultSet result1 = pSt1.executeQuery();
+
+			while (result1.next()) {
+				String electiveName = result1.getString("elective_name");
+				electiveArray.add("~");
+				electiveArray.add(electiveName);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return electiveArray;
 	}
 }

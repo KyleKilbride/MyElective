@@ -17,7 +17,7 @@
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 	ArrayList<String> electiveNames = electiveController.getElectiveNames();
 
-	session.setAttribute("allElectives", electiveController.getElectiveNames());
+	session.setAttribute("allElectives",ratingController.getElectiveNamesSearchBar());
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
 	session.setAttribute("recentRatingBean1", (Rating) ratingArrLst.get(1));
 
@@ -73,11 +73,12 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
-											var names = allElectives.split(", ");
+											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
 										});
-								</script>
+									</script>
 							    		<%if(searchError.equals("")){ %>
 											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
 										<%}else{ %>
@@ -117,13 +118,12 @@
 								 startingLetter = elective_name.charAt(0);
 								 out.print("<h2>"+ startingLetter +"</h2>");
 							 }
-							 
-							 elective_name.replace(" ", "_");
-							 out.print("<a href='searchServlet?param1="+ elective_name +"'>"+ elective_name +"</a><br/>");
+							 Elective elective = ratingController.getElectiveByString(elective_name);
+							 out.print("<a href='FullElective.jsp?ElectiveID=" + elective.getId() + "'>" + elective.getName() + "</a><br/>");
 						 }
 						 %>
 		            </div>
-		        </div>
+		        </div>	
 		    </section>
 		</div>
 	<!-- /.container fluid -->

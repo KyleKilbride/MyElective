@@ -17,7 +17,7 @@
 	RatingController ratingController = new RatingController();
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
-	session.setAttribute("allElectives", electiveController.getElectiveNames());
+	session.setAttribute("allElectives",ratingController.getElectiveNamesSearchBar());
 	//session.setAttribute("userName", user.getFirstName());
 	
 	String error = (String)session.getAttribute("error");
@@ -73,14 +73,15 @@
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 										<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
-											$(function() {			
-												allElectives = searchScript.getAttribute("data-electives");
-												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 1);
-												var names = allElectives.split(", ");
-												$("#search").autocomplete({source : names});
-											});
-										</script>
+										$(function() {
+											allElectives = searchScript.getAttribute("data-electives");
+											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(2);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
+											var names = allElectives.split(", ~, ");
+											$("#search").autocomplete({source : names});
+										});
+									</script>
 										<%if(searchError.equals("")){ %>
 											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
 										<%}else{ %>
