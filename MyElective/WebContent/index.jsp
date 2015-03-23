@@ -111,7 +111,7 @@
 							   		<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
+							  			<li><a href="EditUser.jsp">Welcome ${sessionScope.user.getFirstName()}!</a></li>
 							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
@@ -128,7 +128,7 @@
 		                <div class="row">
 		                    <div class="col-md-8 col-md-offset-2">
 		                        <h1 class="brand-heading">MyElective</h1>
-		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elevtice class of their liking.</p>
+		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elective class of their liking.</p>
 		                        <a href="#featuredElective" class="btn btn-circle page-scroll">
 		                            <i class="fa fa-angle-double-down animated"></i>
 		                        </a>

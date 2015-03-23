@@ -99,7 +99,7 @@
 							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  		<li><a href="EditUser.jsp">Welcome ${sessionScope.user.getFirstName()}!</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>
 
@@ -119,7 +119,6 @@
 		            <div class="col-lg-8 col-lg-offset-2">
 		      			<h1><%=elective.getName()%> - <%=elective.getCourseCode()%></h1>
 						<p>Description: <%=elective.getDescription()%></p>
-						<p>Rating: <%=elective.getRating()%></p>
 						<%for(Rating rating: elective.getComments()){
 							User user = ratingController.getUser(rating.getUserID());
 							out.print("<p><b>" + user.getUsername() + "</b>");
@@ -129,9 +128,9 @@
 						}%>
 						<c:if test="${sessionScope.userName != null}">
 							<form action="commentServlet" method="POST" id="reviewForm">
-								<span style="color:#ffffff">Rating: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
-								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
-								<span style="color:#ffffff">Hours a Week: </span><input name="hoursAWeek" maxlength="4" size="4"/>
+								<span style="color:#ffffff">Rating: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span><br>
+								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea><br>
+								<span style="color:#ffffff">Hours a Week: </span><input name="hoursAWeek" maxlength="4" size="4"/><br>
 								<input type="submit" value="Submit"/>
 							</form>
 						</c:if>

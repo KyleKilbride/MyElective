@@ -120,9 +120,6 @@ public class RatingController {
 	}
 	
 	public Elective getElectiveByString(String selectedElective) throws SQLException{
-		if(selectedElective.contains("'")){
-			selectedElective = selectedElective.replace("'", "''");
-		}
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE elective_name=?");
 		query.setString(1, selectedElective);
 		ResultSet r = query.executeQuery();

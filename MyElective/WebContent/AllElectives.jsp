@@ -93,7 +93,7 @@
 							    	<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  		<li><a href="EditUser.jsp">Welcome ${sessionScope.user.getFirstName()}!</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
 								  	<%}%>
 								</ul>  	
 								<!-- </p> -->
@@ -118,8 +118,8 @@
 								 out.print("<h2>"+ startingLetter +"</h2>");
 							 }
 							 
-							 elective_name.replace(" ", "_");
-							 out.print("<a href='searchServlet?param1="+ elective_name +"'>"+ elective_name +"</a><br/>");
+							 Elective elective = ratingController.getElectiveByString(elective_name);
+							 out.print("<a href='FullElective.jsp?ElectiveID="+ elective.getId() +"'>"+ elective.getName() +"</a><br/>");
 						 }
 						 %>
 		            </div>
