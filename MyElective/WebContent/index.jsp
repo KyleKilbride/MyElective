@@ -129,7 +129,7 @@
 		                <div class="row">
 		                    <div class="col-md-8 col-md-offset-2">
 		                        <h1 class="brand-heading">MyElective</h1>
-		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elevtice class of their liking.</p>
+		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elective class of their liking.</p>
 		                        <a href="#featuredElective" class="btn btn-circle page-scroll">
 		                            <i class="fa fa-angle-double-down animated"></i>
 		                        </a>

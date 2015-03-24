@@ -66,7 +66,7 @@ public class RatingController {
 					//Sets fields for Rating objects
 					ratingBean.setRating(result1.getInt("rating"));
 					ratingBean.setHoursPerWeek(result1.getInt("hours_per_week"));
-					ratingBean.setComment(result1.getString("comment"));
+					ratingBean.setComment(censorReview(result1.getString("comment")));
 					ratingBean.setElectiveID(result1.getInt("electives_id"));
 					
 					ratingBeanAL.add(ratingBean); //adds Rating object to ArrayList
@@ -132,7 +132,7 @@ public class RatingController {
 			e.setRating(r.getInt("average_rating"));
 			e.setCourseCode(r.getString("course_code"));
 			e.setDescription(r.getString("description"));
-		//	e.setComments(this.getRatings(id));
+			//e.setComments(this.getRatings(selectedElective));
 			return e;
 		}else
 			return null;
@@ -157,7 +157,8 @@ public class RatingController {
 		
 		while(r.next()){
 			Rating rating = new Rating();
-			rating.setComment(r.getString("comment"));
+			//rating.setComment(r.getString("comment"));
+			rating.setComment(censorReview(r.getString("comment")));
 			rating.setRating(r.getInt("rating"));
 			rating.setHoursPerWeek(r.getInt("hours_per_week"));
 			rating.setElectiveID(r.getInt("electives_id"));
@@ -292,5 +293,29 @@ public class RatingController {
 		}
 		
 		return electiveArray;
+	}
+	
+	public ArrayList<String> getBadWords() throws SQLException{
+		ArrayList<String> badwords = new ArrayList<String>();
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM bad_words");
+		ResultSet r = query.executeQuery();
+		
+		while(r.next()){
+			badwords.add(r.getString("word"));
+		}
+		return badwords;
+	}
+	
+	public String censorReview(Object review) throws SQLException{
+		ArrayList<String> badwords = getBadWords();
+		for(String word:badwords){
+			String censor = "";
+			for(int i = 0; i < word.length(); i++){
+				censor = censor.concat("*");
+			}
+			review = ((String) review).replaceAll("(?i)"+word, censor);
+		}
+		
+		return (String)review;
 	}
 }
