@@ -108,9 +108,12 @@
 					<p><b>Select Elective to Edit</b></p>
 					<form action="" method="POST">		
 						<select name="editElectivesDrop">
-							<option value=""></option>	
+							<option value=""></option>
+							<%int z=0;%>	
 							<c:forEach items="${sessionScope.allElectives}" var="elective" >
-								<option value="${elective}" >${elective}</option>
+							<%if(z%2 == 1){ %>
+								<option value="${elective}" >${elective}</option>			
+								<%}z++; %>
 							</c:forEach>
 						</select>
 						<input type="submit" value="Select Elective"></input>			
@@ -152,9 +155,12 @@
 						<p><b>Select Elective to Remove</b></p>
 						<form action="" method="POST">		
 							<select name="removeElectivesDrop">
-								<option value=""></option>	
+								<option value=""></option>
+								<%int y=0;%>	
 								<c:forEach items="${sessionScope.allElectives}" var="elective" >
+								<%if(y%2 == 1){ %>
 									<option value="${elective}" >${elective}</option>
+								<%}y++; %>
 								</c:forEach>
 							</select>
 							<input type="submit" value="Select Elective"></input>			

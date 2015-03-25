@@ -68,7 +68,7 @@ public class RatingController {
 					ratingBean.setHoursPerWeek(result1.getInt("hours_per_week"));
 					ratingBean.setComment(censorReview(result1.getString("comment")));
 					ratingBean.setElectiveID(result1.getInt("electives_id"));
-					
+					ratingBean.setDate(result1.getLong("date"));
 					ratingBeanAL.add(ratingBean); //adds Rating object to ArrayList
 					result1.next(); //moves cursor to previous row in result set
 				}
@@ -162,7 +162,7 @@ public class RatingController {
 			rating.setRating(r.getInt("rating"));
 			rating.setHoursPerWeek(r.getInt("hours_per_week"));
 			rating.setElectiveID(r.getInt("electives_id"));
-		//	rating.setDate(r.getDate("date"));
+			rating.setDate(r.getLong("date"));
 			rating.setUserID(r.getInt("users_id"));
 			ratingList.add(rating);
 		}
@@ -271,7 +271,7 @@ public class RatingController {
 //		Date date = df.parse(String.valueOf(rating.getDate()));
 //		String s = date.toString();
 //		int dateInt = Integer.valueOf(s);
-		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
+		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, date, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getDate() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
 		q.executeUpdate();
 		return;
 	}

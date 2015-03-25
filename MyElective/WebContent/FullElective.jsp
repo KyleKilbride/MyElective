@@ -126,6 +126,8 @@
 							out.print("<p><b>" + user.getUsername() + "</b>");
 							out.print("<p>" + rating.getRating() + "/10<br/>    " + rating.getHoursPerWeek() + " hours per week </p>");
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
+							String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (rating.getDate()*1000L));
+							out.print("<p>\"" + date + "\"</p>");
 							out.print("<hr />");
 						}%>
 						<c:if test="${sessionScope.userName != null}">

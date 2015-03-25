@@ -51,10 +51,9 @@ public class CommentServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
-		try {
-			Date date = new Date();
+		try {		
 			User user = (User)session.getAttribute("user");
-			rating.setDate(date);
+			rating.setDate(System.currentTimeMillis()/1000);
 			rating.setElectiveID(Integer.parseInt(session.getAttribute("ElectiveID").toString()));
 			rating.setHoursPerWeek(Integer.parseInt(request.getParameter("hoursAWeek").toString()));
 			rating.setComment(request.getParameter("reviewText").toString());

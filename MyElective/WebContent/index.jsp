@@ -152,27 +152,27 @@
 		    </section>
 
 		    <section id="recentReviews" class="container content-section text-center">
-		        <h1>Recent Reaviews</h1>
+		        <h1>Recent Reviews</h1>
 		        <div class="row" id="recentReviewsRow">
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating1.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: <%=rating1.getComment() %></p>
-			                <p>Rating out of 10: <%=rating1.getRating()%></p>
+			                <p>Rating: <%=rating1.getRating()%>/10</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating2.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: <%=rating2.getComment() %></p>
-			                <p>Rating out of 10: <%=rating2.getRating()%></p>
+			                <p>Rating: <%=rating2.getRating()%>/10</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating3.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
 			                <p>Review: <%=rating3.getComment() %></p>
-			                <p>Rating out of 10: <%=rating3.getRating()%></p>
+			                <p>Rating: <%=rating3.getRating()%>/10</p>
 			            </a>
 		            </div>
 		        </div>
