@@ -32,6 +32,10 @@
     <servlet-name>comment</servlet-name>
     <servlet-class>com.myelective.servlets.CommentServlet</servlet-class>
   </servlet>
+   <servlet>
+    <servlet-name>language</servlet-name>
+    <servlet-class>com.myelective.servlets.LanguageServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>login</servlet-name>
     <url-pattern>/loginServlet</url-pattern>
@@ -63,7 +67,11 @@
   <servlet-mapping>
     <servlet-name>comment</servlet-name>
     <url-pattern>/commentServlet</url-pattern>
-  </servlet-mapping>  
+  </servlet-mapping>
+    <servlet-mapping>
+    <servlet-name>language</servlet-name>
+    <url-pattern>/languageServlet</url-pattern>
+  </servlet-mapping>   
   <welcome-file-list>
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>

@@ -1,5 +1,9 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
 
 <!DOCTYPE html>
 
@@ -7,6 +11,12 @@
 <%
 	request.getSession(false);
 	User user = (User)session.getAttribute("user");
+	
+	if(session.getAttribute("language") ==  "french"){
+		%> <fmt:setBundle basename="com.myelective.resources.text_fr" /> <% 
+	}else{
+		%> <fmt:setBundle basename="com.myelective.resources.text" /> <%
+	}
 	
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
@@ -74,13 +84,13 @@
 					    <div class="collapse navbar-collapse">
 							<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
 						    	<ul class="nav navbar-nav">
-						    		<li><a href="AllElectives.jsp">All Electives</a></li>
-						    		<li><a href="Admin.jsp">Admin</a></li>
+						    		<li><a href="AllElectives.jsp"><fmt:message key="nav.label.allelectives" /></a></li>
+						    		<li><a href="Admin.jsp"><fmt:message key="nav.label.admin" /></a></li>
 						    	</ul>
 						   	<%}
 						   	else{%>
 						   		<ul class="nav navbar-nav">
-						   			<li><a href="AllElectives.jsp">All Electives</a></li>
+						   			<li><a href="AllElectives.jsp"><fmt:message key="nav.label.allelectives" /></a></li>
 						    	</ul>
 						    <%}%>
 						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
@@ -98,23 +108,28 @@
 										});
 									</script>
 							    		<%if(searchError.equals("")){ %>
-											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+											<input type="text" class="form-control" placeholder="<fmt:message key="nav.label.search" />" id="search" name="search">
 										<%}else{ %>
 											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
 											<%session.setAttribute("searchError", null);%>
 										<%} %>
 										<input type="hidden" name="viewid" value="index.jsp">
-							    	<button type="submit" class="btn btn-default">Submit</button>							    
+							    	<button type="submit" class="btn btn-default"><fmt:message key="nav.button.submit" /></button>							    
 							  	</div>
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
 							   		<%if(session.getAttribute("userName") == null){%>
-								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText"><fmt:message key="nav.label.loginsignup" /></a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
 							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
-							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
+								</ul>  	
+							</div>
+							<div id="language">
+							    <ul class="nav navbar-nav navbar-right">
+								  	<li><a href="languageServlet" class="navbar-link" id="loginText"><fmt:message key="nav.label.language" /></a></li>
 								</ul>  	
 							</div>
 						</div>
@@ -129,7 +144,7 @@
 		                <div class="row">
 		                    <div class="col-md-8 col-md-offset-2">
 		                        <h1 class="brand-heading">MyElective</h1>
-		                        <p class="intro-text">A feedback tool for Algonquin College students to better pick an elective class of their liking.</p>
+		                        <p class="intro-text"><fmt:message key="main.label.myelectivedescription" /></p>
 		                        <a href="#featuredElective" class="btn btn-circle page-scroll">
 		                            <i class="fa fa-angle-double-down animated"></i>
 		                        </a>
@@ -143,36 +158,36 @@
 		    <section id="featuredElective" class="container content-section text-center">
 		        <div class="row">
 		            <div class="col-lg-8 col-lg-offset-2">
-		                <h2>Featured Elective</h2>
+		                <h2><fmt:message key="main.label.featuredElective"/></h2>
 		                <h3>${sessionScope.featuredElective.getName()} -- ${sessionScope.featuredElective.getCourseCode()}</h3>
 		                <p>${sessionScope.featuredElective.getDescription()}</p>
-		                <a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getId()%>">View</a>
+		                <a class="btn btn-default" id="featuredViewButton" href="FullElective.jsp?ElectiveID=<%=featuredElective.getId()%>"><fmt:message key="main.button.view"/></a>
 		            </div>
 		        </div>
 		    </section>
 
 		    <section id="recentReviews" class="container content-section text-center">
-		        <h1>Recent Reaviews</h1>
+		        <h1><fmt:message key="main.label.recentreview"/></h1>
 		        <div class="row" id="recentReviewsRow">
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating1.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: <%=rating1.getComment() %></p>
-			                <p>Rating out of 10: <%=rating1.getRating()%></p>
+			                <p><fmt:message key="main.label.review"/>: <%=rating1.getComment() %></p>
+			                <p><fmt:message key="main.label.rating"/>: <%=rating1.getRating()%></p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating2.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: <%=rating2.getComment() %></p>
-			                <p>Rating out of 10: <%=rating2.getRating()%></p>
+			                <p><fmt:message key="main.label.review"/>: <%=rating2.getComment() %></p>
+			                <p><fmt:message key="main.label.rating"/>: <%=rating2.getRating()%></p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating3.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: <%=rating3.getComment() %></p>
-			                <p>Rating out of 10: <%=rating3.getRating()%></p>
+			                <p><fmt:message key="main.label.review"/>: <%=rating3.getComment() %></p>
+			                <p><fmt:message key="main.label.rating"/>: <%=rating3.getRating()%></p>
 			            </a>
 		            </div>
 		        </div>
