@@ -39,13 +39,6 @@ CREATE TABLE `my_elective`.`bad_words` (
 `word` varchar(45) not null,
 PRIMARY KEY (`id`) );
 
-CREATE TABLE `my_elective`.`ratings_has_bad_words`(
-`ratings_id` int not null,
-`bad_words_id` int not null,
-FOREIGN KEY (`ratings_id`) REFERENCES ratings(`id`),
-FOREIGN KEY (`bad_words_id`) REFERENCES bad_words(`id`),
-PRIMARY KEY (`ratings_id`, `bad_words_id`));
-
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('kyle', 'password', 'Kyle', 'Usherwood', 'Computer Engineering - Computer Science', 'ushe0010@algonquinlive.com', 'admin');
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('lesserkyle', 'password', 'Kyle', 'Kilbride', 'Computer Engineering - Computer Science', 'kilb0067@algonquinlive.com', 'admin');
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('matt', 'password', 'Matthew', 'Boyd', 'Computer Engineering - Computer Science', 'boyd0077@algonquinlive.com', 'admin');  

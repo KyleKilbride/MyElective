@@ -58,7 +58,7 @@ public class RatingController {
 				if(numberOf >= returnedRowNum){ //if query returns fewer than requested Ratings
 					numberOf = returnedRowNum;
 				}
-				
+				result1.first();
 				//Creates specified number of Rating objects from result set and adds them to Arraylist
 				for(int i = 0; i < numberOf; i++){	
 					Rating ratingBean = new Rating(); // creates a new Rating object
@@ -66,11 +66,11 @@ public class RatingController {
 					//Sets fields for Rating objects
 					ratingBean.setRating(result1.getInt("rating"));
 					ratingBean.setHoursPerWeek(result1.getInt("hours_per_week"));
-					ratingBean.setComment(result1.getString("comment"));
+					ratingBean.setComment(censorReview(result1.getString("comment")));
 					ratingBean.setElectiveID(result1.getInt("electives_id"));
-					
+					ratingBean.setDate(result1.getLong("date"));
 					ratingBeanAL.add(ratingBean); //adds Rating object to ArrayList
-					result1.previous(); //moves cursor to previous row in result set
+					result1.next(); //moves cursor to previous row in result set
 				}
 			}
 		}catch(Exception e){
@@ -132,7 +132,7 @@ public class RatingController {
 			e.setRating(r.getInt("average_rating"));
 			e.setCourseCode(r.getString("course_code"));
 			e.setDescription(r.getString("description"));
-		//	e.setComments(this.getRatings(id));
+			//e.setComments(this.getRatings(selectedElective));
 			return e;
 		}else
 			return null;
@@ -157,11 +157,12 @@ public class RatingController {
 		
 		while(r.next()){
 			Rating rating = new Rating();
-			rating.setComment(r.getString("comment"));
+			//rating.setComment(r.getString("comment"));
+			rating.setComment(censorReview(r.getString("comment")));
 			rating.setRating(r.getInt("rating"));
 			rating.setHoursPerWeek(r.getInt("hours_per_week"));
 			rating.setElectiveID(r.getInt("electives_id"));
-		//	rating.setDate(r.getDate("date"));
+			rating.setDate(r.getLong("date"));
 			rating.setUserID(r.getInt("users_id"));
 			ratingList.add(rating);
 		}
@@ -270,8 +271,51 @@ public class RatingController {
 //		Date date = df.parse(String.valueOf(rating.getDate()));
 //		String s = date.toString();
 //		int dateInt = Integer.valueOf(s);
-		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
+		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, date, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getDate() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
 		q.executeUpdate();
 		return;
+	}
+	
+	public ArrayList<String> getElectiveNamesSearchBar() {
+		ArrayList<String> electiveArray = new ArrayList<String>();
+		
+		try {
+			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT elective_name FROM electives ORDER BY elective_name");
+			ResultSet result1 = pSt1.executeQuery();
+
+			while (result1.next()) {
+				String electiveName = result1.getString("elective_name");
+				electiveArray.add("~");
+				electiveArray.add(electiveName);
+			}
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+		
+		return electiveArray;
+	}
+	
+	public ArrayList<String> getBadWords() throws SQLException{
+		ArrayList<String> badwords = new ArrayList<String>();
+		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM bad_words");
+		ResultSet r = query.executeQuery();
+		
+		while(r.next()){
+			badwords.add(r.getString("word"));
+		}
+		return badwords;
+	}
+	
+	public String censorReview(Object review) throws SQLException{
+		ArrayList<String> badwords = getBadWords();
+		for(String word:badwords){
+			String censor = "";
+			for(int i = 0; i < word.length(); i++){
+				censor = censor.concat("*");
+			}
+			review = ((String) review).replaceAll("(?i)"+word, censor);
+		}
+		
+		return (String)review;
 	}
 }

@@ -12,24 +12,24 @@
 	RatingController ratingController = new RatingController();
 	
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
-			
+	ArrayList<String> electiveNames = electiveController.getElectiveNames();		
 	Elective featuredElective = (Elective)electiveController.getFeaturedElective();
 
 	session.setAttribute("userName", null);
     session.setAttribute("userStatus", null);
 	session.setAttribute("featuredElective", electiveController.getFeaturedElective());
-	session.setAttribute("allElectives",electiveController.getElectiveNames());
-	session.setAttribute("recentRatingBean1", ratingArrLst.get(0));
-	session.setAttribute("recentRatingBean2", ratingArrLst.get(1));
-	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
-	session.setAttribute("recentRatingBean4", ratingArrLst.get(3));
+	session.setAttribute("allElectives",ratingController.getElectiveNamesSearchBar());
+//	session.setAttribute("recentRatingBean1", ratingArrLst.get(0));
+//	session.setAttribute("recentRatingBean2", ratingArrLst.get(1));
+//	session.setAttribute("recentRatingBean3", ratingArrLst.get(2));
+//	session.setAttribute("recentRatingBean4", ratingArrLst.get(3));
 	
-	Rating rating1 = (Rating)session.getAttribute("recentRatingBean1");
-	Rating rating2 = (Rating)session.getAttribute("recentRatingBean2");
-	Rating rating3 = (Rating)session.getAttribute("recentRatingBean3");
-	Rating rating4 = (Rating)session.getAttribute("recentRatingBean4");
+	Rating rating1 = (Rating)ratingArrLst.get(0);
+	Rating rating2 = (Rating)ratingArrLst.get(1);
+	Rating rating3 = (Rating)ratingArrLst.get(2);
+	Rating rating4 = (Rating)ratingArrLst.get(3);
 
-	session.setAttribute("recentRatingBean1",(Rating) ratingArrLst.get(1));
+//	session.setAttribute("recentRatingBean1",(Rating) ratingArrLst.get(1));
 
 	if (user != null) {
 		session.setAttribute("userName", user.getFirstName());
@@ -91,8 +91,9 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
-											var names = allElectives.split(", ");
+											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
 										});
 									</script>
@@ -151,27 +152,27 @@
 		    </section>
 
 		    <section id="recentReviews" class="container content-section text-center">
-		        <h1>Recent Reaviews</h1>
+		        <h1>Recent Reviews</h1>
 		        <div class="row" id="recentReviewsRow">
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating1.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating1.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: ${sessionScope.recentRatingBean1.getComment()}</p>
-			                <p>Rating out of 10: ${sessionScope.recentRatingBean1.getRating()}</p>
+			                <p>Review: <%=rating1.getComment() %></p>
+			                <p>Rating: <%=rating1.getRating()%>/10</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating2.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating2.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: ${sessionScope.recentRatingBean2.getComment()}</p>
-			                <p>Rating out of 10: ${sessionScope.recentRatingBean2.getRating()}</p>
+			                <p>Review: <%=rating2.getComment() %></p>
+			                <p>Rating: <%=rating2.getRating()%>/10</p>
 			            </a>
 		            </div>
 		            <div class="col-lg-4">
 			            <a href="FullElective.jsp?ElectiveID=<%=ratingController.getElective(rating3.getElectiveID()).getId()%>" id="recentLink">
 			                <% out.write("<h2>" + ratingController.getElective(rating3.getElectiveID()).getName() + "</h2>"); %>
-			                <p>Review: ${sessionScope.recentRatingBean3.getComment()}</p>
-			                <p>Rating out of 10: ${sessionScope.recentRatingBean3.getRating()}</p>
+			                <p>Review: <%=rating3.getComment() %></p>
+			                <p>Rating: <%=rating3.getRating()%>/10</p>
 			            </a>
 		            </div>
 		        </div>

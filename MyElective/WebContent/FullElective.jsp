@@ -11,7 +11,7 @@
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
 	UserController userController = new UserController();
-
+	session.setAttribute("allElectives",ratingController.getElectiveNamesSearchBar());
 	int electiveID = Integer.parseInt(request.getParameter("ElectiveID"));
 	session.setAttribute("ElectiveID", electiveID);
 	
@@ -79,11 +79,12 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
-											var names = allElectives.split(", ");
+											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
 										});
-								</script>
+									</script>
 							    <%if(searchError.equals("")){ %>
 											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
 										<%}else{ %>
@@ -143,6 +144,8 @@
 							out.print("<p><b>" + user.getUsername() + "</b>");
 							out.print("<p>" + rating.getRating() + "/10<br/>    " + rating.getHoursPerWeek() + " hours per week </p>");
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
+							String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (rating.getDate()*1000L));
+							out.print("<p>\"" + date + "\"</p>");
 							out.print("<hr />");
 						}%>
 

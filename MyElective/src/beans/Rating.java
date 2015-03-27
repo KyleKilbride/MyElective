@@ -19,7 +19,7 @@ public class Rating {
 	/** The comment for the course */
 	private String comment;
 	/** The date the rating was made */
-	private Date date;
+	private long date;
 	/** The course ID that the rating is linked too */
 	private int electiveID;
 	
@@ -84,15 +84,15 @@ public class Rating {
 	 * Getter for the rating submittion date
 	 * @return submittion date
 	 */
-	public Date getDate() {
+	public long getDate() {
 		return date;
 	}
 	
 	/**
 	 * Setter for the rating submittion date
-	 * @param date
+	 * @param date2
 	 */
-	public void setDate(Date date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
 	

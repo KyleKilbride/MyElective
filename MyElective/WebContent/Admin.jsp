@@ -17,7 +17,7 @@
 	RatingController ratingController = new RatingController();
 	ArrayList ratingArrLst = ratingController.getRecentRating(4);
 		
-	session.setAttribute("allElectives", electiveController.getElectiveNames());
+	session.setAttribute("allElectives",ratingController.getElectiveNamesSearchBar());
 	
 	String searchError = (String)session.getAttribute("searchError");
 	if(searchError==null || searchError=="null"){
@@ -66,14 +66,15 @@
 										<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 										<script src="//code.jquery.com/ui/1.11.3/jquery-ui.js"></script>
 										<script type="text/javascript" id="searchScript" data-electives="${sessionScope.allElectives}">
-											$(function() {			
-												allElectives = searchScript.getAttribute("data-electives");
-												allElectives = allElectives.substring(1);
-												allElectives = allElectives.substring(0,allElectives.length - 1);
-												var names = allElectives.split(", ");
-												$("#search").autocomplete({source : names});
-											});
-										</script>
+										$(function() {
+											allElectives = searchScript.getAttribute("data-electives");
+											allElectives = allElectives.substring(1);
+											allElectives = allElectives.substring(2);
+											allElectives = allElectives.substring(0,allElectives.length - 1);
+											var names = allElectives.split(", ~, ");
+											$("#search").autocomplete({source : names});
+										});
+									</script>
 										<%if(searchError.equals("")){ %>
 											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
 										<%}else{ %>
@@ -107,9 +108,12 @@
 					<p><b>Select Elective to Edit</b></p>
 					<form action="" method="POST">		
 						<select name="editElectivesDrop">
-							<option value=""></option>	
+							<option value=""></option>
+							<%int z=0;%>	
 							<c:forEach items="${sessionScope.allElectives}" var="elective" >
-								<option value="${elective}" >${elective}</option>
+							<%if(z%2 == 1){ %>
+								<option value="${elective}" >${elective}</option>			
+								<%}z++; %>
 							</c:forEach>
 						</select>
 						<input type="submit" value="Select Elective"></input>			
@@ -151,9 +155,12 @@
 						<p><b>Select Elective to Remove</b></p>
 						<form action="" method="POST">		
 							<select name="removeElectivesDrop">
-								<option value=""></option>	
+								<option value=""></option>
+								<%int y=0;%>	
 								<c:forEach items="${sessionScope.allElectives}" var="elective" >
+								<%if(y%2 == 1){ %>
 									<option value="${elective}" >${elective}</option>
+								<%}y++; %>
 								</c:forEach>
 							</select>
 							<input type="submit" value="Select Elective"></input>			
