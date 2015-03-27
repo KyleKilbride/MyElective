@@ -119,6 +119,25 @@
 		            <div class="col-lg-8 col-lg-offset-2">
 		      			<h1><%=elective.getName()%> - <%=elective.getCourseCode()%></h1>
 						<p>Description: <%=elective.getDescription()%></p>
+						<hr />
+						<c:if test="${sessionScope.userName != null}">
+							<form class="pure-form pure-form-aligned" action="commentServlet" method="POST" id="reviewForm">
+								<div class="pure-control-group">
+									<label for="ratingInput" style="color:#ffffff">Rating: </label>
+									<input id="ratingInput" name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
+								</div>
+								<div class="pure-control-group">
+									<textarea id="review" form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
+								</div>
+								<div class="pure-control-group">
+									<label for="hoursWeekInput" style="color:#ffffff">Hours a Week: </label>
+									<input name="hoursAWeek" maxlength="4" size="4"/>
+								</div>
+								<div class="pure-controles">
+									<input type="submit" class="pure-button" value="Submit"/>
+								</div>
+							</form>
+						</c:if>
 						<%for(Rating rating: elective.getComments()){
 							User user = ratingController.getUser(rating.getUserID());
 							out.print("<p><b>" + user.getUsername() + "</b>");
@@ -126,14 +145,7 @@
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
 							out.print("<hr />");
 						}%>
-						<c:if test="${sessionScope.userName != null}">
-							<form action="commentServlet" method="POST" id="reviewForm">
-								<span style="color:#ffffff">Rating: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span><br>
-								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea><br>
-								<span style="color:#ffffff">Hours a Week: </span><input name="hoursAWeek" maxlength="4" size="4"/><br>
-								<input type="submit" value="Submit"/>
-							</form>
-						</c:if>
+
 		      		</div>
 		        </div>
 		    </section>
