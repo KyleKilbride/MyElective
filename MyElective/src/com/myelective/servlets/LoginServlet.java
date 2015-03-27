@@ -2,6 +2,7 @@ package com.myelective.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;  
 import javax.servlet.ServletException;  
@@ -51,7 +52,11 @@ public class LoginServlet extends HttpServlet {
 
 		if(user.getUsername() == null){ //if login is unsuccessful
             RequestDispatcher rd = request.getRequestDispatcher("SplashPage.jsp");
-            session.setAttribute("error", "Username/Email or password incorrect");
+            if(session.getAttribute("language") == "french"){
+            	session.setAttribute("error", "Nom d'Utilisateur/Email ou mot de passe incorrect");
+            }else{
+            	session.setAttribute("error", "Username/Email or password incorrect");
+            }
             rd.include(request,response);
             rd.forward(request, response);
             //response.sendRedirect("SplashPage.jsp?error=loginError");
