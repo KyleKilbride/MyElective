@@ -1,12 +1,22 @@
 <%@page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" import="com.myelective.controllers.*, java.util.ArrayList, beans.*"%>
-	<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="com.myelective.resources.text_fr" />
 	
 <!DOCTYPE html>
 
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
 
 <%
+	if(session.getAttribute("language") ==  "french"){
+		%> <fmt:setBundle basename="com.myelective.resources.text_fr" /> <% 
+	}else{
+		%> <fmt:setBundle basename="com.myelective.resources.text" /> <%
+	}
+
 	User loggedUser = (User)session.getAttribute("user");
 	ElectiveController electiveController = new ElectiveController();
 	RatingController ratingController = new RatingController();
@@ -62,13 +72,13 @@
 					       <div class="collapse navbar-collapse">
 								<%if(session.getAttribute("userStatus")!= null && session.getAttribute("userStatus").equals("admin")){%>
 						    		<ul class="nav navbar-nav">
-						    			<li><a href="AllElectives.jsp">All Electives</a></li>
-						    			<li><a href="Admin.jsp">Admin</a></li>
+						    			<li><a href="AllElectives.jsp"><fmt:message key="nav.label.allelectives" /></a></li>
+						    		<li><a href="Admin.jsp"><fmt:message key="nav.label.admin" /></a></li>
 						    		</ul>
 						   		<%}
 						   		else{%>
 						   			<ul class="nav navbar-nav">
-						   				<li><a href="AllElectives.jsp">All Electives</a></li>
+						   				<li><a href="AllElectives.jsp"><fmt:message key="nav.label.allelectives" /></a></li>
 						    		</ul>
 						    	<%}%>
 						    <form class="navbar-form navbar-right" role="search" action="searchServlet" method="post">
@@ -86,24 +96,29 @@
 										});
 									</script>
 							    <%if(searchError.equals("")){ %>
-											<input type="text" class="form-control" placeholder="Search" id="search" name="search">
+											<input type="text" class="form-control" placeholder="<fmt:message key="nav.label.search" />" id="search" name="search">
 										<%}else{ %>
 											<input type="text" class="form-control" placeholder="<%out.print(searchError); %>" id="search" name="search">
 											<%session.setAttribute("searchError", null);%>
 										<%} %>
 								<input type="hidden" name="viewid" value="FullElective.jsp">
-							    <button type="submit" class="btn btn-default">Submit</button>							    
+							    <button type="submit" class="btn btn-default"><fmt:message key="nav.button.submit" /></button>							    
 							  </div>
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
 							    	<%if(session.getAttribute("userName") == null){%>
-								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText">Log In/Sign Up</a></li>
+								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText"><fmt:message key="nav.label.loginsignup" /></a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
-								  		<li><a href="EditUser.jsp">Welcome ${sessionScope.user.getFirstName()}!</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" >Logout</a></li>
+								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
 								</ul>
 
+							</div>
+							<div id="language">
+							    <ul class="nav navbar-nav navbar-right">
+								  	<li><a href="languageServlet" class="navbar-link" id="loginText"><fmt:message key="nav.label.language" /></a></li>
+								</ul>  	
 							</div>
 						</div>
 					  </div><!-- /.container-fluid -->
@@ -119,36 +134,23 @@
 		        <div class="row">
 		            <div class="col-lg-8 col-lg-offset-2">
 		      			<h1><%=elective.getName()%> - <%=elective.getCourseCode()%></h1>
-						<p>Description: <%=elective.getDescription()%></p>
-						<hr />
-						<c:if test="${sessionScope.userName != null}">
-							<form class="pure-form pure-form-aligned" action="commentServlet" method="POST" id="reviewForm">
-								<div class="pure-control-group">
-									<label for="ratingInput" style="color:#ffffff">Rating: </label>
-									<input id="ratingInput" name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
-								</div>
-								<div class="pure-control-group">
-									<textarea id="review" form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
-								</div>
-								<div class="pure-control-group">
-									<label for="hoursWeekInput" style="color:#ffffff">Hours a Week: </label>
-									<input name="hoursAWeek" maxlength="4" size="4"/>
-								</div>
-								<div class="pure-controles">
-									<input type="submit" class="pure-button" value="Submit"/>
-								</div>
-							</form>
-						</c:if>
+						<p><fmt:message key="fullelective.label.description" />: <%=elective.getDescription()%></p>
+						<p><fmt:message key="fullelective.label.rating" />: <%=elective.getRating()%></p>
 						<%for(Rating rating: elective.getComments()){
 							User user = ratingController.getUser(rating.getUserID());
 							out.print("<p><b>" + user.getUsername() + "</b>");
-							out.print("<p>" + rating.getRating() + "/10<br/>    " + rating.getHoursPerWeek() + " hours per week </p>");
+							out.print("<p>" + rating.getRating() + "/10<br/>    " + rating.getHoursPerWeek() + "<fmt:message key=\"fullelective.label.hpw\" />" + " </p>"); //not outprinting fmt properly
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
-							String date = new java.text.SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new java.util.Date (rating.getDate()*1000L));
-							out.print("<p>\"" + date + "\"</p>");
 							out.print("<hr />");
 						}%>
-
+						<c:if test="${sessionScope.userName != null}">
+							<form action="commentServlet" method="POST" id="reviewForm">
+								<span style="color:#ffffff"><fmt:message key="fullelective.label.rating" />: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
+								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
+								<span style="color:#ffffff"><fmt:message key="fullelective.label.hpw" />: </span><input name="hoursAWeek" maxlength="4" size="4"/>
+								<input type="submit" value="Submit"/>
+							</form>
+						</c:if>
 		      		</div>
 		        </div>
 		    </section>
