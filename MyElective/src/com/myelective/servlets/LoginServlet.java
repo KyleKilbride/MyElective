@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession; 
 
 import com.myelective.controllers.UserController;
+import com.myelective.jbdc.Security;
 
 import beans.User;
 
@@ -44,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		
 		//Gets username and password from page
 		String name = (String) request.getParameter("user_name");
-		String pass = (String) request.getParameter("user_pass");
+		String pass = Security.encrypt((String) request.getParameter("user_pass"));
 		
 		//Validates username/password in database
 		user = userDAO.validate(name, pass);

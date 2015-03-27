@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import beans.User;
 
 import com.myelective.controllers.UserController;
+import com.myelective.jbdc.Security;
 
 /**
  * Gets account creation info from page and attempts to create
@@ -39,8 +40,7 @@ public class SignupServlet extends HttpServlet {
 		
 		//Gets Account Information from page
 		String userName = (String) request.getParameter("user_name_signup");
-		String pass = (String) request.getParameter("user_pass_signup");
-		String confirmPass = (String) request.getParameter("user_pass_conf_signup");
+		String pass = Security.encrypt((String) request.getParameter("user_pass_signup"));
 		String firstName = (String) request.getParameter("userFirstName");
 		String lastName = (String) request.getParameter("userLastName");
 		String program = (String) request.getParameter("prog_signup");
