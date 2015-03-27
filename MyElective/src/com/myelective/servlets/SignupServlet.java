@@ -73,11 +73,21 @@ public class SignupServlet extends HttpServlet {
 		}else{
 		
 			if(userDAO.checkEmailNotUsed(email)){ //If email is used
-				session.setAttribute("error", "Sorry, Email already is use.");    
+				if(session.getAttribute("language") == "french"){
+					session.setAttribute("error", "Email déjà utilisée");
+				}else{
+					session.setAttribute("error", "Email already in use."); 
+				}
+				   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
 				rd.include(request,response);
 			}else if(userDAO.checkUsername(userName)){ //If username is used
-				session.setAttribute("error", "Sorry, Username already is use.");    
+				if(session.getAttribute("language") == "french"){
+					session.setAttribute("error", "Nom d'Utilisateur déjà utilisée");
+				}else{
+					session.setAttribute("error", "Username already in use."); 
+				}
+				   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
 			}

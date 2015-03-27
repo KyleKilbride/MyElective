@@ -146,9 +146,9 @@
 						<c:if test="${sessionScope.userName != null}">
 							<form action="commentServlet" method="POST" id="reviewForm">
 								<span style="color:#ffffff"><fmt:message key="fullelective.label.rating" />: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
-								<textarea form="reviewForm" name="reviewText" placeholder="Review" rows="5" cols="75"></textarea>
+								<textarea form="reviewForm" name="reviewText" placeholder="<fmt:message key="fullelective.label.review" />" rows="5" cols="75"></textarea>
 								<span style="color:#ffffff"><fmt:message key="fullelective.label.hpw" />: </span><input name="hoursAWeek" maxlength="4" size="4"/>
-								<input type="submit" value="Submit"/>
+								<input type="submit" value="<fmt:message key="fullelective.button.submit" />"/>
 							</form>
 						</c:if>
 		      		</div>
