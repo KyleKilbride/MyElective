@@ -2,6 +2,7 @@ package com.myelective.servlets;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ResourceBundle;
 
 import javax.servlet.RequestDispatcher;  
 import javax.servlet.ServletException;  
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession; 
 
 import com.myelective.controllers.UserController;
+import com.myelective.jbdc.Security;
 
 import beans.User;
 
@@ -43,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 		
 		//Gets username and password from page
 		String name = (String) request.getParameter("user_name");
-		String pass = (String) request.getParameter("user_pass");
+		String pass = Security.encrypt((String) request.getParameter("user_pass"));
 		
 		//Validates username/password in database
 		user = userDAO.validate(name, pass);
@@ -51,7 +53,11 @@ public class LoginServlet extends HttpServlet {
 
 		if(user.getUsername() == null){ //if login is unsuccessful
             RequestDispatcher rd = request.getRequestDispatcher("SplashPage.jsp");
-            session.setAttribute("error", "Username/Email or password incorrect");
+            if(session.getAttribute("language") == "french"){
+            	session.setAttribute("error", "Nom d'Utilisateur/Email ou mot de passe incorrect");
+            }else{
+            	session.setAttribute("error", "Username/Email or password incorrect");
+            }
             rd.include(request,response);
             rd.forward(request, response);
             //response.sendRedirect("SplashPage.jsp?error=loginError");

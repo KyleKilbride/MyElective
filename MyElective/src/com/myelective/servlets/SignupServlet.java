@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import beans.User;
 
 import com.myelective.controllers.UserController;
+import com.myelective.jbdc.Security;
 
 /**
  * Gets account creation info from page and attempts to create
@@ -39,8 +40,7 @@ public class SignupServlet extends HttpServlet {
 		
 		//Gets Account Information from page
 		String userName = (String) request.getParameter("user_name_signup");
-		String pass = (String) request.getParameter("user_pass_signup");
-		String confirmPass = (String) request.getParameter("user_pass_conf_signup");
+		String pass = Security.encrypt((String) request.getParameter("user_pass_signup"));
 		String firstName = (String) request.getParameter("userFirstName");
 		String lastName = (String) request.getParameter("userLastName");
 		String program = (String) request.getParameter("prog_signup");
@@ -73,11 +73,21 @@ public class SignupServlet extends HttpServlet {
 		}else{
 		
 			if(userDAO.checkEmailNotUsed(email)){ //If email is used
-				session.setAttribute("error", "Sorry, Email already is use.");    
+				if(session.getAttribute("language") == "french"){
+					session.setAttribute("error", "Email déjà utilisée");
+				}else{
+					session.setAttribute("error", "Email already in use."); 
+				}
+				   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp");    
 				rd.include(request,response);
 			}else if(userDAO.checkUsername(userName)){ //If username is used
-				session.setAttribute("error", "Sorry, Username already is use.");    
+				if(session.getAttribute("language") == "french"){
+					session.setAttribute("error", "Nom d'Utilisateur déjà utilisée");
+				}else{
+					session.setAttribute("error", "Username already in use."); 
+				}
+				   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
 			}
