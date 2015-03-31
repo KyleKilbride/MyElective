@@ -15,6 +15,7 @@ import beans.User;
 
 import com.myelective.controllers.ElectiveController;
 import com.myelective.controllers.RatingController;
+import com.myelective.jbdc.Security;
 
 public class EditUserServlet extends HttpServlet{
 	
@@ -34,8 +35,8 @@ public class EditUserServlet extends HttpServlet{
 		String firstName = (String) request.getParameter("editUserFirstName");
 		String lastName = (String) request.getParameter("editUserLastName");
 		String program = (String) request.getParameter("editUserProgram");
-		String password = (String) request.getParameter("editUserPassword");
-		String confirmPassword = (String) request.getParameter("editUserConfirmPassword");
+		String password = Security.encrypt((String) request.getParameter("editUserPassword"));
+		String confirmPassword = Security.encrypt((String) request.getParameter("editUserConfirmPassword"));
 		String email = (String) request.getParameter("editUserEmail");
 		
 		if (firstName.intern() != "") {
