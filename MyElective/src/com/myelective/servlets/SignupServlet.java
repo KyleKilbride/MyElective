@@ -57,15 +57,15 @@ public class SignupServlet extends HttpServlet {
 			// Attempts to create new user in database, returns 1 if successful
 			int result = userDAO.createUser(userName, pass, firstName, lastName, email, program, "user");
 			if(result == 1){ // if account is created successfully
-				user.setUsername(userName);
-				user.setPassword(pass);
-				user.setFirstName(firstName);
-				user.setLastName(lastName);
-				user.setProgram(program);
-				user.setEmailAddress(email);
-				user.setStatus("user");
-				session.setAttribute("user", user);
-				response.sendRedirect("index.jsp"); //send user to Account Creation Success
+				
+				//Gets username and password from page
+				String name = (String) request.getParameter("user_name_signup");
+				String password = Security.encrypt((String) request.getParameter("user_pass_signup"));
+				
+				//Validates username/password in database
+				user = userDAO.validate(name, password);
+				
+			
 			}else{ // if account is not created successfully   
 				RequestDispatcher rd=request.getRequestDispatcher("SplashPage.jsp"); //send user back to Account Creation page 
 				rd.include(request,response);
@@ -93,7 +93,8 @@ public class SignupServlet extends HttpServlet {
 			}
 		
 		}
-
+		session.setAttribute("user", user);
+		response.sendRedirect("index.jsp"); //send user to Account Creation Success
 		
 		out.close();
 	}
