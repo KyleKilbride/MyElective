@@ -91,7 +91,7 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(2);
+											//allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
