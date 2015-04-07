@@ -268,10 +268,6 @@ public class RatingController {
 	}	
 	
 	public void addRating(Rating rating) throws SQLException, ParseException{
-//		DateFormat df = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy");
-//		Date date = df.parse(String.valueOf(rating.getDate()));
-//		String s = date.toString();
-//		int dateInt = Integer.valueOf(s);
 		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, date, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getDate() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
 		q.executeUpdate();
 		return;
