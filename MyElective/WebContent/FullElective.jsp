@@ -142,14 +142,14 @@
 							out.print("<p><b>" + user.getUsername() + "</b>");
 							out.print("<p>\"" + rating.getComment() + "\"</p>");
 							out.print("<p>\"" + date + "\"</p>");
-							out.print("<p> Rating: " + rating.getRating() + "/10<br/>" + "Hours required per week: " + rating.getHoursPerWeek() + "<fmt:message key=\"fullelective.label.hpw\" />" + " </p>"); //not outprinting fmt properly
+							out.print("<p> Rating: " + rating.getRating() + "/10<br/>" + "Hours required per week: " + rating.getHoursPerWeek() + " </p>"); //not outprinting fmt properly
 							out.print("<hr />");
 						}%>
 						<c:if test="${sessionScope.userName != null}">
 							<form action="commentServlet" method="POST" id="reviewForm">
-								<span style="color:#ffffff"><fmt:message key="fullelective.label.rating" />: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
+								<span style="color:#ffffff"><fmt:message key="fullelective.label.rating" />: </span><input name="reviewRating" maxlength="2" size="2" type="number" min="0" max="10"/><span style="color:#ffffff">/10</span>
 								<textarea form="reviewForm" name="reviewText" placeholder="<fmt:message key="fullelective.label.review" />" rows="5" cols="75"></textarea>
-								<span style="color:#ffffff"><fmt:message key="fullelective.label.hpw" />: </span><input name="hoursAWeek" maxlength="4" size="4"/>
+								<span style="color:#ffffff"><fmt:message key="fullelective.label.hpw" />: </span><input name="hoursAWeek" maxlength="2" size="4" type="number" min="1" max="60"/>
 								<input type="submit" value="<fmt:message key="fullelective.button.submit" />"/>
 							</form>
 						</c:if>
