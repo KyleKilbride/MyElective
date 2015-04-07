@@ -102,6 +102,7 @@
 											<a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a>							
 									</p>
 								</div>
+								<% 	session.setAttribute("viewid", "index.jsp"); %>
 								<div id="language">
 							    	<ul class="nav navbar-nav navbar-right">
 								  		<li><a href="languageServlet" class="navbar-link" id="loginText"><fmt:message key="nav.label.language" /></a></li>

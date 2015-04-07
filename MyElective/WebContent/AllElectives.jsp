@@ -108,6 +108,7 @@
 								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
 								</ul>  	
+								<% 	session.setAttribute("viewid", "AllElectives.jsp"); %>
 								<!-- </p> -->
 							</div>
 							<div id="language">

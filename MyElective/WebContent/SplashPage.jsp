@@ -26,6 +26,8 @@
 		error="";
 	}
 
+	int i = 0;
+	
 %>
 <html ng-app="ui.bootstrap.demo" 
       xmlns:ui="http://java.sun.com/jsf/facelets"
