@@ -285,8 +285,8 @@ public class RatingController {
 
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
-				electiveArray.add("~");
 				electiveArray.add(electiveName);
+				electiveArray.add("~");
 			}
 		} catch (Exception e) {
 			System.out.println(e);
