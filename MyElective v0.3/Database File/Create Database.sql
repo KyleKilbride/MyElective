@@ -34,6 +34,11 @@ CREATE  TABLE `my_elective`.`ratings` (
   FOREIGN KEY (`electives_id`) REFERENCES electives(`id`),
   PRIMARY KEY (`id`) );
 
+CREATE TABLE `my_elective`.`bad_words` (
+`id` int NOT NULL auto_increment ,
+`word` varchar(45) not null,
+PRIMARY KEY (`id`) );
+
 INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('doug', 'cSeB47o4CarlY/Kmw711sw==', 'doug', 'king', 'Computer Engineering - Computer Science', 'king@king.com', 'admin');
 -- INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('lesserkyle', 'password', 'Kyle', 'Kilbride', 'Computer Engineering - Computer Science', 'kilb0067@algonquinlive.com', 'admin');
 -- INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('matt', 'password', 'Matthew', 'Boyd', 'Computer Engineering - Computer Science', 'boyd0077@algonquinlive.com', 'admin');  
@@ -42,6 +47,18 @@ INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `progra
 -- INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('DAflash', 'arribaARRIBA', 'Barry', 'Allen', 'Kinesiology', 'alle1956@algonquinlive.com', 'user');
 -- INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('green-lantern', 'yElLoWbAd', 'Hal', 'Jordan', 'Aviation', 'jord1959@algonquinlive.com', 'user');
 -- INSERT INTO `users` (`user_name`, `password`, `first_name`, `last_name`, `program`, `email_address`, `status`) VALUES ('wonder_woman', 'themyscira4eva', 'Diana', 'Prince', 'Classical Studies', 'boyd0077@algonquinlive.com', 'user');
+
+INSERT INTO `bad_words` (`word`) VALUES ('fuck');
+INSERT INTO `bad_words` (`word`) VALUES ('shit');
+INSERT INTO `bad_words` (`word`) VALUES ('piss');
+INSERT INTO `bad_words` (`word`) VALUES ('cock');
+INSERT INTO `bad_words` (`word`) VALUES ('ass');
+INSERT INTO `bad_words` (`word`) VALUES ('cunt');
+INSERT INTO `bad_words` (`word`) VALUES ('tit');
+INSERT INTO `bad_words` (`word`) VALUES ('twat');
+INSERT INTO `bad_words` (`word`) VALUES ('dick');
+INSERT INTO `bad_words` (`word`) VALUES ('bastard');
+INSERT INTO `bad_words` (`word`) VALUES ('cum');
 
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('ARC9001', 'Conserving Canada''s Architectural Heritage', 'If your field is architecture, building trades, engineering, social planning or tourism, your future is certain to include our past. To Canadians, preserving our heritage resources is a visible sign of community pride and environmental responsibility. Protecting heritage buildings requires an understanding of their histories and the principles of conservation shared by the preservation community. Conserving Canada’‘s Architectural Heritage traces the study of building styles and traditional building techniques as they have evolved across the Canadian landscape.');
 INSERT INTO `electives` (`course_code`, `elective_name`, `description`) VALUES ('DSN2001', 'History of Design','Explore the many influences of graphic design from the invention of writing and alphabets to the present day computer revolution and its impact on contemporary design. You will learn the philosophies, methods, and techniques of the eras in design including the origins of printing and typography, Victorian and Art Nouveau, Modern Art and Post Modern design. The course involves online discussion and analysis of each of the eras.');
@@ -84,19 +101,19 @@ FOR EACH ROW UPDATE electives
   SET average_rating = (SELECT AVG(rating) from ratings where ratings.id=electives.id)
 WHERE electives.id=NEW.id;
 
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '5', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '7', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('8', '1', 'Lorem Ipsem', '4', UNIX_TIMESTAMP(), '15');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '1', 'i''m batman', '5', UNIX_TIMESTAMP(), '2');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('5', '2', 'i''m batman', '5', UNIX_TIMESTAMP(), '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '1', 'i''m batman', '5', UNIX_TIMESTAMP(), '30');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('4', '3', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '7', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '22');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('10', '5', 'Lorem Ipsem', '6', UNIX_TIMESTAMP(), '32');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('9', '13', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('1', '25', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '23');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('3', '2', 'Lorem Ipsem', '7', UNIX_TIMESTAMP(), '1');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('7', '3', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '5');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '4', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '12');
-INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '6', 'Lorem Ipsem', '8', UNIX_TIMESTAMP(), '11');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '5', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '7', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('8', '1', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '15');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('2', '1', 'i''m batman', '1', UNIX_TIMESTAMP(), '2');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('5', '2', 'i''m batman', '1', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '1', 'i''m batman', '1', UNIX_TIMESTAMP(), '30');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('4', '3', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '7', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '22');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('10', '5', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '32');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('9', '13', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('1', '25', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '23');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('3', '2', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '1');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('7', '3', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '5');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '4', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '12');
+INSERT INTO `ratings` (`rating`, `hours_per_week`, `comment`, `users_id`, `date`, `electives_id`) VALUES ('6', '6', 'Lorem Ipsem', '1', UNIX_TIMESTAMP(), '11');
 

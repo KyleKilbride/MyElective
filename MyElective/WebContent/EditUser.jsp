@@ -128,7 +128,7 @@
 			</div><!-- /.row-fluid -->
 		</div><!-- /.container fluid -->
 		<form action="editUserServlet" class="form-horizontal" method="POST" id="editUserForm">
-			<h1><b><fmt:message key="edituser.label.edituser" /></b></h1>
+			<h1 class="editUserHeader"><b><fmt:message key="edituser.label.edituser" /></b></h1>
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="editUserFirstName"><b><fmt:message key="edituser.label.currfn" />:</b> <%=user.getFirstName()%></label>
 				<div class="col-md-6">
