@@ -81,10 +81,11 @@ public class RatingController {
 	}
 	
 	public User getUser(int id) throws SQLException{
+		System.out.println("USER ID= " + id);
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM users WHERE id=?");
 		query.setInt(1, id);
 		ResultSet r = query.executeQuery();
-		
+		System.out.println(r);
 		if(r != null){
 			User u = new User();
 			r.next();

@@ -62,6 +62,7 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             //response.sendRedirect("SplashPage.jsp?error=loginError");
 		} else {
+			System.out.println("logged in as userId=" + user.getUserID());
 			session.setAttribute("user", user);
 			response.sendRedirect("index.jsp");
 		}
