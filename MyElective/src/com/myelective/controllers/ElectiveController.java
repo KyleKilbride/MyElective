@@ -82,12 +82,17 @@ public Elective getFeaturedElective(){
 		return electiveBean;
 	}
 
+	/** 
+	 * Method for retrieve array of all electives in the database.
+	 * */
 	public ArrayList<Elective> getElectiveArray() {
+		//arraylist of electives
 		ArrayList<Elective> electiveArray = new ArrayList<Elective>();		
 		try {
+			//creating database query and running it
 			PreparedStatement pSt1 = dbConnection.prepareStatement(SQL_SELECT_ALL);
 			ResultSet result1 = pSt1.executeQuery();
-			
+			//while the result set has another row create elective object and insert into list
 			while (result1.next()) {
 				Elective electiveBean = new Elective();
 				electiveBean.setId(result1.getInt("id"));
@@ -101,17 +106,23 @@ public Elective getFeaturedElective(){
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		//return list of elective objects
 		return electiveArray;
 	}
-	
+	/**
+	 * method to retive list of only the elective names
+	 * @return elective
+	 */
 	public ArrayList<String> getElectiveNames() {
+		//list of elective names
 		ArrayList<String> electiveArray = new ArrayList<String>();
 		
 		try {
+			//database query to retrieve all names
 			PreparedStatement pSt1 = dbConnection
 					.prepareStatement(SQL_SELECT_NAME);
 			ResultSet result1 = pSt1.executeQuery();
-
+			//while the result set has another row retrieve the name and insert into elective name list.
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
 				electiveArray.add(electiveName);
@@ -120,13 +131,19 @@ public Elective getFeaturedElective(){
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+		//return arraylist of elective name strings
 		return electiveArray;
 	}
-	
+	/**
+	 * method to get the specific elective
+	 * @param electiveName
+	 * @return elective
+	 */
 	public Elective getElective(String electiveName) {
+		//elective object
 		Elective elective = new Elective();		
 		try {
+			//using the elective name, query the database to retrieve a specific elective object
 			System.out.println(electiveName);
 			electiveName=electiveName.substring(1);
 			PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT * FROM electives where elective_name = '" + electiveName + "'");
@@ -135,6 +152,7 @@ public Elective getFeaturedElective(){
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		//return the elective
 		return elective;
 	}
 }

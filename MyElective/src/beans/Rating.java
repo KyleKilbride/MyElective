@@ -81,33 +81,45 @@ public class Rating {
 	}
 	
 	/**
-	 * Getter for the rating submittion date
-	 * @return submittion date
+	 * Getter for the rating submission date
+	 * @return submission date
 	 */
 	public long getDate() {
 		return date;
 	}
 	
 	/**
-	 * Setter for the rating submittion date
+	 * Setter for the rating submission date
 	 * @param date2
 	 */
 	public void setDate(long date) {
 		this.date = date;
 	}
-	
+	/**
+	 * Getter for the rating elective id
+	 * @return electiveID
+	 */
 	public int getElectiveID(){
 		return electiveID;
 	}
-	
+	/**
+	 * Setter for the rating elective id
+	 * @param n
+	 */
 	public void setElectiveID(int n){
 		this.electiveID = n;
 	}
-	
+	/**
+	 * Getter for the rating user id
+	 * @return userID
+	 */
 	public int getUserID(){
 		return userID;
 	}
-	
+	/**
+	 * Setter for the rating user id
+	 * @param userID
+	 */
 	public void setUserID(int userId){
 		this.userID = userId;
 	}
