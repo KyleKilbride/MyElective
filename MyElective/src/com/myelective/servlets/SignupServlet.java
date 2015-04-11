@@ -19,8 +19,7 @@ import com.myelective.jbdc.Security;
  * Gets account creation info from page and attempts to create
  * a new user in the database
  * 
- * @author Matthew Boyd
- * @version 0.2
+ * @version 1.0
  *
  */
 public class SignupServlet extends HttpServlet {

@@ -17,6 +17,15 @@ import com.myelective.controllers.ElectiveController;
 import com.myelective.controllers.RatingController;
 import com.myelective.jbdc.Security;
 
+/**
+ * Gets the updated user information from the page, updates
+ * the users information in the database and also updates the
+ * user in the session with the updates information.
+ * 
+ * @version 1.0
+ *
+ */
+
 public class EditUserServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;
