@@ -8,7 +8,6 @@
 
 <!DOCTYPE html>
 <!-- PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd" -->
-<!-- Authors: Kyle Usherwood, Kyle Kilbride -->
 <%
 	request.getSession(false);
 	User user = (User) session.getAttribute("user");
@@ -168,7 +167,7 @@
 						<%}%>			
 					<%}%>
 					<%if(session.getAttribute("adminAction")=="removeElective"){%>
-						<p><b><fmt:message key="admin.label.newelectivedescription" /></b></p>
+						<p><b><fmt:message key="admin.label.selectelectiveremove" /></b></p>
 						<form action="" method="POST">		
 							<select name="removeElectivesDrop">
 								<option value=""></option>
@@ -179,7 +178,7 @@
 								<%}y++; %>
 								</c:forEach>
 							</select>
-							<input type="submit" value="<fmt:message key="admin.label.selectelectiveremove" />"></input>			
+							<input type="submit" value="<fmt:message key="admin.button.removeelective" />"></input>			
 						</form>
 						<form action="adminServlet" method="post" id="removeElectivesForm">	
 							<%String removeElectivesDropSelection[] = request.getParameterValues("removeElectivesDrop");
