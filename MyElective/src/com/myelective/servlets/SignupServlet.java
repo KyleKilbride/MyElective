@@ -30,7 +30,6 @@ public class SignupServlet extends HttpServlet {
 	 * Gets new account information, checks that username and email do not
 	 * exist in the database, and then attempts to create the user in the
 	 * database
-	 * 
 	 */
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
@@ -73,7 +72,7 @@ public class SignupServlet extends HttpServlet {
 		
 			if(userDAO.checkEmailNotUsed(email)){ //If email is used
 				if(session.getAttribute("language") == "french"){
-					session.setAttribute("error", "Email déjà utilisée");
+					session.setAttribute("error", "Email dï¿½jï¿½ utilisï¿½e");
 				}else{
 					session.setAttribute("error", "Email already in use."); 
 				}
@@ -82,7 +81,7 @@ public class SignupServlet extends HttpServlet {
 				rd.include(request,response);
 			}else if(userDAO.checkUsername(userName)){ //If username is used
 				if(session.getAttribute("language") == "french"){
-					session.setAttribute("error", "Nom d'Utilisateur déjà utilisée");
+					session.setAttribute("error", "Nom d'Utilisateur dï¿½jï¿½ utilisï¿½e");
 				}else{
 					session.setAttribute("error", "Username already in use."); 
 				}
