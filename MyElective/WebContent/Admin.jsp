@@ -141,7 +141,7 @@
 							<option value=""></option>
 							<%int z=0;%>	
 							<c:forEach items="${sessionScope.allElectives}" var="elective" >
-							<%if(z%2 == 1){ %>
+							<%if(z%2 != 1){ %>
 								<option value="${elective}" >${elective}</option>			
 								<%}z++; %>
 							</c:forEach>
@@ -191,7 +191,7 @@
 								<option value=""></option>
 								<%int y=0;%>	
 								<c:forEach items="${sessionScope.allElectives}" var="elective" >
-								<%if(y%2 == 1){ %>
+								<%if(y%2 != 1){ %>
 									<option value="${elective}" >${elective}</option>
 								<%}y++; %>
 								</c:forEach>
@@ -204,7 +204,6 @@
 								String selectedElective="";
 								for(int i=0; i<removeElectivesDropSelection.length; i++){
 									selectedElective += removeElectivesDropSelection[i];
-									//selectedElective = selectedElective.substring(1);
 								}%>	
 							<br/>
 							<%Elective elective = ratingController.getElectiveByString(selectedElective);%>	
