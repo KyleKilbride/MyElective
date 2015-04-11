@@ -8,6 +8,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;  
 import javax.servlet.http.HttpSession; 
 
+/**
+ * Switches session language variable and directs the user back to the page
+ * 
+ * @version 1.0
+ *
+ */
+
 public class LanguageServlet extends HttpServlet{
 	
 	private static final long serialVersionUID = 1L;	

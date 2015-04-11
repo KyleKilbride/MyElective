@@ -12,6 +12,14 @@ import javax.servlet.http.HttpSession;
 import com.myelective.controllers.ElectiveController;
 import com.myelective.controllers.RatingController;
 
+/**
+ * Handles requests to Create, Update and Remove
+ * electives from the database.
+ * 
+ * @version 1.0
+ *
+ */
+
 public class AdminServlet extends HttpServlet{
 
 	private static final long serialVersionUID = 1L;

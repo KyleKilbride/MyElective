@@ -19,9 +19,8 @@ import beans.User;
 /**
  * Gets login info from page and attempts to validate
  * with the database
- * 
- * @author Matthew Boyd, Kyle Kilbride
- * @version 0.2
+
+ * @version 1.0
  *
  */
 public class LoginServlet extends HttpServlet {

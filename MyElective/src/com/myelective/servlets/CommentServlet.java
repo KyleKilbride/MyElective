@@ -20,7 +20,11 @@ import beans.User;
 import com.myelective.controllers.RatingController;
 
 /**
- * Servlet implementation class CommentServlet
+ * Gets the elective comment and rating from the page,
+ * and adds the information to the database and redirects the user
+ * back to the elective page.
+ * 
+ * @version 1.0
  */
 @WebServlet("/CommentServlet")
 public class CommentServlet extends HttpServlet {

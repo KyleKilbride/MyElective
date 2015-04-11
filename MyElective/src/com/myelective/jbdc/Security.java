@@ -4,6 +4,12 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.commons.codec.binary.Base64;
 
+/**
+ * A class to encrypt and decrypt strings
+ * 
+ * @version 1.0
+ *
+ */
 
 public class Security {
 

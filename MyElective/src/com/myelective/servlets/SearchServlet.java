@@ -14,6 +14,13 @@ import beans.Elective;
 import com.myelective.controllers.ElectiveController;
 import com.myelective.controllers.RatingController;
 
+/** Directs the user to the selected Full Elective page when
+ *  using the search bar to navigate.
+ * 
+ * @version 1.0
+ *
+ */
+
 public class SearchServlet extends HttpServlet{
 	private static final long serialVersionUID = 1L;
 	RatingController rc = new RatingController();
