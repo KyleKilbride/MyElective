@@ -40,6 +40,8 @@
 
 <html>
 	<head>
+	
+	
 		<link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 		<link href="css/bootstrap.min.css" rel="stylesheet" type="text/css">
 		<!-- <link href="css/index.css" rel="stylesheet" type="text/css"> -->
@@ -89,7 +91,7 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(2);
+											//allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
@@ -113,7 +115,7 @@
 								  		<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li><li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
 								</ul>
-
+								<% 	session.setAttribute("viewid", "FullElective.jsp?ElectiveID=" + elective.getId()); %>
 							</div>
 							<div id="language">
 							    <ul class="nav navbar-nav navbar-right">
@@ -146,11 +148,22 @@
 							out.print("<hr />");
 						}%>
 						<c:if test="${sessionScope.userName != null}">
-							<form action="commentServlet" method="POST" id="reviewForm">
-								<span style="color:#ffffff"><fmt:message key="fullelective.label.rating" />: </span><input name="reviewRating" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
-								<textarea form="reviewForm" name="reviewText" placeholder="<fmt:message key="fullelective.label.review" />" rows="5" cols="75"></textarea>
-								<span style="color:#ffffff"><fmt:message key="fullelective.label.hpw" />: </span><input name="hoursAWeek" maxlength="4" size="4"/>
-								<input type="submit" value="<fmt:message key="fullelective.button.submit" />"/>
+							<form action="commentServlet" method="POST" id="reviewForm" class="form-horizontal">
+								<div class="form-group">
+									<label for="reviewRating" style="color: #ffffff"><fmt:message key="fullelective.label.rating" />: </label>
+									<input name="reviewRating" class="form-control" maxlength="2" size="2"/><span style="color:#ffffff">/10</span>
+								</div>
+								<div class="form-group">
+									<label for="reviewText" style="color: #ffffff">Review</label>
+									<textarea form="reviewForm" class="form-control" name="reviewText" placeholder="<fmt:message key="fullelective.label.review" />" rows="5" cols="75"></textarea>
+								</div>
+								<div class="form-group">
+									<label for="hoursAWeek" style="color: #ffffff">Hours a Week: </label>
+									<input name="hoursAWeek" maxlength="4" size="4" class="form-control"/>
+								</div>
+								<div class="form-group">
+									<input type="submit" class="form-control btn-default submitRatingButton" value="<fmt:message key="fullelective.button.submit" />"/>
+								</div>
 							</form>
 						</c:if>
 		      		</div>

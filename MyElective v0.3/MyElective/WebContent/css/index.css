@@ -34,10 +34,12 @@ body{
 	font-size: 35px;
 }
 
+.editUserHeader{
+	margin-left: 34%;
+}
+
 #viewFEButton{
-	
-	
-	
+
 	margin-bottom: 37px;
 }
 

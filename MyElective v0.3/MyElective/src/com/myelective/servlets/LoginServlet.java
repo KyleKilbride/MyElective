@@ -19,9 +19,8 @@ import beans.User;
 /**
  * Gets login info from page and attempts to validate
  * with the database
- * 
- * @author Matthew Boyd, Kyle Kilbride
- * @version 0.2
+
+ * @version 1.0
  *
  */
 public class LoginServlet extends HttpServlet {
@@ -40,13 +39,13 @@ public class LoginServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession(false);
 		
-		UserController userDAO = new UserController();
+		UserController userDAO = new UserController();	
 		User user = new User();
 		
 		//Gets username and password from page
 		String name = (String) request.getParameter("user_name");
 		String pass = Security.encrypt((String) request.getParameter("user_pass"));
-		
+		String ref = (String) session.getAttribute("viewid");
 		//Validates username/password in database
 		user = userDAO.validate(name, pass);
 		
@@ -62,8 +61,9 @@ public class LoginServlet extends HttpServlet {
             rd.forward(request, response);
             //response.sendRedirect("SplashPage.jsp?error=loginError");
 		} else {
+			System.out.println("logged in as userId=" + user.getUserID());
 			session.setAttribute("user", user);
-			response.sendRedirect("index.jsp");
+			response.sendRedirect(ref);
 		}
         
         out.close();

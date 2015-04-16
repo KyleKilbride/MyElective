@@ -2,10 +2,7 @@ package com.myelective.servlets;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +17,11 @@ import beans.User;
 import com.myelective.controllers.RatingController;
 
 /**
- * Servlet implementation class CommentServlet
+ * Gets the elective comment and rating from the page,
+ * and adds the information to the database and redirects the user
+ * back to the elective page.
+ * 
+ * @version 1.0
  */
 @WebServlet("/CommentServlet")
 public class CommentServlet extends HttpServlet {
@@ -47,11 +48,15 @@ public class CommentServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * 
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		
 		try {		
+			/**
+			 * create rating from form in fullElective.jsp and add it to the list of ratings 
+			 */
 			User user = (User)session.getAttribute("user");
 			rating.setDate(System.currentTimeMillis()/1000);
 			rating.setElectiveID(Integer.parseInt(session.getAttribute("ElectiveID").toString()));

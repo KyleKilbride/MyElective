@@ -90,7 +90,7 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(2);
+											//allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
@@ -114,7 +114,8 @@
 							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
 							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
-								</ul>  	
+								</ul>  
+								<% 	session.setAttribute("viewid", "EditUser.jsp"); %>	
 							</div>
 							<div id="language">
 							    <ul class="nav navbar-nav navbar-right">
@@ -128,7 +129,7 @@
 			</div><!-- /.row-fluid -->
 		</div><!-- /.container fluid -->
 		<form action="editUserServlet" class="form-horizontal" method="POST" id="editUserForm">
-			<h1><b><fmt:message key="edituser.label.edituser" /></b></h1>
+			<h1 class="editUserHeader"><b><fmt:message key="edituser.label.edituser" /></b></h1>
 			<div class="form-group">
 				<label class="col-md-4 control-label" for="editUserFirstName"><b><fmt:message key="edituser.label.currfn" />:</b> <%=user.getFirstName()%></label>
 				<div class="col-md-6">

@@ -3,12 +3,21 @@ package com.myelective.servlets;
 import java.io.IOException; 
   
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;  
 import javax.servlet.http.HttpServlet;  
 import javax.servlet.http.HttpServletRequest;  
 import javax.servlet.http.HttpServletResponse;  
 import javax.servlet.http.HttpSession;  
+
+/**
+ * Invalidates the users session (logs them out) and returns the
+ * user to the mainpage. 
+ * 
+ * @version 1.0
+ *
+ */
 
 public class LogoutServlet extends HttpServlet {  
 	
@@ -17,11 +26,12 @@ public class LogoutServlet extends HttpServlet {
         protected void doGet(HttpServletRequest request, HttpServletResponse response)  
                                 throws ServletException, IOException {  
             response.setContentType("text/html");
-              
+            
             HttpSession session=request.getSession();  
+            String ref = (String) session.getAttribute("viewid");
             session.invalidate();  
               
-            RequestDispatcher rd=request.getRequestDispatcher("index.jsp"); //send user back to Account Creation page 
+            RequestDispatcher rd=request.getRequestDispatcher(ref); //send user back to Account Creation page 
 			rd.include(request,response);
     }  
 } 

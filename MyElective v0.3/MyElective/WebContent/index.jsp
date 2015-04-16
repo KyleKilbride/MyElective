@@ -101,7 +101,7 @@
 										$(function() {
 											allElectives = searchScript.getAttribute("data-electives");
 											allElectives = allElectives.substring(1);
-											allElectives = allElectives.substring(2);
+											//allElectives = allElectives.substring(2);
 											allElectives = allElectives.substring(0,allElectives.length - 1);
 											var names = allElectives.split(", ~, ");
 											$("#search").autocomplete({source : names});
@@ -119,13 +119,15 @@
 							</form>
 						    <div id="loginSignupText">
 							    <ul class="nav navbar-nav navbar-right">
+							    
 							   		<%if(session.getAttribute("userName") == null){%>
 								  		<li><a href="SplashPage.jsp" class="navbar-link" id="loginText"><fmt:message key="nav.label.loginsignup" /></a></li>
 								  	<%}else if(session.getAttribute("userName") != null){%>
 							  			<li><a href="EditUser.jsp">${sessionScope.user.getUsername()}</a></li>
 							  			<li><a href="logoutServlet" class="navbar-link" id="logoutText" ><fmt:message key="nav.label.logout" /></a></li>
 								  	<%}%>
-								</ul>  	
+								</ul> 
+								<% 	session.setAttribute("viewid", "index.jsp"); %>
 							</div>
 							<div id="language">
 							    <ul class="nav navbar-nav navbar-right">

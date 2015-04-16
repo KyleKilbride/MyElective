@@ -9,7 +9,7 @@ body {
     height: 100%;
     font-family: Lora,"Helvetica Neue",Helvetica,Arial,sans-serif;
     color: #fff;
-    background-color: #000;
+    background-color: #0c0c0c;
 }
 
 html {
@@ -28,6 +28,17 @@ html {
 
 #reviewForm{
 	color: black;
+	text-align: left;
+	
+}
+
+#reviewForm input{
+	width: 70px;
+	display: inline !important;
+}
+
+#reviewForm .submitRatingButton{
+	width: 100px;
 }
 
 h1,

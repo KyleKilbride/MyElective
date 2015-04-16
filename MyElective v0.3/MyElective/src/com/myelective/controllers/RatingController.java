@@ -19,10 +19,6 @@ import com.myelective.jbdc.DBUtility;
 /**
  * A class used to access, return and add Rating data to
  * the SQL Database.
- * 
- * @author Matthew Boyd
- * @version 0.2
- *
  */
 public class RatingController {
 	
@@ -80,11 +76,16 @@ public class RatingController {
 		return ratingBeanAL;
 	}
 	
+	/**
+	 *  Returns user object information from the database 
+	 *  @param id The id in the User table in the database
+	 */
 	public User getUser(int id) throws SQLException{
+		System.out.println("USER ID= " + id);
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM users WHERE id=?");
 		query.setInt(1, id);
 		ResultSet r = query.executeQuery();
-		
+		System.out.println(r);
 		if(r != null){
 			User u = new User();
 			r.next();
@@ -100,6 +101,10 @@ public class RatingController {
 		return null;
 	}
 	
+	/**
+	 *  Returns elective object information from the database 
+	 *  @param id The id in the Elective table in the database
+	 */
 	public Elective getElective(int id) throws SQLException{
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE id=?");
 		query.setInt(1, id);
@@ -119,6 +124,10 @@ public class RatingController {
 			return null;
 	}
 	
+	/**
+	 *  Returns elective object information from the database 
+	 *  @param selectedElective elective_name in the Elective table in the database
+	 */
 	public Elective getElectiveByString(String selectedElective) throws SQLException{
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM electives WHERE elective_name=?");
 		query.setString(1, selectedElective);
@@ -132,12 +141,15 @@ public class RatingController {
 			e.setRating(r.getInt("average_rating"));
 			e.setCourseCode(r.getString("course_code"));
 			e.setDescription(r.getString("description"));
-			//e.setComments(this.getRatings(selectedElective));
 			return e;
 		}else
 			return null;
 	}
 	
+	/**
+	 *  Returns elective object id from the database 
+	 *  @param name elective_name in the Elective table in the database
+	 */
 	public int getIdByName(String name) throws SQLException{
 		PreparedStatement pSt1 = dbConnection.prepareStatement("SELECT id FROM electives WHERE elective_name='" + name + "'");
 		ResultSet result1 = pSt1.executeQuery();
@@ -148,6 +160,10 @@ public class RatingController {
 		return -1;	
 	}
 	
+	/**
+	 *  Returns an array of ratings for an elective from the database 
+	 *  @param id The elective's id in the Elective table in the database
+	 */
 	public ArrayList<Rating> getRatings(int id) throws SQLException{
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM ratings WHERE electives_id=?");
 		query.setInt(1, id);
@@ -157,7 +173,6 @@ public class RatingController {
 		
 		while(r.next()){
 			Rating rating = new Rating();
-			//rating.setComment(r.getString("comment"));
 			rating.setComment(censorReview(r.getString("comment")));
 			rating.setRating(r.getInt("rating"));
 			rating.setHoursPerWeek(r.getInt("hours_per_week"));
@@ -170,6 +185,11 @@ public class RatingController {
 		return ratingList;
 	}
 	
+	/**
+	 *  Edits an elective's name in the database 
+	 *  @param newName The new elective_name for the elective being edited
+	 *  @param currentName The current elective_name for the elective being edited
+	 */
 	public void editElectiveName(String newName, String currentName)throws SQLException{
 		if(newName.contains("'")){
 			newName = newName.replace("'", "''");
@@ -181,7 +201,12 @@ public class RatingController {
 		query.executeUpdate();
 		return;
 	}
-
+	
+	/**
+	 *  Edits an elective's course code in the database 
+	 *  @param newCode The new course_code for the elective being edited
+	 *  @param currentCode The current course_code for the elective being edited
+	 */
 	public void editElectiveCourseCode(String newCode, String currentCode)throws SQLException{
 		if(newCode.contains("'")){
 			newCode = newCode.replace("'", "''");
@@ -194,6 +219,11 @@ public class RatingController {
 		return;
 	}
 
+	/**
+	 *  Edits an elective's description in the database 
+	 *  @param newDesc The new description for the elective being edited
+	 *  @param currentDesc The current description for the elective being edited
+	 */
 	public void editElectiveDescription(String newDesc, String currentDesc)throws SQLException{
 		if(newDesc.contains("'")){
 			newDesc = newDesc.replace("'", "''");
@@ -206,6 +236,10 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Removes an elective from the database 
+	 *  @param electiveName The elective_name for the elective being removed
+	 */
 	public void removeElective(String electiveName)throws SQLException{
 		if(electiveName.contains("'")){
 			electiveName = electiveName.replace("'", "''");
@@ -215,6 +249,12 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Adds an elective to the database 
+	 *  @param electiveName The elective_name for the elective being added
+	 *  @param electiveCode The course_code for the elective being added
+	 *  @param electiveDesc The description for the elective being added
+	 */
 	public void addElective(String electiveName, String electiveCode, String electiveDesc)throws SQLException{
 		if(electiveName.contains("'")){
 			electiveName = electiveName.replace("'", "''");
@@ -230,6 +270,11 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Edits a user's first name in the database 
+	 *  @param newName The first_name for the user being edited
+	 *  @param editUserEmail The email_address of the user being edited
+	 */
 	public void editUserFirstName(String newName, String editUserEmail)throws SQLException{
 		if(newName.contains("'")){
 			newName = newName.replace("'", "''");
@@ -239,6 +284,11 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Edits a user's last name in the database 
+	 *  @param newName The last_name for the user being edited
+	 *  @param editUserEmail The email_address of the user being edited
+	 */
 	public void editUserLastName(String newName, String editUserEmail)throws SQLException{
 		if(newName.contains("'")){
 			newName = newName.replace("'", "''");
@@ -248,6 +298,11 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Edits a user's program in the database 
+	 *  @param newProgram The program for the user being edited
+	 *  @param editUserEmail The email_address of the user being edited
+	 */
 	public void editUserProgram(String newProgram, String editUserEmail)throws SQLException{
 		if(newProgram.contains("'")){
 			newProgram = newProgram.replace("'", "''");
@@ -257,6 +312,11 @@ public class RatingController {
 		return;
 	}
 	
+	/**
+	 *  Edits a user's password in the database 
+	 *  @param newPassword The last_name for the user being edited
+	 *  @param editUserEmail The email_address of the user being edited
+	 */
 	public void editUserPassword(String newPassword, String editUserEmail)throws SQLException{
 		if(newPassword.contains("'")){
 			newPassword = newPassword.replace("'", "''");
@@ -266,16 +326,19 @@ public class RatingController {
 		return;
 	}	
 	
+	/**
+	 *  Add a rating to an elective in the database 
+	 *  @param rating The rating object for the rating being added
+	 */
 	public void addRating(Rating rating) throws SQLException, ParseException{
-//		DateFormat df = new SimpleDateFormat("EE MMM dd HH:mm:ss z yyyy");
-//		Date date = df.parse(String.valueOf(rating.getDate()));
-//		String s = date.toString();
-//		int dateInt = Integer.valueOf(s);
 		PreparedStatement q = dbConnection.prepareStatement("INSERT INTO ratings (rating, hours_per_week, comment, date, users_id, electives_id) VALUES ('" + rating.getRating() + "', '" + rating.getHoursPerWeek() + "', '" + rating.getComment() + "', '" + rating.getDate() + "', '" + rating.getUserID() + "', '" + rating.getElectiveID() + "')");
 		q.executeUpdate();
 		return;
 	}
 	
+	/**
+	 *  Get an array of all elective names 
+	 */
 	public ArrayList<String> getElectiveNamesSearchBar() {
 		ArrayList<String> electiveArray = new ArrayList<String>();
 		
@@ -285,8 +348,8 @@ public class RatingController {
 
 			while (result1.next()) {
 				String electiveName = result1.getString("elective_name");
-				electiveArray.add("~");
 				electiveArray.add(electiveName);
+				electiveArray.add("~"); //delimiter to seperate elective names
 			}
 		} catch (Exception e) {
 			System.out.println(e);
@@ -295,6 +358,9 @@ public class RatingController {
 		return electiveArray;
 	}
 	
+	/**
+	 *  Get an array of bad words 
+	 */
 	public ArrayList<String> getBadWords() throws SQLException{
 		ArrayList<String> badwords = new ArrayList<String>();
 		PreparedStatement query = dbConnection.prepareStatement("SELECT * FROM bad_words");
@@ -306,6 +372,9 @@ public class RatingController {
 		return badwords;
 	}
 	
+	/**
+	 *  Returns a review with all bad words censored 
+	 */
 	public String censorReview(Object review) throws SQLException{
 		ArrayList<String> badwords = getBadWords();
 		for(String word:badwords){
